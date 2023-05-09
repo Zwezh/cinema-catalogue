@@ -34,7 +34,8 @@
             "styles": [
               "src/styles.scss"
             ],
-            "scripts": []
+            "scripts": [],
+            "allowedCommonJsDependencies": ["fast-deep-equal"]
           },
           "configurations": {
             "production": {

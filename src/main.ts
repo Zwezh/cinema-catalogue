@@ -1,7 +1,19 @@
-import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
+import { importProvidersFrom } from '@angular/core';
+import { AngularFireModule } from '@angular/fire/compat';
+import { AngularFireDatabaseModule } from '@angular/fire/compat/database';
+import { bootstrapApplication } from '@angular/platform-browser';
+import { provideRouter } from '@angular/router';
+import { APP_ROUTES } from '@app/app-routes';
+import { AppComponent } from '@app/app.component';
+import { ENVIRONMENT } from '@appTokens';
 
-import { AppModule } from './app/app.module';
+import { environment } from './environments/environment';
 
-
-platformBrowserDynamic().bootstrapModule(AppModule)
-  .catch(err => console.error(err));
+bootstrapApplication(AppComponent, {
+  providers: [
+    provideRouter(APP_ROUTES),
+    AngularFireDatabaseModule,
+    { provide: ENVIRONMENT, useValue: environment },
+    importProvidersFrom(AngularFireModule.initializeApp(environment.firebaseOptions))
+  ]
+});

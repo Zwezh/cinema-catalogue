@@ -1,0 +1,19 @@
+.card {
+  border: 1px solid rgba(0, 0, 0, .05);
+  border-radius: 1.5rem;
+}
+
+.card-header {
+  margin-bottom: 0;
+  padding: 1.25rem 1.5rem;
+  border-bottom: 1px solid rgba(0, 0, 0, .05);
+  border-radius: calc(0.75rem - 1px) calc(0.75rem - 1px) 0 0;
+  background-color: #fff;
+}
+
+.card-footer {
+  padding: 1.25rem 1.5rem;
+  border-top: 1px solid rgba(0, 0, 0, .05);
+  background-color: #fff;
+  border-radius: 0 0 calc(0.75rem - 1px) calc(0.75rem - 1px);
+}
