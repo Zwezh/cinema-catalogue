@@ -1,3 +1,6 @@
+/// <reference types="@angular/localize" />
+
+import { provideHttpClient } from '@angular/common/http';
 import { importProvidersFrom } from '@angular/core';
 import { AngularFireModule } from '@angular/fire/compat';
 import { AngularFireDatabaseModule } from '@angular/fire/compat/database';
@@ -14,6 +17,7 @@ bootstrapApplication(AppComponent, {
     provideRouter(APP_ROUTES),
     AngularFireDatabaseModule,
     { provide: ENVIRONMENT, useValue: environment },
-    importProvidersFrom(AngularFireModule.initializeApp(environment.firebaseOptions))
+    importProvidersFrom(AngularFireModule.initializeApp(environment.firebaseOptions)),
+    provideHttpClient()
   ]
 });

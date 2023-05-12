@@ -1,0 +1,11 @@
+<ngb-rating [readonly]="true" [rate]="value" [ngbTooltip]="tipContent" [animation]="true" placement="bottom">
+  <ng-template let-fill="fill">
+    <i class="bi-star icon">
+      <i *ngIf="fill > 0" class="bi-star-fill icon filled" [style.width.%]="fill"></i>
+    </i>
+  </ng-template>
+</ngb-rating>
+
+<ng-template #tipContent>
+  <span class="lead">Rating is: {{ value }}</span></ng-template
+>

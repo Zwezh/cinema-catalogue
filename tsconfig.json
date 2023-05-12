@@ -8,7 +8,8 @@
       "@appServices": ["./src/app/common/services"],
       "@appModels": ["./src/app/common/models"],
       "@appTokens": ["./src/app/common/tokens"],
-      "@appLayout": ["./src/app/layout"]
+      "@appLayout": ["./src/app/layout"],
+      "@appDTOs": ["./src/app/common/dtos"]
     },
     "outDir": "./dist/out-tsc",
     "forceConsistentCasingInFileNames": true,
@@ -21,6 +22,7 @@
     "declaration": false,
     "downlevelIteration": true,
     "experimentalDecorators": true,
+    "strictNullChecks": false,
     "moduleResolution": "node",
     "importHelpers": true,
     "target": "ES2022",

@@ -1,9 +1,8 @@
 import { inject, Injectable } from '@angular/core';
+import { MovieRaw } from '@appModels';
 import { FireApiService, MockApiService } from '@appServices';
 
 import { Observable } from 'rxjs';
-
-import { MovieRaw } from '@appModels';
 
 @Injectable({
   providedIn: 'root'
@@ -16,6 +15,6 @@ export class MoviesApiService extends FireApiService {
   }
 
   getAllMovies(): Observable<MovieRaw[]> {
-    return this.#mockApi.getAll(); // this.getAll<MovieRaw[]>();
+    return this.#mockApi.getAll(); //this.#mockApi.getAll(); // this.getAll<MovieRaw[]>();
   }
 }

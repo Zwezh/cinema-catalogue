@@ -1,0 +1,13 @@
+<div class="card shadow border-1">
+  <div class="card-header border-0 d-flex justify-content-between">
+    <h1 class="display-6">Add movie</h1>
+    <div class="actions align-self-center">
+      <button class="btn btn-outline-info" (click)="onLoadDataFromKP()">Load from KP</button>
+      <a routerLink="edit" class="btn btn-outline-primary ms-3">Save</a>
+      <a routerLink=".." class="btn btn-outline-secondary ms-3">Cancel</a>
+    </div>
+  </div>
+  <div class="card-body">
+    <cc-movie-upsert-content [form]="form" />
+  </div>
+</div>

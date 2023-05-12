@@ -9,5 +9,6 @@ export const environment: Environment = {
     storageBucket: 'cinema-catalogue.appspot.com',
     messagingSenderId: '1063421071099',
     appId: '1:1063421071099:web:9f639e414323560be9ea5e'
-  }
+  },
+  kinopoiskToken: 'T11347S-7JJMGDN-GPJT8YX-2KPCPMQ'
 };
