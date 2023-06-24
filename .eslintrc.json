@@ -80,11 +80,11 @@
                 "group": "builtin"
               },
               {
-                "pattern": "..\/.*",
+                "pattern": "../.*",
                 "group": "builtin"
               },
               {
-                "pattern": ".\/*",
+                "pattern": "./*",
                 "group": "builtin"
               }
             ],
@@ -115,7 +115,9 @@
             ]
           },
           "node": {
-            "extensions": [".ts"]
+            "extensions": [
+              ".ts"
+            ]
           }
         }
       }
