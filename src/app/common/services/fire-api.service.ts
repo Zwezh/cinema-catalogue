@@ -5,8 +5,10 @@ import { doc, docData, Firestore } from '@angular/fire/firestore';
 import { map, Observable, of, tap } from 'rxjs';
 
 import { extractDocumentHelper } from '../helpers/extract-document.helper';
+
+@Injectable({ providedIn: 'root' })
 export abstract class FireApiService {
-  // protected readonly firestore = inject(Firestore);
+  protected readonly firestore = inject(Firestore);
   protected readonly aFirestore = inject(AngularFirestore);
 
   readonly #collectionName: string;
@@ -25,10 +27,8 @@ export abstract class FireApiService {
       );
   }
 
-  protected get<DataContract>(id: string) {
-    //: Observable<DataContract> {
-    return of(null);
-    // return docData(this.#getDocumentRef(id), { idField: 'id' }) as Observable<DataContract>;
+  protected getById<DataContract>(id: string): Observable<DataContract> {
+    return docData(this.#getDocumentRef(id), { idField: 'id' }) as Observable<DataContract>;
   }
 
   //
@@ -58,7 +58,7 @@ export abstract class FireApiService {
   //   return deleteDoc(pokemonDocumentReference);
   // }
   //
-  // #getDocumentRef(id: string) {
-  //   return doc(this.firestore, `${this.#collectionName}/${id}`);
-  // }
+  #getDocumentRef(id: string) {
+    return doc(this.firestore, `${this.#collectionName}/${id}`);
+  }
 }

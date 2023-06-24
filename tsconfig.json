@@ -9,7 +9,8 @@
       "@appModels": ["./src/app/common/models"],
       "@appTokens": ["./src/app/common/tokens"],
       "@appLayout": ["./src/app/layout"],
-      "@appDTOs": ["./src/app/common/dtos"]
+      "@appDTOs": ["./src/app/common/dtos"],
+      "@appComponents": ["./src/app/common/components"]
     },
     "outDir": "./dist/out-tsc",
     "forceConsistentCasingInFileNames": true,

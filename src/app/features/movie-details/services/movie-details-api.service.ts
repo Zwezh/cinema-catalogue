@@ -7,14 +7,12 @@ import { Observable } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
-export class MoviesApiService extends FireApiService {
-  // #mockApi = inject(MockApiService);
-
+export class MovieDetailsApiService extends FireApiService {
   constructor() {
     super('movies');
   }
 
-  getAllMovies(): Observable<MovieRaw[]> {
-    return this.getAll<MovieRaw[]>();
+  getMovieById(id: string): Observable<MovieRaw> {
+    return this.getById<MovieRaw>(id);
   }
 }
