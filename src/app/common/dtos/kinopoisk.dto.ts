@@ -12,11 +12,11 @@ export interface KinopoiskDto {
     url: string;
     previewUrl: string;
   };
-  genres: { name: string }[];
-  countries: { name: string }[];
-  persons: { name: string }[];
-  similarMovies: { id: number }[];
-  sequelsAndPrequels: { id: number }[];
+  genres: KinopoiskListItemDto[];
+  countries: KinopoiskListItemDto[];
+  persons: KinopoiskListItemDto[];
+  similarMovies: KinopoiskListItemDto[];
+  sequelsAndPrequels: KinopoiskListItemDto[];
   releaseYears: {
     start: number;
     end: number;
@@ -24,4 +24,9 @@ export interface KinopoiskDto {
   totalSeriesLength: 155;
   seriesLength: 20;
   isSeries: true;
+}
+
+export interface KinopoiskListItemDto {
+  id: number;
+  name: string;
 }

@@ -1,5 +1,5 @@
 import { FormArray, FormControl, FormGroup } from '@angular/forms';
-import { KinopoiskDto } from '@appDTOs';
+import { KinopoiskDto, KinopoiskListItemDto } from '@appDTOs';
 
 import { MovieUpsertFormModel, MovieUpsertValueModel } from '../models';
 
@@ -56,7 +56,7 @@ export class MovieUpsertForm extends FormGroup<MovieUpsertFormModel> {
     });
   }
 
-  #getActorsFromDto(persons: string[]): string[] {
-    return persons.map((person) => person);
+  #getActorsFromDto(persons: KinopoiskListItemDto[]): string[] {
+    return persons.map((person) => person.name);
   }
 }
