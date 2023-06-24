@@ -1,5 +1,5 @@
 import { inject, Injectable } from '@angular/core';
-import { MovieRaw } from '@appModels';
+import { MovieDto } from '@appDTOs';
 
 import { take } from 'rxjs';
 
@@ -18,7 +18,7 @@ export class MovieDetailsActionService {
     this.#apiService.getMovieById(id).pipe(take(1)).subscribe(this.#updateStateAfterLoadMovie.bind(this));
   }
 
-  #updateStateAfterLoadMovie(movie: MovieRaw): void {
+  #updateStateAfterLoadMovie(movie: MovieDto): void {
     const newState = { ...this.#stateService.state, movie, loading: false };
     this.#stateService.setState(newState);
   }
