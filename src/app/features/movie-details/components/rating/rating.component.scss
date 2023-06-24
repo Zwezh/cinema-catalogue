@@ -1,0 +1,15 @@
+.icon {
+  position: relative;
+  display: inline-block;
+  font-size: 2rem;
+  padding-right: 0.1rem;
+  color: var(--bs-border-color);
+}
+
+.filled {
+  color: var(--bs-warning);
+  overflow: hidden;
+  position: absolute;
+  top: 0;
+  left: 0;
+}

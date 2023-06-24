@@ -9,7 +9,8 @@
         "@schematics/angular:component": {
           "style": "scss",
           "changeDetection": "OnPush",
-          "prefix": "cc"
+          "prefix": "cc",
+          "standalone": true
         }
       },
       "root": "",
@@ -29,12 +30,25 @@
             "inlineStyleLanguage": "scss",
             "assets": [
               "src/favicon.ico",
+              "src/apple-touch-icon.png",
+              "src/favicon-32x32.png",
+              "src/favicon-16x16.png",
+              "src/site.webmanifest",
+              "src/safari-pinned-tab.svg",
+              "src/android-chrome-192x192.png",
+              "src/android-chrome-512x512.png",
+              "src/mstile-144x144.png",
+              "src/mstile-150x150.png",
+              "src/mstile-310x150.png",
+              "src/mstile-310x310.png",
+              "src/mstile-70x70.png",
               "src/assets"
             ],
             "styles": [
               "src/styles.scss"
             ],
-            "scripts": []
+            "scripts": [],
+            "allowedCommonJsDependencies": ["fast-deep-equal"]
           },
           "configurations": {
             "production": {

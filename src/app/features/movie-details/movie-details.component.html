@@ -1,0 +1,86 @@
+<ng-container *ngIf="movie$ | async">
+  <div class="card shadow border-0">
+    <div class="card-header border-0 text-end">
+      <a routerLink="edit" class="btn btn-outline-primary">Edit</a>
+      <a routerLink=".." class="btn btn-outline-secondary ms-3">Back</a>
+    </div>
+    <div class="card-body">
+      <div class="row">
+        <div class="col-3">
+          <div class="poster">
+            <img
+              alt="Poster"
+              src="https://www.themoviedb.org/t/p/w600_and_h900_bestv2/7SivRwOLuA6DR09zNJ9JIo14GyX.jpg" />
+          </div>
+          <div class="text-center">
+            <cc-rating [value]="7.7" />
+          </div>
+        </div>
+        <div class="col-9">
+          <div class="row mb-3">
+            <div class="col">
+              <h3>Начало</h3>
+              <h5 class="text-secondary">Inception</h5>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-9">
+              <div class="row">
+                <div class="col-2">rating</div>
+                <div class="col-10">7.7</div>
+              </div>
+              <div class="row">
+                <div class="col-2">year</div>
+                <div class="col-10">2010</div>
+              </div>
+              <div class="row">
+                <div class="col-2">director</div>
+                <div class="col-10">director</div>
+              </div>
+              <div class="row">
+                <div class="col-2">movieLength</div>
+                <div class="col-10">120m</div>
+              </div>
+              <div class="row">
+                <div class="col-2">ageRating</div>
+                <div class="col-10">16</div>
+              </div>
+              <div class="row">
+                <div class="col-2">genres</div>
+                <div class="col-10">year, movieLength, ageRating, genres, countries</div>
+              </div>
+              <div class="row">
+                <div class="col-2">countries</div>
+                <div class="col-10">year, movieLength, ageRating</div>
+              </div>
+              <div class="row">
+                <div class="col-2">quality</div>
+                <div class="col-10">quality</div>
+              </div>
+              <div class="row">
+                <div class="col-2">description</div>
+                <div class="col-10">description</div>
+              </div>
+            </div>
+            <div class="col-3">
+              <p>Actors:</p>
+              <ul class="list-unstyled text-secondary">
+                <li>Леонардо ДиКаприо</li>
+                <li>Джозеф Гордон-Левитт</li>
+                <li>Эллиот Пейдж</li>
+                <li>Том Харди</li>
+                <li>Кэн Ватанабэ</li>
+                <li>Дилип Рао</li>
+                <li>Киллиан Мерфи</li>
+                <li>Том Беренджер</li>
+                <li>Марион Котийяр</li>
+                <li>Пит Постлетуэйт</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-container>
+<cc-load-spinner [loading]="loading$ | async" />

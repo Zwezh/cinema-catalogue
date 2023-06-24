@@ -1,0 +1,37 @@
+<div
+  class="card shadow border-0"
+  *ngIf="{ pageSize: pageSize$ | async, currentPage: currentPage$ | async, movies: movies$ | async } as state">
+  <div class="card-header">
+    <div class="d-flex justify-content-between">
+      <div role="search">
+        <input
+          [formControl]="searchControl"
+          class="form-control me-2"
+          type="search"
+          placeholder="Search"
+          aria-label="Search" />
+      </div>
+      <div><a routerLink="add" class="btn btn-outline-primary">Add movie</a></div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col">
+      <cc-movies-list
+        [movies]="
+          state.movies | slice : state.currentPage * state.pageSize : (state.currentPage + 1) * state.pageSize
+        "></cc-movies-list>
+    </div>
+  </div>
+
+  <div class="card-footer border-0">
+    <ngb-pagination
+      [rotate]="true"
+      [ellipses]="true"
+      [maxSize]="5"
+      [page]="state.currentPage + 1"
+      [pageSize]="state.pageSize"
+      [collectionSize]="state.movies.length"
+      (pageChange)="onChangePageChange($event)">
+    </ngb-pagination>
+  </div>
+</div>
