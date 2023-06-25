@@ -6,6 +6,7 @@ import { RouterLink } from '@angular/router';
 import { debounceTime, Observable, takeWhile } from 'rxjs';
 
 import { NgbPagination } from '@ng-bootstrap/ng-bootstrap';
+import { TranslateModule } from '@ngx-translate/core';
 
 import { MoviesListComponent } from './components';
 import { MovieRaw } from './models';
@@ -17,7 +18,16 @@ import { MoviesStateService } from './services/movies-state.service';
   templateUrl: './movies-page.component.html',
   styleUrls: ['./movies-page.component.scss'],
   standalone: true,
-  imports: [AsyncPipe, MoviesListComponent, NgIf, NgbPagination, SlicePipe, ReactiveFormsModule, RouterLink],
+  imports: [
+    AsyncPipe,
+    MoviesListComponent,
+    NgIf,
+    NgbPagination,
+    SlicePipe,
+    ReactiveFormsModule,
+    RouterLink,
+    TranslateModule
+  ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class MoviesPageComponent implements OnInit, OnDestroy {

@@ -5,12 +5,14 @@ export interface MovieUpsertValueModel {
   enName: string;
   year: number;
   description: string;
+  director: string;
   rating: number;
   movieLength: number;
   ageRating: number;
   logoUrl: string;
   posterUrl: string;
   previewUrl: string;
+  quality: string;
   genres: string;
   countries: string;
   actors: string[];

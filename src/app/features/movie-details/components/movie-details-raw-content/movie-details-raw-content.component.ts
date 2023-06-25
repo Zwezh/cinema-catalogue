@@ -4,6 +4,8 @@ import { RouterLink } from '@angular/router';
 import { LoadSpinnerComponent } from '@appComponents';
 import { MovieRaw } from '@appModels';
 
+import { TranslateModule } from '@ngx-translate/core';
+
 import { RatingComponent } from '../rating/rating.component';
 
 @Component({
@@ -11,6 +13,7 @@ import { RatingComponent } from '../rating/rating.component';
   standalone: true,
   templateUrl: './movie-details-raw-content.component.html',
   styleUrls: ['./movie-details-raw-content.component.scss'],
+  imports: [TranslateModule],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class MovieDetailsRawContentComponent {

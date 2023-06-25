@@ -1,8 +1,10 @@
 export interface MovieDto {
   addedDate: string;
   ageRating: number;
+  actors: string[];
   countries: string[];
   description: string;
+  director: string;
   enName: string;
   extension: string;
   genres: string[];
@@ -14,7 +16,8 @@ export interface MovieDto {
   movieLength: number;
   persons: string[];
   previewUrl: string;
-  rating: string;
+  quality: string;
+  rating: number;
   year: string;
   sequelsAndPrequels: string[];
   similarMovies: string[];

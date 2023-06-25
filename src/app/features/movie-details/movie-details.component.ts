@@ -6,6 +6,8 @@ import { MovieDto } from '@appDTOs';
 
 import { Observable } from 'rxjs';
 
+import { TranslateModule } from '@ngx-translate/core';
+
 import { MovieDetailsFullContentComponent, MovieDetailsRawContentComponent } from './components';
 import { MovieDetailsActionService, MovieDetailsStateService } from './services';
 
@@ -18,7 +20,8 @@ import { MovieDetailsActionService, MovieDetailsStateService } from './services'
     LoadSpinnerComponent,
     AsyncPipe,
     MovieDetailsRawContentComponent,
-    MovieDetailsFullContentComponent
+    MovieDetailsFullContentComponent,
+    TranslateModule
   ],
   templateUrl: './movie-details.component.html',
   styleUrls: ['./movie-details.component.scss'],

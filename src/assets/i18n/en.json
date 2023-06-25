@@ -1,0 +1,41 @@
+{
+  "navigation": {
+    "movies": "Movies"
+  },
+  "actions": {
+    "edit": "Edit",
+    "delete": "Delete",
+    "back": "Back",
+    "save": "Save",
+    "cancel": "Cancel"
+  },
+  "search": "Search",
+  "addMovie": "Add movie",
+  "updateMovie": "Update movie",
+  "getFromKp": "Get data from KP",
+  "movie": {
+    "name": "Russian name",
+    "poster": "Poster",
+    "kpId": "Kinopoisk id",
+    "enName": "Name",
+    "rating": "Rating",
+    "year": "Year",
+    "director": "Director",
+    "ageRating": "Age rating",
+    "genres": "Genres",
+    "countries": "Countries",
+    "quality": "Quality",
+    "description": "Description",
+    "actors": "Actors:",
+    "addActor": "Add an actor",
+    "size": "File size",
+    "extension": "File extension",
+    "addedDate": "Added date",
+    "movieLength": "Duration",
+    "sequelsAndPrequels": "Sequels and prequels",
+    "similarMovies": "Similar movies",
+    "seriesLength": "Series length",
+    "totalSeriesLength": "Total series length"
+  },
+  "ratingIs": "Rating is:"
+}

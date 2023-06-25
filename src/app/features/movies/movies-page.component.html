@@ -8,10 +8,12 @@
           [formControl]="searchControl"
           class="form-control me-2"
           type="search"
-          placeholder="Search"
-          aria-label="Search" />
+          [placeholder]="'search' | translate"
+          [attr.aria-label]="'search' | translate" />
       </div>
-      <div><a routerLink="add" class="btn btn-outline-primary">Add movie</a></div>
+      <div>
+        <a routerLink="add" class="btn btn-outline-primary">{{ 'addMovie' | translate }}</a>
+      </div>
     </div>
   </div>
   <div class="row">

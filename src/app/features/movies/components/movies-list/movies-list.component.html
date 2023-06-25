@@ -1,18 +1,14 @@
 <table class="table align-middle mb-0 bg-white">
-  <thead class="bg-light">
-    <tr>
-      <th>Name</th>
-      <th>Title</th>
-      <th>Extra Info</th>
-      <th>Actions</th>
-    </tr>
-  </thead>
   <tbody>
     <ng-container *ngFor="let movie of movies">
       <tr>
         <td>
           <div class="d-flex align-items-center">
-            <img src="assets/images/icon.svg" alt="" style="width: 45px; height: 45px" class="rounded-circle" />
+            <img
+              src="assets/images/icon.svg"
+              [alt]="'movie.poster' | translate"
+              style="width: 45px; height: 45px"
+              class="rounded-circle" />
             <div class="ms-3">
               <p class="fw-bold mb-1">
                 <a [routerLink]="movie.id">{{ movie.name }}</a>
@@ -27,8 +23,12 @@
         </td>
         <td>{{ movie.size }}</td>
         <td>
-          <button type="button" class="btn btn-link btn-rounded"><i class="bi-pencil-square"></i></button>
-          <button type="button" class="btn btn-link btn-rounded btn-delete"><i class="bi-trash"></i></button>
+          <button type="button" class="btn btn-link btn-rounded" [title]="'actions.edit' | translate">
+            <i class="bi-pencil-square"></i>
+          </button>
+          <button type="button" class="btn btn-link btn-rounded btn-delete" [title]="'actions.delete' | translate">
+            <i class="bi-trash"></i>
+          </button>
         </td>
       </tr>
     </ng-container>

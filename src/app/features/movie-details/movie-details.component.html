@@ -1,8 +1,8 @@
 <ng-container *ngIf="movie$ | async as movie">
   <div class="card shadow border-0">
     <div class="card-header border-0 text-end">
-      <a routerLink="edit" class="btn btn-outline-primary">Edit</a>
-      <a routerLink=".." class="btn btn-outline-secondary ms-3">Back</a>
+      <a routerLink="edit" class="btn btn-outline-primary">{{ 'actions.edit' | translate }}</a>
+      <a routerLink=".." class="btn btn-outline-secondary ms-3">{{ 'actions.back' | translate }}</a>
     </div>
     <div class="card-body">
       <ng-container *ngIf="movie.kpid; else rawRef">

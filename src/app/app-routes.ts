@@ -11,7 +11,13 @@ export const APP_ROUTES: Routes = [
         loadComponent: () => import('./features/movie-upsert').then((m) => m.MovieAddPageComponent),
         pathMatch: 'full'
       },
-      { path: ':id', loadComponent: () => import('./features/movie-details').then((m) => m.MovieDetailsComponent) }
+      {
+        path: ':id',
+        children: [
+          { path: '', loadComponent: () => import('./features/movie-details').then((m) => m.MovieDetailsComponent) },
+          { path: 'edit', loadComponent: () => import('./features/movie-upsert').then((m) => m.MovieEditPageComponent) }
+        ]
+      }
     ]
   },
   { path: '', redirectTo: 'movies', pathMatch: 'prefix' },
