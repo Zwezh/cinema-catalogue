@@ -1,98 +1,110 @@
 <div class="row" [formGroup]="form">
+  <input type="hidden" formControlName="id" />
   <div class="col-3">
-    <div class="mb-3">
+    <div class="mb-2">
       <label for="poster" class="form-label">{{ 'movie.poster' | translate }}</label>
-      <input type="text" class="form-control" id="poster" />
+      <input type="text" class="form-control" id="poster" formControlName="posterUrl" />
     </div>
-    <img
-      class="poster"
-      [alt]="'movie.poster' | translate"
-      src="https://www.themoviedb.org/t/p/w600_and_h900_bestv2/7SivRwOLuA6DR09zNJ9JIo14GyX.jpg" />
+    <ng-container *ngIf="formValues?.posterUrl">
+      <img class="poster" [alt]="'movie.poster' | translate" [src]="formValues.posterUrl" />
+    </ng-container>
   </div>
   <div class="col-9">
-    <div class="row">
-      <div class="col-9">
-        <div class="mb-3 row">
-          <label for="kpId" class="col-sm-2 col-form-label">{{ 'movie.kpId' | translate }}</label>
-          <div class="col-sm-9">
-            <input type="number" class="form-control" formControlName="kpId" id="kpId" />
-          </div>
-        </div>
-        <div class="mb-3 row">
-          <label for="enName" class="col-sm-2 col-form-label">{{ 'movie.enName' | translate }}</label>
-          <div class="col-sm-9">
-            <input type="text" class="form-control" id="enName" />
-          </div>
-        </div>
-        <div class="mb-3 row">
-          <label for="name" class="col-sm-2 col-form-label">{{ 'movie.name' | translate }}</label>
-          <div class="col-sm-9">
-            <input type="text" class="form-control" id="name" />
-          </div>
-        </div>
-        <div class="mb-3 row">
-          <label for="rating" class="col-sm-2 col-form-label">{{ 'movie.rating' | translate }}</label>
-          <div class="col-sm-9">
-            <input type="number" class="form-control" id="rating" />
-          </div>
-        </div>
-        <div class="mb-3 row">
-          <label for="year" class="col-sm-2 col-form-label">{{ 'movie.year' | translate }}</label>
-          <div class="col-sm-9">
-            <input type="number" class="form-control" id="year" />
-          </div>
-        </div>
-        <div class="mb-3 row">
-          <label for="director" class="col-sm-2 col-form-label">{{ 'movie.director' | translate }}</label>
-          <div class="col-sm-9">
-            <input type="text" class="form-control" id="director" />
-          </div>
-        </div>
-        <div class="mb-3 row">
-          <label for="movieLength" class="col-sm-2 col-form-label">{{ 'movie.movieLength' | translate }}</label>
-          <div class="col-sm-9">
-            <input type="number" class="form-control" id="movieLength" />
-          </div>
-        </div>
-        <div class="mb-3 row">
-          <label for="ageRating" class="col-sm-2 col-form-label">{{ 'movie.ageRating' | translate }}</label>
-          <div class="col-sm-9">
-            <input type="text" class="form-control" id="ageRating" />
-          </div>
-        </div>
-        <div class="mb-3 row">
-          <label for="genres" class="col-sm-2 col-form-label">{{ 'movie.genres' | translate }}</label>
-          <div class="col-sm-9">
-            <input type="text" class="form-control" id="genres" />
-          </div>
-        </div>
-        <div class="mb-3 row">
-          <label for="countries" class="col-sm-2 col-form-label">{{ 'movie.countries' | translate }}</label>
-          <div class="col-sm-9">
-            <input type="text" class="form-control" id="countries" />
-          </div>
-        </div>
-        <div class="mb-3 row">
-          <label for="quality" class="col-sm-2 col-form-label">{{ 'movie.quality' | translate }}</label>
-          <div class="col-sm-9">
-            <input type="text" class="form-control" id="quality" />
-          </div>
-        </div>
-        <div class="mb-3 row">
-          <label for="quality" class="col-sm-2 col-form-label">{{ 'movie.description' | translate }}</label>
-          <div class="col-sm-9">
-            <textarea class="form-control" id="description" rows="4"></textarea>
-          </div>
+    <div class="row mb-2">
+      <div class="col">
+        <label for="kpId" class="form-label">{{ 'movie.kpId' | translate }}</label>
+        <input type="number" class="form-control" formControlName="kpId" id="kpId" />
+      </div>
+    </div>
+    <div class="row mb-2">
+      <div class="col-6">
+        <label for="name" class="form-label">{{ 'movie.name' | translate }}</label>
+        <input type="text" class="form-control" formControlName="name" id="name" />
+      </div>
+      <div class="col-6">
+        <label for="enName" class="form-label">{{ 'movie.enName' | translate }}</label>
+        <input type="text" class="form-control" id="enName" formControlName="enName" />
+      </div>
+    </div>
+    <div class="row mb-2">
+      <div class="col-6">
+        <label for="director" class="form-label">{{ 'movie.director' | translate }}</label>
+        <input type="text" class="form-control" id="director" formControlName="director" />
+      </div>
+      <div class="col-6">
+        <label for="genres" class="form-label">{{ 'movie.genres' | translate }}</label>
+        <input type="text" class="form-control" id="genres" formControlName="genres" />
+      </div>
+    </div>
+    <div class="row mb-2">
+      <div class="col-4">
+        <label for="rating" class="form-label">{{ 'movie.rating' | translate }}</label>
+        <input type="number" class="form-control" id="rating" formControlName="rating" />
+      </div>
+      <div class="col-4">
+        <label for="year" class="form-label">{{ 'movie.year' | translate }}</label>
+        <input type="text" class="form-control" id="year" formControlName="year" />
+      </div>
+      <div class="col-4">
+        <label for="quality" class="form-label">{{ 'movie.quality' | translate }}</label>
+        <input type="text" class="form-control" id="quality" formControlName="quality" />
+      </div>
+    </div>
+    <div class="row mb-2">
+      <div class="col-4">
+        <label for="ageRating" class="form-label">{{ 'movie.ageRating' | translate }}</label>
+        <input type="text" class="form-control" id="ageRating" formControlName="ageRating" />
+      </div>
+      <div class="col-4">
+        <label for="movieLength" class="form-label">{{ 'movie.movieLength' | translate }}</label>
+        <input type="number" class="form-control" id="movieLength" formControlName="movieLength" />
+      </div>
+      <div class="col-4">
+        <label for="countries" class="form-label">{{ 'movie.countries' | translate }}</label>
+        <input type="text" class="form-control" id="countries" formControlName="countries" />
+      </div>
+    </div>
+    <div class="row mb-2">
+      <div class="col-6">
+        <label for="addedDate" class="form-label">{{ 'movie.addedDate' | translate }}</label>
+        <input type="text" class="form-control" id="addedDate" formControlName="addedDate" />
+      </div>
+      <div class="col-4">
+        <label for="extension" class="form-label">{{ 'movie.extension' | translate }}</label>
+        <input type="text" class="form-control" id="extension" formControlName="extension" />
+      </div>
+    </div>
+
+    <div class="row mb-2">
+      <div class="col">
+        <div class="form-check">
+          <input type="checkbox" class="form-check-input" id="isSeries" formControlName="isSeries" />
+          <label for="size" class="form-check-label">{{ 'movie.isSeries' | translate }}</label>
         </div>
       </div>
-      <div class="col-3">
-        <p>{{ 'movie.actors' | translate }}</p>
-        <div class="mb-3">
-          <input type="text" class="form-control" id="actor" />
-        </div>
-        <div class="text-center">
-          <button type="button" class="btn btn-primary">{{ 'movie.addActor' | translate }}</button>
-        </div>
+    </div>
+    <div class="row mb-2">
+      <div class="col">
+        <label for="actors" class="form-label">{{ 'movie.actors' | translate }}</label>
+        <input type="text" class="form-control" id="actors" formControlName="actors" />
+      </div>
+    </div>
+    <div class="row mb-2">
+      <div class="col">
+        <label for="sequelsAndPrequels" class="form-label">{{ 'movie.sequelsAndPrequels' | translate }}</label>
+        <input type="text" class="form-control" id="sequelsAndPrequels" formControlName="sequelsAndPrequels" />
+      </div>
+    </div>
+    <div class="row mb-2">
+      <div class="col">
+        <label for="similarMovies" class="form-label">{{ 'movie.similarMovies' | translate }}</label>
+        <input type="text" class="form-control" id="similarMovies" formControlName="similarMovies" />
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <label for="description" class="form-label">{{ 'movie.description' | translate }}</label>
+        <textarea class="form-control" id="description" rows="4" formControlName="description"></textarea>
       </div>
     </div>
   </div>

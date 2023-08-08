@@ -1,17 +1,22 @@
 <ng-container *ngIf="movie$ | async as movie">
-  <div class="card shadow border-0">
-    <div class="card-header border-0 text-end">
+  <div class="card shadow border-0 fallback">
+    <div class="card-header border-0 text-end z-1">
       <a routerLink="edit" class="btn btn-outline-primary">{{ 'actions.edit' | translate }}</a>
       <a routerLink=".." class="btn btn-outline-secondary ms-3">{{ 'actions.back' | translate }}</a>
     </div>
-    <div class="card-body">
-      <ng-container *ngIf="movie.kpid; else rawRef">
+    <div class="card-body z-1">
+      <ng-container *ngIf="movie.kpId; else rawRef">
         <cc-movie-details-full-content [movie]="movie" />
       </ng-container>
       <ng-template #rawRef>
         <cc-movie-details-raw-content [movie]="movie" />
       </ng-template>
     </div>
+    <div
+      class="fallback__cover"
+      [ngStyle]="{
+        'background-image': 'url(' + movie.posterUrl || noPictureUrl + ')'
+      }"></div>
   </div>
 </ng-container>
 <cc-load-spinner [loading]="loading$ | async" />

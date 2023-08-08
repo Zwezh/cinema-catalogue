@@ -1,26 +1,26 @@
-import { AbstractControl, FormArray, FormControl } from '@angular/forms';
+import { AbstractControl, FormControl } from '@angular/forms';
 
 export interface MovieUpsertFormModel {
   [key: string]: AbstractControl<unknown, unknown>;
 
-  kpId: FormControl<number>;
-  name: FormControl<string>;
-  enName: FormControl<string>;
-  year: FormControl<number>;
-  description: FormControl<string>;
-  rating: FormControl<number>;
-  movieLength: FormControl<number>;
+  actors: FormControl<string>;
+  addedDate: FormControl<string>;
   ageRating: FormControl<number>;
-  logoUrl: FormControl<string>;
-  posterUrl: FormControl<string>;
-  previewUrl: FormControl<string>;
-  genres: FormControl<string>;
   countries: FormControl<string>;
-  actors: FormArray<FormControl<string>>;
-  similarMovies: FormControl<string>;
-  sequelsAndPrequels: FormControl<string>;
-  releaseYears: FormControl<string>;
-  totalSeriesLength: FormControl<number>;
-  seriesLength: FormControl<number>;
+  description: FormControl<string>;
+  director: FormControl<string>;
+  enName: FormControl<string>;
+  extension: FormControl<string>;
+  genres: FormControl<string>;
+  id: FormControl<string>;
   isSeries: FormControl<boolean>;
+  kpId: FormControl<number>;
+  movieLength: FormControl<number>;
+  name: FormControl<string>;
+  posterUrl: FormControl<string>;
+  quality: FormControl<string>;
+  rating: FormControl<number>;
+  sequelsAndPrequels: FormControl<string>;
+  similarMovies: FormControl<string>;
+  year: FormControl<string>;
 }

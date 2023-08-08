@@ -28,14 +28,15 @@
     "description": "Description",
     "actors": "Actors:",
     "addActor": "Add an actor",
-    "size": "File size",
+    "series": "Series",
     "extension": "File extension",
     "addedDate": "Added date",
     "movieLength": "Duration",
     "sequelsAndPrequels": "Sequels and prequels",
     "similarMovies": "Similar movies",
     "seriesLength": "Series length",
-    "totalSeriesLength": "Total series length"
+    "totalSeriesLength": "Total series length",
+    "isSeries": "Is series"
   },
   "ratingIs": "Rating is:"
 }

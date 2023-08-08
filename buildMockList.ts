@@ -2,7 +2,10 @@
 
 const splitbySpace = (item: string): [string, string] => [item.replace(/\s.*/, ''), item.replace(/\S+\s/, '')];
 
-const splitExtension = (item: string): [string, string] => [item.substring(item.lastIndexOf('.')), item.substring(0, item.lastIndexOf('.'))];
+const splitExtension = (item: string): [string, string] => [
+  item.substring(item.lastIndexOf('.')),
+  item.substring(0, item.lastIndexOf('.'))
+];
 
 const getYear = (item: string): string => {
   const index = item.search(/\((\d{4})\)/);
@@ -36,5 +39,4 @@ interface RawMovie {
   year: string;
   extension: string;
   addedDate: string;
-  size: number;
 }

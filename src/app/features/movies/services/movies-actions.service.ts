@@ -1,11 +1,11 @@
 import { inject, Injectable } from '@angular/core';
+import { MoviesApiService } from '@appServices';
 
 import { take, tap } from 'rxjs';
 
-import { MoviesApiService } from './movies-api.service';
 import { MoviesStateService } from './movies-state.service';
 
-import { MovieRaw, MoviesState } from '../models';
+import { MovieRaw } from '../models';
 
 @Injectable({
   providedIn: 'root'

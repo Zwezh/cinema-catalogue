@@ -3,11 +3,11 @@
     <h1 class="display-6">{{ 'addMovie' | translate }}</h1>
     <div class="actions align-self-center">
       <button class="btn btn-outline-info" (click)="onLoadDataFromKP()">{{ 'getFromKp' | translate }}</button>
-      <a routerLink="edit" class="btn btn-outline-primary ms-3">{{ 'actions.save' | translate }}</a>
+      <button class="btn btn-outline-primary ms-3">{{ 'actions.save' | translate }}</button>
       <a routerLink=".." class="btn btn-outline-secondary ms-3">{{ 'actions.cancel' | translate }}</a>
     </div>
   </div>
   <div class="card-body">
-    <cc-movie-upsert-content [form]="form" />
+    <cc-movie-upsert-content [form]="form" [formValues]="form.valueChanges | async" />
   </div>
 </div>

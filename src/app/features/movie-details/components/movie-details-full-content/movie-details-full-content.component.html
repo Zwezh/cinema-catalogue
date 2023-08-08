@@ -1,11 +1,8 @@
 <div class="row">
   <div class="col-3">
-    <div class="poster">
-      <img
-        [alt]="'movie.poster' | translate"
-        src="https://www.themoviedb.org/t/p/w600_and_h900_bestv2/7SivRwOLuA6DR09zNJ9JIo14GyX.jpg" />
+    <div>
+      <img class="poster" [alt]="'movie.poster' | translate" [src]="pictureUrl" />
     </div>
-    <!--    logoUrl: string; previewUrl: string;-->
     <div class="text-center">
       <cc-rating [value]="movie.rating" />
     </div>
@@ -13,104 +10,86 @@
   <div class="col-9">
     <div class="row mb-3">
       <div class="col">
-        <h3>{{ movie.name }}</h3>
+        <h3>
+          {{ movie.name }}
+          <ng-container *ngIf="movie.isSeries">
+            <span class="badge text-bg-warning">{{ 'movie.series' | translate }}</span>
+          </ng-container>
+        </h3>
         <h5 class="text-secondary">{{ movie.enName }}</h5>
       </div>
     </div>
     <div class="row">
       <div class="col-9">
         <div class="row">
-          <div class="col-2">{{ 'movie.rating' | translate }}</div>
-          <div class="col-10">{{ movie.rating }}</div>
+          <div class="col-3 text-secondary mb-3">{{ 'movie.rating' | translate }}</div>
+          <div class="col-9">{{ movie.rating }}</div>
         </div>
         <div class="row">
-          <div class="col-2">{{ 'movie.year' | translate }}</div>
-          <div class="col-10">{{ movie.year }}</div>
+          <div class="col-3 text-secondary mb-3">{{ 'movie.year' | translate }}</div>
+          <div class="col-9">{{ movie.year }}</div>
         </div>
         <div class="row">
-          <div class="col-2">{{ 'movie.director' | translate }}</div>
-          <div class="col-10">{{ movie.director }}</div>
+          <div class="col-3 text-secondary mb-3">{{ 'movie.director' | translate }}</div>
+          <div class="col-9">{{ movie.director }}</div>
         </div>
         <div class="row">
-          <div class="col-2">{{ 'movie.movieLength' | translate }}</div>
-          <div class="col-10">{{ movie.movieLength }}</div>
+          <div class="col-3 text-secondary mb-3">{{ 'movie.movieLength' | translate }}</div>
+          <div class="col-9">{{ movie.movieLength }}</div>
         </div>
         <div class="row">
-          <div class="col-2">{{ 'movie.ageRating' | translate }}</div>
-          <div class="col-10">{{ movie.ageRating }}</div>
+          <div class="col-3 text-secondary mb-3">{{ 'movie.ageRating' | translate }}</div>
+          <div class="col-9">{{ movie.ageRating }}</div>
         </div>
         <div class="row">
-          <div class="col-2">{{ 'movie.genres' | translate }}</div>
-          <div class="col-10">{{ movie.genres }}</div>
+          <div class="col-3 text-secondary mb-3">{{ 'movie.genres' | translate }}</div>
+          <div class="col-9">{{ movie.genres }}</div>
         </div>
         <div class="row">
-          <div class="col-2">{{ 'movie.countries' | translate }}</div>
-          <div class="col-10">{{ movie.countries }}</div>
+          <div class="col-3 text-secondary mb-3">{{ 'movie.countries' | translate }}</div>
+          <div class="col-9">{{ movie.countries }}</div>
         </div>
         <div class="row">
-          <div class="col-2">{{ 'movie.quality' | translate }}</div>
-          <div class="col-10">{{ movie.quality }}</div>
+          <div class="col-3 text-secondary mb-3">{{ 'movie.quality' | translate }}</div>
+          <div class="col-9">{{ movie.quality }}</div>
         </div>
         <div class="row">
-          <div class="col-2">{{ 'movie.addedDate' | translate }}</div>
-          <div class="col-10">{{ movie.addedDate }}</div>
+          <div class="col-3 text-secondary mb-3">{{ 'movie.addedDate' | translate }}</div>
+          <div class="col-9">{{ movie.addedDate }}</div>
         </div>
 
         <div class="row">
-          <div class="col-2">{{ 'movie.extension' | translate }}</div>
-          <div class="col-10">{{ movie.extension }}</div>
+          <div class="col-3 text-secondary mb-3">{{ 'movie.extension' | translate }}</div>
+          <div class="col-9">{{ movie.extension }}</div>
         </div>
-
         <div class="row">
-          <div class="col-2">{{ 'movie.extension' | translate }}</div>
-          <div class="col-10">{{ movie.extension }}</div>
+          <div class="col-3 text-secondary mb-3">{{ 'movie.description' | translate }}</div>
+          <div class="col-9">{{ movie.description }}</div>
         </div>
-
-        <div class="row">
-          <div class="col-2">{{ 'movie.extension' | translate }}</div>
-          <div class="col-10">{{ movie.extension }}</div>
-        </div>
-
-        <div class="row">
-          <div class="col-2">{{ 'movie.size' | translate }}</div>
-          <div class="col-10">{{ movie.size }}</div>
-        </div>
-        <ng-container *ngIf="movie.isSeries">
-          <div class="row">
-            <div class="col-2">{{ 'movie.seriesLength' | translate }}</div>
-            <div class="col-10">{{ movie.seriesLength }}</div>
-          </div>
-          <div class="row">
-            <div class="col-2">{{ 'movie.totalSeriesLength' | translate }}</div>
-            <div class="col-10">{{ movie.totalSeriesLength }}</div>
-          </div>
-        </ng-container>
       </div>
       <div class="col-3">
         <div>
-          <p>{{ 'movie.actors' | translate }}</p>
+          <div>{{ 'movie.actors' | translate }}</div>
           <ul class="list-unstyled text-secondary">
             <ng-container *ngFor="let actor of movie.actors">
-              <li>{{ actor }}</li>
+              <li class="mb-2">{{ actor }}</li>
             </ng-container>
           </ul>
         </div>
-        <div>
-          <p>{{ 'movie.sequelsAndPrequels' | translate }}</p>
-          <ul class="list-unstyled text-secondary">
-            <ng-container *ngFor="let item of movie.sequelsAndPrequels">
-              <li>{{ item }}</li>
-            </ng-container>
-          </ul>
-        </div>
-        <div>
-          <p>{{ 'movie.similarMovies' | translate }}</p>
-          <ul class="list-unstyled text-secondary">
-            <ng-container *ngFor="let item of movie.similarMovies">
-              <li>{{ item }}</li>
-            </ng-container>
-          </ul>
-        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <ng-container *ngIf="movie?.sequelsAndPrequels">
+          <h5>{{ 'movie.sequelsAndPrequels' | translate }}</h5>
+          <p class="text-secondary">{{ movie.sequelsAndPrequels }}</p>
+        </ng-container>
+        <ng-container *ngIf="movie?.similarMovies">
+          <h5>{{ 'movie.similarMovies' | translate }}</h5>
+          <p class="text-secondary">
+            {{ movie.similarMovies }}
+          </p>
+        </ng-container>
       </div>
     </div>
   </div>

@@ -1,5 +1,19 @@
-.poster img{
-  max-width: 100%;
+.fallback {
+  position: relative;
+
+  &__cover {
+    opacity: 0.04;
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    width: 100%;
+    height: auto;
+  }
 }
 
 .actor-list {

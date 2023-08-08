@@ -1,8 +1,8 @@
 export interface KinopoiskDto {
   id: number;
   name: string;
-  enName: string;
-  year: 2023;
+  alternativeName: string;
+  year: number;
   description: string;
   rating: { kp: number };
   movieLength: number;
@@ -14,7 +14,7 @@ export interface KinopoiskDto {
   };
   genres: KinopoiskListItemDto[];
   countries: KinopoiskListItemDto[];
-  persons: KinopoiskListItemDto[];
+  persons: KinopoiskPersonListDto[];
   similarMovies: KinopoiskListItemDto[];
   sequelsAndPrequels: KinopoiskListItemDto[];
   releaseYears: {
@@ -29,4 +29,12 @@ export interface KinopoiskDto {
 export interface KinopoiskListItemDto {
   id: number;
   name: string;
+}
+
+export interface KinopoiskPersonListDto extends KinopoiskListItemDto {
+  description: string;
+  enName: string;
+  enProfession: string;
+  photo: string;
+  profession: string;
 }

@@ -1,7 +1,8 @@
 import { NgForOf, NgIf } from '@angular/common';
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
-import { MovieDto } from '@appDTOs';
+import { MovieModel } from '@appModels';
 
+import { urlsConstant } from '@appConstants';
 import { TranslateModule } from '@ngx-translate/core';
 
 import { RatingComponent } from '../rating/rating.component';
@@ -15,5 +16,9 @@ import { RatingComponent } from '../rating/rating.component';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class MovieDetailsFullContentComponent {
-  @Input() movie: MovieDto;
+  @Input() movie: MovieModel;
+
+  get pictureUrl(): string {
+    return this.movie.posterUrl || urlsConstant.NO_PICTURE_URL;
+  }
 }

@@ -1,8 +1,8 @@
 import { inject, Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
-import { doc, docData, Firestore } from '@angular/fire/firestore';
+import { doc, docData, Firestore, updateDoc } from '@angular/fire/firestore';
 
-import { map, Observable, of, tap } from 'rxjs';
+import { map, Observable } from 'rxjs';
 
 import { extractDocumentHelper } from '../helpers/extract-document.helper';
 
@@ -19,7 +19,7 @@ export abstract class FireApiService {
 
   protected getAll<DataContract>(): Observable<DataContract> {
     return this.aFirestore
-      .collection('movies')
+      .collection(this.#collectionName)
       .snapshotChanges()
       .pipe(
         map((changes) => changes.map((x) => extractDocumentHelper(x))),
@@ -47,10 +47,22 @@ export abstract class FireApiService {
   //   });
   // }
   //
-  // update<T = unknown & { id: string }>(dataContract: T): Promise<void> {
-  //   const docRef = doc(this.firestore, `${this.#collectionName}/${dataContract.id}`);
-  //   return updateDoc(docRef, { ...pokemon });
-  // }
+  protected update<T extends { id: string }>(dataContract: T): Observable<void> {
+    const docRef = doc(this.firestore, `${this.#collectionName}/${dataContract.id}`);
+    return new Observable((observer) => {
+      updateDoc(docRef, { ...dataContract })
+        .then((result) => {
+          observer.next(result);
+          observer.complete();
+        })
+        .catch((err) => {
+          observer.error(err);
+        })
+        .finally(() => {
+          observer.complete();
+        });
+    });
+  }
   //
   // delete(id: string) {
   //   const docRef = doc(this.firestore, `${this.#collectionName}/${dataContract.id}`);
