@@ -6,6 +6,8 @@ import { Observable, take } from 'rxjs';
 
 import { MovieUpsertStateService } from './movie-upsert-state.service';
 
+import { MOVIE_UPSERT_INITIAL_STATE } from '../constants';
+
 @Injectable({
   providedIn: 'root'
 })
@@ -23,12 +25,20 @@ export class MovieUpsertActionsService {
 
   loadDataDB(id: string): void {
     this.#moviesApi
-      .getMovieById(id)
+      .getMovieById$(id)
       .pipe(take(1))
       .subscribe((result) => this.#stateService.setState({ ...this.#stateService.state, movieDTO: result }));
   }
 
-  updateMovie(movie: MovieDto): Observable<void> {
-    return this.#moviesApi.updateMovie(movie);
+  updateMovie$(movie: MovieDto): Observable<void> {
+    return this.#moviesApi.updateMovie$(movie);
+  }
+
+  addMovie$(movie: MovieDto): Observable<unknown> {
+    return this.#moviesApi.addMovie$(movie);
+  }
+
+  resetState(): void {
+    this.#stateService.setState(MOVIE_UPSERT_INITIAL_STATE);
   }
 }

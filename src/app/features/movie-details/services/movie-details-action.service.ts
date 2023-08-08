@@ -18,7 +18,7 @@ export class MovieDetailsActionService {
 
   loadMovieById(id: string): void {
     this.#stateService.setState({ ...this.#stateService.state, loading: true });
-    this.#apiService.getMovieById(id).pipe(take(1)).subscribe(this.#updateStateAfterLoadMovie.bind(this));
+    this.#apiService.getMovieById$(id).pipe(take(1)).subscribe(this.#updateStateAfterLoadMovie.bind(this));
   }
 
   resetState(): void {

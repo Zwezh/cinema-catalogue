@@ -17,7 +17,7 @@ export class MoviesActionsService {
 
   loadAllMovies(): void {
     this.#apiService
-      .getAllMovies()
+      .getAllMovies$()
       .pipe(
         take(1),
         tap((movies) => (this.#sourceMovies = [...movies]))
@@ -30,7 +30,7 @@ export class MoviesActionsService {
   }
 
   searchMovies(value: string): void {
-    const filteredMovies = this.#sourceMovies.filter((item: MovieRaw) => item.name.includes(value));
+    const filteredMovies = this.#sourceMovies.filter((item: MovieRaw) => item.name?.includes(value));
     this.#updateStateForLoadMovies(filteredMovies);
   }
 

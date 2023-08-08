@@ -25,8 +25,7 @@ const buildMovie = (item: string): RawMovie => {
     name,
     year,
     extension,
-    addedDate,
-    size: +size
+    addedDate
   };
 };
 

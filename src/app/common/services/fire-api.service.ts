@@ -1,5 +1,5 @@
 import { inject, Injectable } from '@angular/core';
-import { AngularFirestore } from '@angular/fire/compat/firestore';
+import { AngularFirestore, DocumentReference } from '@angular/fire/compat/firestore';
 import { doc, docData, Firestore, updateDoc } from '@angular/fire/firestore';
 
 import { map, Observable } from 'rxjs';
@@ -17,7 +17,7 @@ export abstract class FireApiService {
     this.#collectionName = collectinName;
   }
 
-  protected getAll<DataContract>(): Observable<DataContract> {
+  protected getAll$<DataContract>(): Observable<DataContract> {
     return this.aFirestore
       .collection(this.#collectionName)
       .snapshotChanges()
@@ -27,27 +27,30 @@ export abstract class FireApiService {
       );
   }
 
-  protected getById<DataContract>(id: string): Observable<DataContract> {
+  protected getById$<DataContract>(id: string): Observable<DataContract> {
     return docData(this.#getDocumentRef(id), { idField: 'id' }) as Observable<DataContract>;
   }
 
-  //
-  // create(dataContract: DataContract): Observable<DataContract> {
-  //   return new Observable((observer) => {
-  //     this.#collectionRef
-  //       .add(dataContract)
-  //       .then((result) => {
-  //         observer.next(result);
-  //         observer.complete();
-  //       })
-  //       .catch((result) => {
-  //         observer.error(result);
-  //         observer.complete();
-  //       });
-  //   });
-  // }
-  //
-  protected update<T extends { id: string }>(dataContract: T): Observable<void> {
+  protected add$<T>(dataContract: T): Observable<unknown> {
+    return new Observable((observer) => {
+      this.aFirestore
+        .collection(this.#collectionName)
+        .add(dataContract)
+        .then((result: DocumentReference) => {
+          observer.next(result.id);
+          observer.complete();
+        })
+        .catch((result) => {
+          observer.error(result);
+          observer.complete();
+        })
+        .finally(() => {
+          observer.complete();
+        });
+    });
+  }
+
+  protected update$<T extends { id: string }>(dataContract: T): Observable<void> {
     const docRef = doc(this.firestore, `${this.#collectionName}/${dataContract.id}`);
     return new Observable((observer) => {
       updateDoc(docRef, { ...dataContract })
