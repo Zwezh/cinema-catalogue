@@ -1,5 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 import { AngularFirestore, DocumentReference } from '@angular/fire/compat/firestore';
+import { QueryFn } from '@angular/fire/compat/firestore/interfaces';
 import { doc, docData, Firestore, updateDoc } from '@angular/fire/firestore';
 
 import { map, Observable } from 'rxjs';
@@ -17,9 +18,9 @@ export abstract class FireApiService {
     this.#collectionName = collectinName;
   }
 
-  protected getAll$<DataContract>(): Observable<DataContract> {
+  protected getAll$<DataContract>(queryFn?: QueryFn): Observable<DataContract> {
     return this.aFirestore
-      .collection(this.#collectionName)
+      .collection(this.#collectionName, queryFn)
       .snapshotChanges()
       .pipe(
         map((changes) => changes.map((x) => extractDocumentHelper(x))),

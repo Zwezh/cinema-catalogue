@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { MovieDto } from '@appDTOs';
-import { MovieRaw } from '@appModels';
 import { FireApiService } from '@appServices';
 
 import { Observable } from 'rxjs';
@@ -13,8 +12,8 @@ export class MoviesApiService extends FireApiService {
     super('movies');
   }
 
-  getAllMovies$(): Observable<MovieRaw[]> {
-    return this.getAll$<MovieRaw[]>();
+  getAllMovies$(): Observable<MovieDto[]> {
+    return this.getAll$<MovieDto[]>((ref) => ref.orderBy('addedDate', 'desc'));
   }
 
   getMovieById$(id: string): Observable<MovieDto> {

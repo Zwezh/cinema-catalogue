@@ -1,7 +1,7 @@
 import { NgFor } from '@angular/common';
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, TrackByFunction } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { MovieRaw } from '@appModels';
+import { MovieModel } from '@appModels';
 
 import { TranslateModule } from '@ngx-translate/core';
 
@@ -14,5 +14,7 @@ import { TranslateModule } from '@ngx-translate/core';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class MoviesListComponent {
-  @Input() movies!: MovieRaw[];
+  @Input() movies!: MovieModel[];
+
+  trackByBookId: TrackByFunction<MovieModel> = (index, movie) => movie.id;
 }

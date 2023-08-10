@@ -1,7 +1,7 @@
-import { MovieRaw } from '@appModels';
+import { MovieModel } from '@appModels';
 
 export interface MoviesState {
   readonly currentPage: number;
-  readonly movies: MovieRaw[];
+  readonly movies: MovieModel[];
   readonly pageSize: number;
 }

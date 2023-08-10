@@ -2,6 +2,7 @@ import { AsyncPipe, NgIf, SlicePipe } from '@angular/common';
 import { ChangeDetectionStrategy, Component, inject, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
+import { MovieModel } from '@appModels';
 
 import { debounceTime, Observable, takeWhile } from 'rxjs';
 
@@ -9,7 +10,6 @@ import { NgbPagination } from '@ng-bootstrap/ng-bootstrap';
 import { TranslateModule } from '@ngx-translate/core';
 
 import { MoviesListComponent } from './components';
-import { MovieRaw } from './models';
 
 import { MoviesActionsService } from './services/movies-actions.service';
 import { MoviesStateService } from './services/movies-state.service';
@@ -31,7 +31,7 @@ import { MoviesStateService } from './services/movies-state.service';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class MoviesPageComponent implements OnInit, OnDestroy {
-  movies$: Observable<MovieRaw[]>;
+  movies$: Observable<MovieModel[]>;
   currentPage$: Observable<number>;
   pageSize$: Observable<number>;
   searchControl = new FormControl();

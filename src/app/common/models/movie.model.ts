@@ -39,7 +39,7 @@ export class MovieModel {
     this.kpId = value?.kpId;
     this.posterUrl = value?.posterUrl || urlsConstant.NO_PICTURE_URL;
     this.name = value?.name;
-    this.movieLength = this.#toHoursAndMinutes(value?.movieLength);
+    this.movieLength = value?.movieLength ? this.#toHoursAndMinutes(value.movieLength) : '...';
     this.quality = value?.quality;
     this.rating = value?.rating;
     this.year = value?.year;

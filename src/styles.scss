@@ -1,6 +1,8 @@
 @import 'bootstrap/dist/css/bootstrap.css';
 @import 'bootstrap-icons/font/bootstrap-icons.css';
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;400&display=swap');
 
 html, body{
   background: var(--bs-white);
+  font-family: 'Poppins', sans-serif;
 }

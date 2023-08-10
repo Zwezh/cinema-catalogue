@@ -2,7 +2,7 @@ import { inject, Injectable } from '@angular/core';
 import { MovieDto } from '@app/common/dtos';
 import { KinopoiskApiService, MoviesApiService } from '@appServices';
 
-import { Observable, take } from 'rxjs';
+import { Observable, take, tap } from 'rxjs';
 
 import { MovieUpsertStateService } from './movie-upsert-state.service';
 
@@ -31,11 +31,11 @@ export class MovieUpsertActionsService {
   }
 
   updateMovie$(movie: MovieDto): Observable<void> {
-    return this.#moviesApi.updateMovie$(movie);
+    return this.#moviesApi.updateMovie$(movie).pipe(tap(() => localStorage.clear()));
   }
 
   addMovie$(movie: MovieDto): Observable<unknown> {
-    return this.#moviesApi.addMovie$(movie);
+    return this.#moviesApi.addMovie$(movie).pipe(tap(() => localStorage.clear()));
   }
 
   resetState(): void {
