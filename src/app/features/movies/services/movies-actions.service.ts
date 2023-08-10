@@ -19,11 +19,13 @@ export class MoviesActionsService {
   #sourceMovies: MovieModel[];
 
   loadAllMovies(): void {
+    this.#updateStateByLoading(true);
     const cachedMovies = localStorage.getItem(LocalStorageKeysConstant.MOVIES);
     if (cachedMovies) {
       const movieList = this.#convertDtoListToModel(JSON.parse(cachedMovies) as MovieDto[]);
       this.#sourceMovies = [...movieList];
       this.#updateStateAfterLoad();
+      this.#updateStateByLoading(false);
       return;
     }
     this.#apiService
@@ -47,10 +49,6 @@ export class MoviesActionsService {
     this.#stateService.setState(state);
   }
 
-  pageChange(value: number): void {
-    this.#stateService.setState({ ...this.#stateService.state, currentPage: value - 1 });
-  }
-
   searchMovies(value: string): MovieModel[] {
     return value
       ? this.#sourceMovies.filter((item: MovieModel) => item?.name?.toLowerCase()?.includes(value.toLowerCase()))
@@ -60,9 +58,14 @@ export class MoviesActionsService {
   #updateStateAfterLoad(): void {
     const { currentPage: page, searchValue: search } = this.#stateService.state;
     this.setMovieListParams({ page: page.toString(), search });
+    this.#updateStateByLoading(false);
   }
 
   #convertDtoListToModel(list: MovieDto[]): MovieModel[] {
     return list.map((movie: MovieDto) => new MovieModel(movie));
+  }
+
+  #updateStateByLoading(loading: boolean): void {
+    this.#stateService.setState({ ...this.#stateService.state, loading });
   }
 }

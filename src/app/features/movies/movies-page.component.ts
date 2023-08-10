@@ -2,6 +2,7 @@ import { AsyncPipe, NgIf, SlicePipe } from '@angular/common';
 import { ChangeDetectionStrategy, Component, inject, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { LoadSpinnerComponent } from '@appComponents';
 import { MovieModel } from '@appModels';
 
 import { debounceTime, Observable, takeWhile } from 'rxjs';
@@ -27,7 +28,8 @@ import { MoviesStateService } from './services/movies-state.service';
     SlicePipe,
     ReactiveFormsModule,
     RouterLink,
-    TranslateModule
+    TranslateModule,
+    LoadSpinnerComponent
   ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
@@ -35,6 +37,7 @@ export class MoviesPageComponent implements OnInit, OnDestroy {
   movies$: Observable<MovieModel[]>;
   currentPage$: Observable<number>;
   pageSize$: Observable<number>;
+  loading$: Observable<boolean>;
   searchControl = new FormControl();
 
   #activatedRoute = inject(ActivatedRoute);
@@ -46,6 +49,7 @@ export class MoviesPageComponent implements OnInit, OnDestroy {
     this.movies$ = this.#stateService.select(({ movies }) => movies);
     this.currentPage$ = this.#stateService.select(({ currentPage }) => currentPage);
     this.pageSize$ = this.#stateService.select(({ pageSize }) => pageSize);
+    this.loading$ = this.#stateService.select(({ loading }) => loading);
   }
 
   ngOnInit(): void {

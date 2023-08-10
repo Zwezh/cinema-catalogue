@@ -1,7 +1,8 @@
 import { MoviesState } from '../models';
 
 export const MOVIES_INITIAL_STATE: MoviesState = {
-  currentPage: 0,
+  currentPage: 1,
+  loading: false,
   movies: [],
   pageSize: 30
 };
