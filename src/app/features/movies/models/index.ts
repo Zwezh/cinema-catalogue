@@ -1,2 +1,2 @@
-export * from '../../../common/models/movie-raw.model';
 export * from './movies-state.model';
+export * from './movies-page-params.model';
