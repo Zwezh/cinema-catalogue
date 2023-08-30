@@ -1,12 +1,12 @@
 import { AsyncPipe, NgIf, NgStyle } from '@angular/common';
-import { ChangeDetectionStrategy, Component, OnInit, inject, OnDestroy } from '@angular/core';
-import { ActivatedRoute, RouterLink } from '@angular/router';
+import { ChangeDetectionStrategy, Component, OnInit, inject, OnDestroy, Input } from '@angular/core';
+import { RouterLink } from '@angular/router';
 import { LoadSpinnerComponent } from '@appComponents';
+import { urlsConstant } from '@appConstants';
 import { MovieModel } from '@appModels';
 
 import { Observable } from 'rxjs';
 
-import { urlsConstant } from '@appConstants';
 import { TranslateModule } from '@ngx-translate/core';
 
 import { MovieDetailsFullContentComponent, MovieDetailsRawContentComponent } from './components';
@@ -30,12 +30,12 @@ import { MovieDetailsActionService, MovieDetailsStateService } from './services'
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class MovieDetailsComponent implements OnInit, OnDestroy {
+  @Input() id?: string;
   movie$: Observable<MovieModel>;
   loading$: Observable<boolean>;
 
   #actionService = inject(MovieDetailsActionService);
   #stateService = inject(MovieDetailsStateService);
-  #activatedRoute = inject(ActivatedRoute);
 
   constructor() {
     this.movie$ = this.#stateService.select(({ movie }) => movie);
@@ -47,7 +47,7 @@ export class MovieDetailsComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.#actionService.loadMovieById(this.#activatedRoute.snapshot.params['id']);
+    this.#actionService.loadMovieById(this.id);
   }
 
   ngOnDestroy(): void {

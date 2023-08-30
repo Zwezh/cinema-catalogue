@@ -1,5 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 import { MovieDto } from '@app/common/dtos';
+import { storageKeysConstant } from '@appConstants';
 import { KinopoiskApiService, MoviesApiService } from '@appServices';
 
 import { Observable, take, tap } from 'rxjs';
@@ -31,11 +32,11 @@ export class MovieUpsertActionsService {
   }
 
   updateMovie$(movie: MovieDto): Observable<void> {
-    return this.#moviesApi.updateMovie$(movie).pipe(tap(() => localStorage.clear()));
+    return this.#moviesApi.updateMovie$(movie).pipe(tap(() => sessionStorage.removeItem(storageKeysConstant.MOVIES)));
   }
 
   addMovie$(movie: MovieDto): Observable<unknown> {
-    return this.#moviesApi.addMovie$(movie).pipe(tap(() => localStorage.clear()));
+    return this.#moviesApi.addMovie$(movie).pipe(tap(() => sessionStorage.removeItem(storageKeysConstant.MOVIES)));
   }
 
   resetState(): void {

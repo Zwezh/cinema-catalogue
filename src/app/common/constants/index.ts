@@ -1,2 +1,3 @@
 export * from './urls.constant';
-export * from './local-storage-keys.constant';
+export * from './storage-keys.constant';
+export * from './languages.constant';

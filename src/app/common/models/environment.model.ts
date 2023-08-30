@@ -4,4 +4,5 @@ export interface Environment {
   production: boolean;
   firebaseOptions: FirebaseOptions;
   kinopoiskToken: string;
+  settingsId: string;
 }

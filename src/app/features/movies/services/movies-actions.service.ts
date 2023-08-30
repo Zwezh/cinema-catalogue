@@ -1,5 +1,5 @@
 import { inject, Injectable } from '@angular/core';
-import { LocalStorageKeysConstant } from '@appConstants';
+import { storageKeysConstant } from '@appConstants';
 import { MovieDto } from '@appDTOs';
 import { MovieModel } from '@appModels';
 import { MoviesApiService } from '@appServices';
@@ -20,7 +20,7 @@ export class MoviesActionsService {
 
   loadAllMovies(): void {
     this.#updateStateByLoading(true);
-    const cachedMovies = localStorage.getItem(LocalStorageKeysConstant.MOVIES);
+    const cachedMovies = sessionStorage.getItem(storageKeysConstant.MOVIES);
     if (cachedMovies) {
       const movieList = this.#convertDtoListToModel(JSON.parse(cachedMovies) as MovieDto[]);
       this.#sourceMovies = [...movieList];
@@ -32,7 +32,7 @@ export class MoviesActionsService {
       .getAllMovies$()
       .pipe(
         take(1),
-        tap((movies: MovieDto[]) => localStorage.setItem(LocalStorageKeysConstant.MOVIES, JSON.stringify(movies))),
+        tap((movies: MovieDto[]) => sessionStorage.setItem(storageKeysConstant.MOVIES, JSON.stringify(movies))),
         map(this.#convertDtoListToModel),
         tap((movies: MovieModel[]) => (this.#sourceMovies = [...movies]))
       )

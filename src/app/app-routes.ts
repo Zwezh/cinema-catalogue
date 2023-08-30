@@ -20,6 +20,11 @@ export const APP_ROUTES: Routes = [
       }
     ]
   },
+  {
+    path: 'settings',
+    title: 'Settings',
+    loadComponent: () => import('./features/settings/settings.component').then((m) => m.SettingsComponent)
+  },
   { path: '', redirectTo: 'movies', pathMatch: 'prefix' },
   { path: '*', redirectTo: 'movies' }
 ];

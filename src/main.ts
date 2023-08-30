@@ -5,9 +5,10 @@ import { FIREBASE_OPTIONS } from '@angular/fire/compat';
 import { AngularFireDatabaseModule } from '@angular/fire/compat/database';
 import { getFirestore, provideFirestore } from '@angular/fire/firestore';
 import { bootstrapApplication } from '@angular/platform-browser';
-import { provideRouter } from '@angular/router';
+import { provideRouter, withComponentInputBinding } from '@angular/router';
 import { APP_ROUTES } from '@app/app-routes';
 import { AppComponent } from '@app/app.component';
+import { LanguagesConstant } from '@appConstants';
 import { ENVIRONMENT } from '@appTokens';
 
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
@@ -21,7 +22,7 @@ export function HttpLoaderFactory(http: HttpClient) {
 
 bootstrapApplication(AppComponent, {
   providers: [
-    provideRouter(APP_ROUTES),
+    provideRouter(APP_ROUTES, withComponentInputBinding()),
     AngularFireDatabaseModule,
     { provide: ENVIRONMENT, useValue: environment },
     importProvidersFrom(provideFirebaseApp(() => initializeApp(environment.firebaseOptions))),
@@ -30,7 +31,7 @@ bootstrapApplication(AppComponent, {
     provideHttpClient(),
     importProvidersFrom(
       TranslateModule.forRoot({
-        defaultLanguage: 'en',
+        defaultLanguage: LanguagesConstant.EN,
         loader: {
           provide: TranslateLoader,
           useFactory: HttpLoaderFactory,

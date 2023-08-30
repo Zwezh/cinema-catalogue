@@ -1,8 +1,10 @@
 {
   "navigation": {
-    "movies": "Movies"
+    "movies": "Movies",
+    "settings": "Settings"
   },
   "actions": {
+    "add": "Add",
     "edit": "Edit",
     "delete": "Delete",
     "back": "Back",
@@ -38,5 +40,17 @@
     "totalSeriesLength": "Total series length",
     "isSeries": "Is series"
   },
-  "ratingIs": "Rating is:"
+  "ratingIs": "Rating is:",
+  "settings": {
+    "title": "Settings",
+    "header": "Set your settings",
+    "language": "Language",
+    "languageHint": "The selected language effects only for labels and general titles, but not the data stored on the server",
+    "genresForFilters": "Genres for filters",
+    "defaultQuality": "Default quality",
+    "defaultExtension": "Default extension",
+    "qualityHint": "You can set default quality value for adding and updating movies if that field is empty, that value automatically will be inserted to form control",
+    "extensionHint": "You can set default extension value for adding and updating movies if that field is empty, that value automatically will be inserted to form control",
+    "fillGenres": "Fill from movie list"
+  }
 }

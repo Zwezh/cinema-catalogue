@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, Input } from '@angular/core';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { MovieDto } from '@appDTOs';
 
@@ -19,6 +19,8 @@ import { MovieUpsertPageBaseComponent } from '../movie-upsert-page-base.componen
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class MovieEditPageComponent extends MovieUpsertPageBaseComponent {
+  @Input() id?: string;
+
   #activatedRoute = inject(ActivatedRoute);
   #router = inject(Router);
   #alive = true;
@@ -45,6 +47,6 @@ export class MovieEditPageComponent extends MovieUpsertPageBaseComponent {
       .subscribe((result: MovieDto) => {
         this.form.setValuesFromDB(result);
       });
-    this.actionsService.loadDataDB(this.#activatedRoute.snapshot.paramMap.get('id'));
+    this.actionsService.loadDataDB(this.id);
   }
 }

@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-lg bg-secondary border-bottom border-body shadow z-2" data-bs-theme="dark">
+<nav class="navbar navbar-expand-lg bg-secondary border-bottom border-body shadow z-3" data-bs-theme="dark">
   <div class="container-fluid">
     <a class="navbar-brand" [routerLink]="['']">
       <img alt="Logo" class="d-inline-block align-text-top" ngSrc="assets/images/icon.svg" height="31" width="31" />
@@ -8,6 +8,11 @@
       <li class="nav-item">
         <a class="nav-link active" aria-current="page" [routerLink]="['/movies']" routerLinkActive="active">{{
           'navigation.movies' | translate
+        }}</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link active" aria-current="page" [routerLink]="['/settings']" routerLinkActive="active">{{
+          'navigation.settings' | translate
         }}</a>
       </li>
     </ul>
