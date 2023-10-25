@@ -1,4 +1,5 @@
 {
+  "defaultTitle": "Cinema Catalogue",
   "navigation": {
     "movies": "Movies",
     "settings": "Settings"

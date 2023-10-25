@@ -1,10 +1,8 @@
-import { inject } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
-import { KinopoiskDto, KinopoiskListItemDto, KinopoiskPersonListDto, MovieDto } from '@appDTOs';
+import { KinopoiskDto, KinopoiskListItemDto, KinopoiskPersonListDto, MovieDto, SettingsDto } from '@appDTOs';
 
 import { Observable } from 'rxjs';
 
-import { SettingsStateService } from '../../settings';
 import { MovieProfessionConstant } from '../constants';
 import { MovieUpsertFormModel, MovieUpsertValueModel } from '../models';
 
@@ -12,10 +10,7 @@ export class MovieUpsertForm extends FormGroup<MovieUpsertFormModel> {
   override value: MovieUpsertValueModel;
   override valueChanges: Observable<MovieUpsertValueModel>;
 
-  #extension: string;
-  #quality: string;
-
-  constructor(extension: string, quality: string) {
+  constructor() {
     super({
       actors: new FormControl<string>(null, { nonNullable: true }),
       addedDate: new FormControl<string>(null, { nonNullable: true }),
@@ -24,7 +19,7 @@ export class MovieUpsertForm extends FormGroup<MovieUpsertFormModel> {
       description: new FormControl<string>(null, { nonNullable: true }),
       director: new FormControl<string>(null, { nonNullable: true }),
       enName: new FormControl<string>(null, { nonNullable: true }),
-      extension: new FormControl<string>(extension, { nonNullable: true }),
+      extension: new FormControl<string>(null, { nonNullable: true }),
       genres: new FormControl<string>(null, { nonNullable: true }),
       id: new FormControl<string>(null, { nonNullable: true }),
       isSeries: new FormControl<boolean>(null, { nonNullable: true }),
@@ -32,17 +27,19 @@ export class MovieUpsertForm extends FormGroup<MovieUpsertFormModel> {
       movieLength: new FormControl<number>(null, { nonNullable: true }),
       name: new FormControl<string>(null, { nonNullable: true }),
       posterUrl: new FormControl<string>(null, { nonNullable: true }),
-      quality: new FormControl<string>(quality, { nonNullable: true }),
+      quality: new FormControl<string>(null, { nonNullable: true }),
       rating: new FormControl<number>(null, { nonNullable: true }),
       sequelsAndPrequels: new FormControl<string>(null, { nonNullable: true }),
       similarMovies: new FormControl<string>(null, { nonNullable: true }),
       year: new FormControl<string>(null, { nonNullable: true })
     });
-    this.#extension = extension;
-    this.#quality = quality;
   }
 
-  setValuesFromDB(value: Partial<MovieDto>): void {
+  setSettingsValues({ extension, quality }: Partial<SettingsDto>): void {
+    this.patchValue({ extension, quality });
+  }
+
+  setValuesFromDB(value: Partial<MovieDto>, { extension, quality }: Partial<SettingsDto>): void {
     this.patchValue({
       actors: value?.actors?.join(', '),
       addedDate: value?.addedDate,
@@ -51,7 +48,7 @@ export class MovieUpsertForm extends FormGroup<MovieUpsertFormModel> {
       description: value?.description,
       director: value?.director?.join(', '),
       enName: value?.enName,
-      extension: value?.extension || this.#extension,
+      extension: value?.extension || extension,
       genres: value?.genres?.join(', '),
       id: value?.id,
       isSeries: value?.isSeries,
@@ -59,7 +56,7 @@ export class MovieUpsertForm extends FormGroup<MovieUpsertFormModel> {
       movieLength: value?.movieLength,
       name: value?.name,
       posterUrl: value?.posterUrl,
-      quality: value?.quality || this.#quality,
+      quality: value?.quality || quality,
       rating: value?.rating,
       year: value?.year,
       sequelsAndPrequels: value?.sequelsAndPrequels?.join(', '),
@@ -130,9 +127,5 @@ export class MovieUpsertForm extends FormGroup<MovieUpsertFormModel> {
 
   #getDuration(value: KinopoiskDto): number {
     return value.isSeries ? value.seriesLength : value.movieLength;
-  }
-
-  #getKpidsFromDto(fields: KinopoiskListItemDto[]): string {
-    return fields.map((field: KinopoiskListItemDto) => field.id)?.join(', ');
   }
 }

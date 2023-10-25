@@ -1,9 +1,10 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, inject, Input } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
-import { MovieDto } from '@appDTOs';
+import { MovieDto, SettingsDto } from '@appDTOs';
 
-import { filter, take, takeWhile } from 'rxjs';
+import { filter, forkJoin, take, takeWhile } from 'rxjs';
 
 import { TranslateModule } from '@ngx-translate/core';
 
@@ -23,30 +24,24 @@ export class MovieEditPageComponent extends MovieUpsertPageBaseComponent {
 
   #activatedRoute = inject(ActivatedRoute);
   #router = inject(Router);
-  #alive = true;
 
   onUpdateMovie(): void {
     this.actionsService
       .updateMovie$(this.form.getMovieValue())
       .pipe(take(1))
-      .subscribe({
-        next: () => {
-          this.#router.navigate(['..'], { relativeTo: this.#activatedRoute });
-        }
+      .subscribe(() => {
+        this.#router.navigate(['..'], { relativeTo: this.#activatedRoute });
       });
   }
 
   override loadInitialData(): void {
     super.loadInitialData();
-    this.stateService
-      .select(({ movieDTO }) => movieDTO)
-      .pipe(
-        takeWhile(() => this.#alive),
-        filter(Boolean)
-      )
-      .subscribe((result: MovieDto) => {
-        this.form.setValuesFromDB(result);
-      });
+    const dataFromDb = this.stateService.select(({ movieDTO }) => movieDTO);
+    const settings = this.settingsStateService.select(({ settings }) => settings);
+
+    forkJoin([dataFromDb, settings])
+      .pipe(takeUntilDestroyed(this.destroyRef), filter(Boolean))
+      .subscribe(([movie, settings]: [MovieDto, SettingsDto]) => this.form.setValuesFromDB(movie, settings));
     this.actionsService.loadDataDB(this.id);
   }
 }

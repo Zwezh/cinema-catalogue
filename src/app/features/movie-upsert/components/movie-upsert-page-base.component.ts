@@ -1,4 +1,5 @@
-import { Component, inject, OnDestroy, OnInit } from '@angular/core';
+import { Component, DestroyRef, inject, OnDestroy, OnInit } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { KinopoiskDto } from '@appDTOs';
 
 import { filter, takeWhile } from 'rxjs';
@@ -12,18 +13,15 @@ export abstract class MovieUpsertPageBaseComponent implements OnInit, OnDestroy 
   form: MovieUpsertForm;
   protected actionsService = inject(MovieUpsertActionsService);
   protected stateService = inject(MovieUpsertStateService);
-  protected alive = true;
-  constructor(settingsStateService: SettingsStateService) {
-    const { extension, quality } = settingsStateService.state.settings;
-    this.form = new MovieUpsertForm(extension, quality);
-  }
+  protected settingsStateService = inject(SettingsStateService);
+  protected destroyRef = inject(DestroyRef);
 
   ngOnInit(): void {
+    this.form = new MovieUpsertForm();
     this.loadInitialData();
   }
 
   ngOnDestroy(): void {
-    this.alive = false;
     this.actionsService.resetState();
   }
 
@@ -37,10 +35,7 @@ export abstract class MovieUpsertPageBaseComponent implements OnInit, OnDestroy 
   protected loadInitialData(): void {
     this.stateService
       .select(({ kinopoiskDTO }) => kinopoiskDTO)
-      .pipe(
-        takeWhile(() => this.alive),
-        filter(Boolean)
-      )
+      .pipe(takeUntilDestroyed(this.destroyRef), filter(Boolean))
       .subscribe((result: KinopoiskDto) => this.form.setValuesFromKinopoisk(result));
   }
 }

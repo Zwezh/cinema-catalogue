@@ -1,5 +1,6 @@
 import { AsyncPipe, NgIf, SlicePipe } from '@angular/common';
-import { ChangeDetectionStrategy, Component, inject, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, DestroyRef, inject, OnInit } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { LoadSpinnerComponent } from '@appComponents';
@@ -33,7 +34,7 @@ import { MoviesStateService } from './services/movies-state.service';
   ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class MoviesPageComponent implements OnInit, OnDestroy {
+export class MoviesPageComponent implements OnInit {
   movies$: Observable<MovieModel[]>;
   currentPage$: Observable<number>;
   pageSize$: Observable<number>;
@@ -44,7 +45,8 @@ export class MoviesPageComponent implements OnInit, OnDestroy {
   #router = inject(Router);
   #actionService = inject(MoviesActionsService);
   #stateService = inject(MoviesStateService);
-  #alive = true;
+  #destroyRef = inject(DestroyRef);
+
   constructor() {
     this.movies$ = this.#stateService.select(({ movies }) => movies);
     this.currentPage$ = this.#stateService.select(({ currentPage }) => currentPage);
@@ -55,19 +57,14 @@ export class MoviesPageComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.#actionService.loadAllMovies();
     this.searchControl.valueChanges
-      .pipe(
-        debounceTime(300),
-        takeWhile(() => this.#alive)
-      )
+      .pipe(debounceTime(300), takeUntilDestroyed(this.#destroyRef))
       .subscribe((value: string) => this.#navigateChange({ search: value || undefined, page: '1' }));
-    this.#activatedRoute.queryParams.pipe(takeWhile(() => this.#alive)).subscribe((params: MoviesPageParams) => {
-      this.#actionService.setMovieListParams(params);
-      this.searchControl.patchValue(params.search, { emitEvent: false });
-    });
-  }
-
-  ngOnDestroy(): void {
-    this.#alive = false;
+    this.#activatedRoute.queryParams
+      .pipe(takeUntilDestroyed(this.#destroyRef))
+      .subscribe((params: MoviesPageParams) => {
+        this.#actionService.setMovieListParams(params);
+        this.searchControl.patchValue(params.search, { emitEvent: false });
+      });
   }
 
   onChangePageChange(page: number): void {
