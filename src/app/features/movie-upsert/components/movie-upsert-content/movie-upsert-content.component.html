@@ -13,7 +13,10 @@
     <div class="row mb-2">
       <div class="col">
         <label for="kpId" class="form-label">{{ 'movie.kpId' | translate }}</label>
-        <input type="number" class="form-control" formControlName="kpId" id="kpId" />
+        <div class="input-group">
+          <input type="number" class="form-control" formControlName="kpId" id="kpId" />
+          <button class="btn btn-outline-info" (click)="loadFromKP.emit()">{{ 'getFromKp' | translate }}</button>
+        </div>
       </div>
     </div>
     <div class="row mb-2">

@@ -1,5 +1,5 @@
 import { CommonModule, NgOptimizedImage } from '@angular/common';
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { TranslateModule } from '@ngx-translate/core';
@@ -19,4 +19,5 @@ import { MovieUpsertValueModel } from '../../models';
 export class MovieUpsertContentComponent {
   @Input({ required: true }) form: MovieUpsertForm;
   @Input({ required: true }) formValues: MovieUpsertValueModel;
+  @Output() loadFromKP = new EventEmitter<void>();
 }
