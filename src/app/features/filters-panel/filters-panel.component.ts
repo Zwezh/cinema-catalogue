@@ -41,7 +41,7 @@ export class FiltersPanelComponent implements OnInit {
 
   onResetFilters(): void {
     this.form.reset();
-    this.onApplyFilters();
+    this.changeFilters.emit(undefined);
   }
 
   onChangeToYearField(change: { value?: number }): void {

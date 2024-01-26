@@ -76,7 +76,7 @@ export class ActionsPanelComponent implements OnInit, AfterViewInit {
   }
 
   onChangeFilters(value: Partial<FiltersValueType>): void {
-    const filters = encodeURIComponent(JSON.stringify(value)) || undefined;
+    const filters = value ? encodeURIComponent(JSON.stringify(value)) : undefined;
     this.#navigateChange({ filters, resetState: true, page: '1' });
   }
 
