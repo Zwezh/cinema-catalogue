@@ -8,7 +8,8 @@ import { map, take, tap } from 'rxjs';
 
 import { MoviesStateService } from './movies-state.service';
 
-import { MoviesPageParams, MoviesState } from '../models';
+import { moviesFilterHelper } from '../helpers';
+import { MoviesPageParamsType, MoviesState } from '../types';
 
 @Injectable({
   providedIn: 'root'
@@ -39,17 +40,34 @@ export class MoviesActionsService {
       .subscribe(this.#updateStateAfterLoad.bind(this));
   }
 
-  setMovieListParams(params: MoviesPageParams): void {
-    const state: MoviesState = {
-      ...this.#stateService.state,
-      currentPage: params.page ? +params.page - 1 : 0,
-      movies: this.searchMovies(params.search),
-      searchValue: params.search
-    };
+  setMovieListParams(params: MoviesPageParamsType): void {
+    const state: MoviesState = params.resetState
+      ? {
+          ...this.#stateService.state,
+          currentPage: 0,
+          movies: this.#getMoviesByParams(params),
+          searchValue: params.search
+        }
+      : {
+          ...this.#stateService.state,
+          movies: [...this.#stateService.state.movies],
+          currentPage: params.page ? +params.page - 1 : 0
+        };
     this.#stateService.setState(state);
   }
 
-  searchMovies(value: string): MovieModel[] {
+  #getMoviesByParams(params: MoviesPageParamsType): MovieModel[] {
+    return this.#filterMovies(params.filters, this.#searchMovies(params.search));
+  }
+
+  #filterMovies(filters: string, movies: MovieModel[]): MovieModel[] {
+    if (filters) {
+      return movies.filter((movie: MovieModel) => moviesFilterHelper(movie, filters));
+    }
+    return [...movies];
+  }
+
+  #searchMovies(value: string): MovieModel[] {
     return value
       ? this.#sourceMovies.filter((item: MovieModel) => item?.name?.toLowerCase()?.includes(value.toLowerCase()))
       : [...this.#sourceMovies];
@@ -57,7 +75,7 @@ export class MoviesActionsService {
 
   #updateStateAfterLoad(): void {
     const { currentPage: page, searchValue: search } = this.#stateService.state;
-    this.setMovieListParams({ page: page.toString(), search });
+    this.setMovieListParams({ page: page.toString(), search, resetState: true });
     this.#updateStateByLoading(false);
   }
 

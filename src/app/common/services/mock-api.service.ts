@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
+import { MovieRaw } from '@appModels';
 
 import { Observable, of } from 'rxjs';
-
-import { MovieRaw } from '@appModels';
 
 import { RAW_MOVIES } from '../../../assets/mocks/rawMovies';
 

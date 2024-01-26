@@ -2,8 +2,6 @@ import { CommonModule, NgOptimizedImage } from '@angular/common';
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
-import { Observable } from 'rxjs';
-
 import { TranslateModule } from '@ngx-translate/core';
 
 import { RatingComponent } from '../../../movie-details/components';
@@ -21,8 +19,4 @@ import { MovieUpsertValueModel } from '../../models';
 export class MovieUpsertContentComponent {
   @Input({ required: true }) form: MovieUpsertForm;
   @Input({ required: true }) formValues: MovieUpsertValueModel;
-
-  // get formValues$(): Observable<MovieUpsertValueModel> {
-  //   return this.form.valueChanges;
-  // }
 }

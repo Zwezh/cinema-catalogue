@@ -16,7 +16,7 @@ describe('AppComponent', () => {
   });
 
   it(`should have as title 'cinema-catalogue'`, () => {
-    const fixture = TestBed.createComponent(AppComponent);
+    // const fixture = TestBed.createComponent(AppComponent);
     // const app = fixture.componentInstance;
     // expect(app.title).toEqual('cinema-catalogue');
   });

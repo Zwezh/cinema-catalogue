@@ -1,0 +1,33 @@
+<div class="actions">
+  <div class="actions__bunch">
+    <div role="search">
+      <input
+        [formControl]="searchControl"
+        class="form-control me-2"
+        type="search"
+        [placeholder]="'search' | translate"
+        [attr.aria-label]="'search' | translate" />
+    </div>
+    <button
+      type="button"
+      class="btn filters__btn"
+      (click)="active = !active; accordion.toggle('filters')"
+      [attr.aria-label]="'filters.title' | translate"
+      [title]="'filters.title' | translate">
+      <i class="bi" [ngClass]="{ 'bi-funnel-fill': active, 'bi-funnel': !active }"></i>
+      <span class="filters__label">{{ 'filters.title' | translate }}</span>
+    </button>
+  </div>
+  <div>
+    <a routerLink="add" class="btn btn-outline-primary">{{ 'addMovie' | translate }}</a>
+  </div>
+</div>
+<div ngbAccordion #accordion="ngbAccordion">
+  <div ngbAccordionItem="filters" class="filters__accordion">
+    <div ngbAccordionCollapse>
+      <div ngbAccordionBody>
+        <cc-filters-panel [filters]="filters$ | async" (changeFilters)="onChangeFilters($event)"></cc-filters-panel>
+      </div>
+    </div>
+  </div>
+</div>

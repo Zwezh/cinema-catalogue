@@ -1,0 +1,55 @@
+<div class="row" [formGroup]="form">
+  <div class="col-md-4 col-sm-6">
+    <label for="fromYear" class="form-label">{{ 'filters.fromYear' | translate }}</label>
+    <ng-select
+      id="fromYear"
+      [items]="fromYearList$ | async"
+      bindLabel="value"
+      bindValue="value"
+      formControlName="fromYear"
+      [searchable]="false"
+      (change)="onChangeFromYearField($event)"></ng-select>
+  </div>
+  <div class="col-md-4 col-sm-6">
+    <label for="toYear" class="form-label">{{ 'filters.toYear' | translate }}</label>
+    <ng-select
+      id="toYear"
+      [items]="toYearList$ | async"
+      bindLabel="value"
+      bindValue="value"
+      formControlName="toYear"
+      [searchable]="false"
+      (change)="onChangeToYearField($event)"></ng-select>
+  </div>
+  <div class="col-md-4 col-sm-6">
+    <label for="rating" class="form-label">{{ 'filters.rating' | translate }}</label>
+    <ng-select
+      [items]="ratingList"
+      bindLabel="value"
+      bindValue="value"
+      formControlName="rating"
+      [searchable]="false"></ng-select>
+  </div>
+  <div class="col-md-4 col-sm-6">
+    <label for="actors" class="form-label">{{ 'filters.actors' | translate }}</label>
+    <input type="text" class="form-control" id="actors" formControlName="actors" />
+  </div>
+  <div class="col-md-4 col-sm-6">
+    <label for="directors" class="form-label">{{ 'filters.directors' | translate }}</label>
+    <input type="text" class="form-control" id="directors" formControlName="directors" />
+  </div>
+  <div class="col-md-4 col-sm-6">
+    <label for="genres" class="form-label">{{ 'filters.genres' | translate }}</label>
+    <input type="text" class="form-control" id="genres" formControlName="genres" />
+  </div>
+</div>
+<div class="row">
+  <div class="col mt-2 d-flex justify-content-end">
+    <button class="btn btn-secondary me-3" (click)="onResetFilters()" [title]="'actions.reset' | translate">
+      {{ 'actions.reset' | translate }}
+    </button>
+    <button class="btn btn-primary" (click)="onApplyFilters()" [title]="'actions.apply' | translate">
+      {{ 'actions.apply' | translate }}
+    </button>
+  </div>
+</div>

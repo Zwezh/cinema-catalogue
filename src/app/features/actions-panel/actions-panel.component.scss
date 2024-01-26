@@ -1,0 +1,39 @@
+@import 'bootstrap/scss/functions';
+@import 'bootstrap/scss/variables';
+@import 'bootstrap/scss/mixins';
+
+.actions {
+  display: flex;
+  justify-content: space-between;
+
+  &__bunch {
+    display: flex;
+
+    @include media-breakpoint-down(md) {
+      flex-direction: column;
+    }
+  }
+
+  @include media-breakpoint-down(md) {
+    flex-direction: column;
+  }
+}
+
+.filters {
+  &__btn {
+    margin-left: 0.5rem;
+    @include media-breakpoint-down(md) {
+      margin: 0;
+    }
+  }
+
+  &__label {
+    display: none;
+    @include media-breakpoint-down(md) {
+      display: inline;
+    }
+  }
+  &__accordion {
+    border: none;
+  }
+}

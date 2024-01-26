@@ -7,19 +7,7 @@
   } as state">
   <div class="card shadow border-0" *ngIf="!state.loading">
     <div class="card-header">
-      <div class="d-flex justify-content-between">
-        <div role="search">
-          <input
-            [formControl]="searchControl"
-            class="form-control me-2"
-            type="search"
-            [placeholder]="'search' | translate"
-            [attr.aria-label]="'search' | translate" />
-        </div>
-        <div>
-          <a routerLink="add" class="btn btn-outline-primary">{{ 'addMovie' | translate }}</a>
-        </div>
-      </div>
+      <cc-actions-panel></cc-actions-panel>
     </div>
     <div class="row">
       <div class="col">

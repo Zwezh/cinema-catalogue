@@ -10,7 +10,18 @@
     "delete": "Delete",
     "back": "Back",
     "save": "Save",
-    "cancel": "Cancel"
+    "cancel": "Cancel",
+    "apply": "Apply",
+    "reset": "Reset"
+  },
+  "filters": {
+    "title": "Filters",
+    "fromYear": "From year",
+    "toYear": "To year",
+    "actors": "Actors",
+    "directors": "Directors",
+    "rating": "Minimal rating",
+    "genres": "Genres"
   },
   "search": "Search",
   "addMovie": "Add movie",

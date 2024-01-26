@@ -1,6 +1,5 @@
-import { MovieDto } from '@appDTOs';
-
 import { urlsConstant } from '@appConstants';
+import { MovieDto } from '@appDTOs';
 
 export class MovieModel {
   readonly actors: string[];

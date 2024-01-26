@@ -1,8 +1,8 @@
 import { NgForOf, NgIf } from '@angular/common';
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import { urlsConstant } from '@appConstants';
 import { MovieModel } from '@appModels';
 
-import { urlsConstant } from '@appConstants';
 import { TranslateModule } from '@ngx-translate/core';
 
 import { RatingComponent } from '../rating/rating.component';

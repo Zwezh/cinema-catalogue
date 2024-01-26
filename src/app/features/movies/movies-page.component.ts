@@ -1,21 +1,20 @@
 import { AsyncPipe, NgIf, SlicePipe } from '@angular/common';
-import { ChangeDetectionStrategy, Component, DestroyRef, inject, OnInit } from '@angular/core';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { FormControl, ReactiveFormsModule } from '@angular/forms';
-import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { ChangeDetectionStrategy, Component, inject, OnInit } from '@angular/core';
+import { Router, RouterLink } from '@angular/router';
 import { LoadSpinnerComponent } from '@appComponents';
 import { MovieModel } from '@appModels';
 
-import { debounceTime, Observable, takeWhile } from 'rxjs';
+import { Observable } from 'rxjs';
 
 import { NgbPagination } from '@ng-bootstrap/ng-bootstrap';
 import { TranslateModule } from '@ngx-translate/core';
 
 import { MoviesListComponent } from './components';
-import { MoviesPageParams } from './models';
+import { MoviesPageParamsType } from './types';
 
 import { MoviesActionsService } from './services/movies-actions.service';
 import { MoviesStateService } from './services/movies-state.service';
+import { ActionsPanelComponent } from '../actions-panel';
 
 @Component({
   templateUrl: './movies-page.component.html',
@@ -27,10 +26,10 @@ import { MoviesStateService } from './services/movies-state.service';
     NgIf,
     NgbPagination,
     SlicePipe,
-    ReactiveFormsModule,
-    RouterLink,
     TranslateModule,
-    LoadSpinnerComponent
+    RouterLink,
+    LoadSpinnerComponent,
+    ActionsPanelComponent
   ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
@@ -39,13 +38,10 @@ export class MoviesPageComponent implements OnInit {
   currentPage$: Observable<number>;
   pageSize$: Observable<number>;
   loading$: Observable<boolean>;
-  searchControl = new FormControl();
 
-  #activatedRoute = inject(ActivatedRoute);
   #router = inject(Router);
   #actionService = inject(MoviesActionsService);
   #stateService = inject(MoviesStateService);
-  #destroyRef = inject(DestroyRef);
 
   constructor() {
     this.movies$ = this.#stateService.select(({ movies }) => movies);
@@ -56,22 +52,13 @@ export class MoviesPageComponent implements OnInit {
 
   ngOnInit(): void {
     this.#actionService.loadAllMovies();
-    this.searchControl.valueChanges
-      .pipe(debounceTime(300), takeUntilDestroyed(this.#destroyRef))
-      .subscribe((value: string) => this.#navigateChange({ search: value || undefined, page: '1' }));
-    this.#activatedRoute.queryParams
-      .pipe(takeUntilDestroyed(this.#destroyRef))
-      .subscribe((params: MoviesPageParams) => {
-        this.#actionService.setMovieListParams(params);
-        this.searchControl.patchValue(params.search, { emitEvent: false });
-      });
   }
 
   onChangePageChange(page: number): void {
-    this.#navigateChange({ page: page.toString() });
+    this.#navigateChange({ page: page.toString(), resetState: undefined });
   }
 
-  #navigateChange(queryParams: MoviesPageParams): void {
+  #navigateChange(queryParams: MoviesPageParamsType): void {
     this.#router.navigate([], { queryParams, queryParamsHandling: 'merge' });
   }
 }
