@@ -33,10 +33,16 @@ export class MovieAddPageComponent extends MovieUpsertPageBaseComponent implemen
       .addMovie$(this.form.getMovieValue())
       .pipe(take(1))
       .subscribe(() => {
-        // TODO Add custom button with add next movie
         this.form.reset();
         this.#router.navigate(['..'], { relativeTo: this.#activatedRoute });
       });
+  }
+
+  onAddMovieAndContinue(): void {
+    this.actionsService
+      .addMovie$(this.form.getMovieValue())
+      .pipe(take(1))
+      .subscribe(() => this.form.reset());
   }
   #loadSettingData(): void {
     this.settingsStateService

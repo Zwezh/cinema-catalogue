@@ -1,3 +1,4 @@
+import { SortingType } from '@app/features/actions-panel';
 import { MovieModel } from '@appModels';
 
 export type MoviesState = {
@@ -5,5 +6,6 @@ export type MoviesState = {
   readonly loading: boolean;
   readonly movies: MovieModel[];
   readonly pageSize: number;
+  readonly sorting: SortingType;
   readonly searchValue?: string;
 };

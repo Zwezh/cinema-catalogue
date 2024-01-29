@@ -4,7 +4,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { MovieDto, SettingsDto } from '@appDTOs';
 
-import { filter, forkJoin, take, takeWhile } from 'rxjs';
+import { filter, forkJoin, take } from 'rxjs';
 
 import { TranslateModule } from '@ngx-translate/core';
 

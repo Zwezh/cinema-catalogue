@@ -1,4 +1,6 @@
 import { inject, Injectable } from '@angular/core';
+import { SortingType } from '@app/features/actions-panel';
+import { SortingDirectionConstant, SortingKeyConstant } from '@app/features/actions-panel/constants';
 import { storageKeysConstant } from '@appConstants';
 import { MovieDto } from '@appDTOs';
 import { MovieModel } from '@appModels';
@@ -8,7 +10,7 @@ import { map, take, tap } from 'rxjs';
 
 import { MoviesStateService } from './movies-state.service';
 
-import { moviesFilterHelper } from '../helpers';
+import { moviesFilterHelper, moviesSortingHelper } from '../helpers';
 import { MoviesPageParamsType, MoviesState } from '../types';
 
 @Injectable({
@@ -56,6 +58,16 @@ export class MoviesActionsService {
     this.#stateService.setState(state);
   }
 
+  changeSortingKey(key: SortingKeyConstant): void {
+    const direction = SortingDirectionConstant.desc;
+    this.#changeSorting({ direction, key });
+  }
+
+  changeSortingDirection(): void {
+    const direction = this.#getSortDirection();
+    this.#changeSorting({ direction, key: this.#stateService.state.sorting.key });
+  }
+
   #getMoviesByParams(params: MoviesPageParamsType): MovieModel[] {
     return this.#filterMovies(params.filters, this.#searchMovies(params.search));
   }
@@ -85,5 +97,19 @@ export class MoviesActionsService {
 
   #updateStateByLoading(loading: boolean): void {
     this.#stateService.setState({ ...this.#stateService.state, loading });
+  }
+
+  #getSortDirection(): SortingDirectionConstant {
+    return this.#stateService.state.sorting.direction === SortingDirectionConstant.desc
+      ? SortingDirectionConstant.asc
+      : SortingDirectionConstant.desc;
+  }
+
+  #changeSorting(sorting: SortingType): void {
+    this.#stateService.setState({
+      ...this.#stateService.state,
+      movies: moviesSortingHelper(this.#stateService.state.movies, sorting),
+      sorting
+    });
   }
 }

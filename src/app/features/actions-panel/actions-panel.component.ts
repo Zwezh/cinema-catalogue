@@ -1,24 +1,29 @@
-import { AsyncPipe, NgClass, NgIf } from '@angular/common';
+import { AsyncPipe, NgClass, NgFor, NgIf } from '@angular/common';
 import {
   AfterViewInit,
   ChangeDetectionStrategy,
   Component,
   DestroyRef,
   OnInit,
+  Signal,
   ViewChild,
   inject
 } from '@angular/core';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { FormControl, ReactiveFormsModule } from '@angular/forms';
+import { takeUntilDestroyed, toSignal } from '@angular/core/rxjs-interop';
+import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 
 import { BehaviorSubject, Observable, debounceTime } from 'rxjs';
 
 import { NgbAccordionDirective, NgbAccordionModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgSelectModule } from '@ng-select/ng-select';
 import { TranslateModule } from '@ngx-translate/core';
 
+import { SortingDirectionConstant, SortingKeyConstant } from './constants';
+import { SortingType } from './types';
+
 import { FiltersPanelComponent, FiltersValueType } from '../filters-panel';
-import { MoviesActionsService, MoviesPageParamsType } from '../movies';
+import { MoviesActionsService, MoviesPageParamsType, MoviesStateService } from '../movies';
 
 @Component({
   selector: 'cc-actions-panel',
@@ -31,7 +36,10 @@ import { MoviesActionsService, MoviesPageParamsType } from '../movies';
     NgbAccordionModule,
     NgClass,
     NgIf,
-    AsyncPipe
+    AsyncPipe,
+    NgSelectModule,
+    NgFor,
+    FormsModule
   ],
   templateUrl: './actions-panel.component.html',
   styleUrls: ['./actions-panel.component.scss'],
@@ -43,14 +51,20 @@ export class ActionsPanelComponent implements OnInit, AfterViewInit {
   active = false;
   filters$: Observable<Partial<FiltersValueType>>;
 
+  sortingList = Object.values(SortingKeyConstant).map((key) => ({ value: key }));
+  sortingDirections = SortingDirectionConstant;
+  selectedSortItem: Signal<SortingType>;
+
   #activatedRoute = inject(ActivatedRoute);
   #router = inject(Router);
   #actionService = inject(MoviesActionsService);
+  #stateService = inject(MoviesStateService);
   #destroyRef = inject(DestroyRef);
   #filters$ = new BehaviorSubject<Partial<FiltersValueType>>(undefined);
 
   constructor() {
     this.filters$ = this.#filters$.asObservable();
+    this.selectedSortItem = toSignal(this.#stateService.select(({ sorting }) => sorting));
   }
 
   ngOnInit(): void {
@@ -78,6 +92,14 @@ export class ActionsPanelComponent implements OnInit, AfterViewInit {
   onChangeFilters(value: Partial<FiltersValueType>): void {
     const filters = value ? encodeURIComponent(JSON.stringify(value)) : undefined;
     this.#navigateChange({ filters, resetState: true, page: '1' });
+  }
+
+  onChangeSortingKey(value: SortingKeyConstant): void {
+    this.#actionService.changeSortingKey(value);
+  }
+
+  onChangeSortingDirection(): void {
+    this.#actionService.changeSortingDirection();
   }
 
   #navigateChange(queryParams: MoviesPageParamsType): void {

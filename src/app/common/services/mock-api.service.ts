@@ -17,15 +17,15 @@ export class MockApiService {
     return of(deleteId !== -1);
   }
 
-  getAll(): Observable<any> {
+  getAll(): Observable<unknown> {
     return of(this.#movies);
   }
 
-  post(): Observable<any> {
+  post(): Observable<unknown> {
     return of(null);
   }
 
-  put(): Observable<any> {
+  put(): Observable<unknown> {
     return of(null);
   }
 }

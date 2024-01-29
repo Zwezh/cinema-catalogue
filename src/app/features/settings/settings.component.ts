@@ -1,5 +1,5 @@
 import { AsyncPipe, KeyValuePipe, NgForOf, NgIf } from '@angular/common';
-import { ChangeDetectionStrategy, Component, inject, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { FormArray, FormControl, ReactiveFormsModule } from '@angular/forms';
 import { LoadSpinnerComponent } from '@appComponents';
 import { LanguagesConstant } from '@appConstants';

@@ -5,6 +5,12 @@
       <button class="btn btn-outline-primary ms-3" [disabled]="form.invalid || form.pristine" (click)="onAddMovie()">
         {{ 'actions.save' | translate }}
       </button>
+      <button
+        class="btn btn-outline-success ms-3"
+        [disabled]="form.invalid || form.pristine"
+        (click)="onAddMovieAndContinue()">
+        {{ 'actions.saveAndAddNew' | translate }}
+      </button>
       <a routerLink=".." class="btn btn-outline-secondary ms-3">{{ 'actions.cancel' | translate }}</a>
     </div>
   </div>

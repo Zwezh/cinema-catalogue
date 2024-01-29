@@ -1,4 +1,4 @@
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { KinopoiskDto, KinopoiskListItemDto, KinopoiskPersonListDto, MovieDto, SettingsDto } from '@appDTOs';
 
 import { Observable } from 'rxjs';
@@ -12,26 +12,26 @@ export class MovieUpsertForm extends FormGroup<MovieUpsertFormModel> {
 
   constructor() {
     super({
-      actors: new FormControl<string>(null, { nonNullable: true }),
-      addedDate: new FormControl<string>(null, { nonNullable: true }),
+      actors: new FormControl<string>(null, { validators: Validators.required, nonNullable: true }),
+      addedDate: new FormControl<string>(null, { validators: Validators.required, nonNullable: true }),
       ageRating: new FormControl<number>(null, { nonNullable: true }),
-      countries: new FormControl<string>(null, { nonNullable: true }),
-      description: new FormControl<string>(null, { nonNullable: true }),
-      director: new FormControl<string>(null, { nonNullable: true }),
-      enName: new FormControl<string>(null, { nonNullable: true }),
-      extension: new FormControl<string>(null, { nonNullable: true }),
-      genres: new FormControl<string>(null, { nonNullable: true }),
+      countries: new FormControl<string>(null, { validators: Validators.required, nonNullable: true }),
+      description: new FormControl<string>(null, { validators: Validators.required, nonNullable: true }),
+      director: new FormControl<string>(null, { validators: Validators.required, nonNullable: true }),
+      enName: new FormControl<string>(null, { validators: Validators.required, nonNullable: true }),
+      extension: new FormControl<string>(null, { validators: Validators.required, nonNullable: true }),
+      genres: new FormControl<string>(null, { validators: Validators.required, nonNullable: true }),
       id: new FormControl<string>(null, { nonNullable: true }),
       isSeries: new FormControl<boolean>(null, { nonNullable: true }),
-      kpId: new FormControl<number>(null, { nonNullable: true }),
+      kpId: new FormControl<number>(null, { validators: Validators.required, nonNullable: true }),
       movieLength: new FormControl<number>(null, { nonNullable: true }),
-      name: new FormControl<string>(null, { nonNullable: true }),
-      posterUrl: new FormControl<string>(null, { nonNullable: true }),
-      quality: new FormControl<string>(null, { nonNullable: true }),
-      rating: new FormControl<number>(null, { nonNullable: true }),
+      name: new FormControl<string>(null, { validators: Validators.required, nonNullable: true }),
+      posterUrl: new FormControl<string>(null, { validators: Validators.required, nonNullable: true }),
+      quality: new FormControl<string>(null, { validators: Validators.required, nonNullable: true }),
+      rating: new FormControl<number>(null, { validators: Validators.required, nonNullable: true }),
       sequelsAndPrequels: new FormControl<string>(null, { nonNullable: true }),
       similarMovies: new FormControl<string>(null, { nonNullable: true }),
-      year: new FormControl<string>(null, { nonNullable: true })
+      year: new FormControl<string>(null, { validators: Validators.required, nonNullable: true })
     });
   }
 

@@ -2,7 +2,7 @@ import { Component, DestroyRef, inject, OnDestroy, OnInit } from '@angular/core'
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { KinopoiskDto } from '@appDTOs';
 
-import { filter, takeWhile } from 'rxjs';
+import { filter } from 'rxjs';
 
 import { SettingsStateService } from '../../settings';
 import { MovieUpsertForm } from '../forms';

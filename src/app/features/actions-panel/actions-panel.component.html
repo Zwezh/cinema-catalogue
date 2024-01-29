@@ -17,6 +17,23 @@
       <i class="bi" [ngClass]="{ 'bi-funnel-fill': active, 'bi-funnel': !active }"></i>
       <span class="filters__label">{{ 'filters.title' | translate }}</span>
     </button>
+    <ng-select
+      [searchable]="false"
+      [ngModel]="selectedSortItem().key"
+      class="sort-dropdown ms-3"
+      id="sorting"
+      bindLabel="value"
+      bindValue="value"
+      [clearable]="false"
+      (change)="onChangeSortingKey($event)">
+      <ng-option *ngFor="let item of sortingList" [value]="item.value">
+        {{ 'movie.' + item.value | translate }}
+      </ng-option>
+    </ng-select>
+    <button class="btn" type="button" (click)="onChangeSortingDirection()">
+      <i *ngIf="selectedSortItem().direction === sortingDirections.desc" class="bi bi-sort-down"></i>
+      <i *ngIf="selectedSortItem().direction === sortingDirections.asc" class="bi bi-sort-up"></i>
+    </button>
   </div>
   <div>
     <a routerLink="add" class="btn btn-outline-primary">{{ 'addMovie' | translate }}</a>
