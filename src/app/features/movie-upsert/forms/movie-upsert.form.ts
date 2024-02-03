@@ -48,7 +48,7 @@ export class MovieUpsertForm extends FormGroup<MovieUpsertFormModel> {
       description: value?.description,
       director: value?.director?.join(', '),
       enName: value?.enName,
-      extension: value?.extension || extension,
+      extension: value?.extension?.replace('.', '')?.toUpperCase() || extension,
       genres: value?.genres?.join(', '),
       id: value?.id,
       isSeries: value?.isSeries,

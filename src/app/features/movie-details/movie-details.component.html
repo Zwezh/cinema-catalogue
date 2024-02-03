@@ -2,6 +2,9 @@
   <div class="card shadow border-0 fallback">
     <div class="card-header border-0 text-end z-1">
       <a routerLink="edit" class="btn btn-outline-primary">{{ 'actions.edit' | translate }}</a>
+      <button type="button" class="btn btn-outline-danger ms-3" (click)="onDeleteMovie()">
+        {{ 'actions.delete' | translate }}
+      </button>
       <a routerLink=".." class="btn btn-outline-secondary ms-3">{{ 'actions.back' | translate }}</a>
     </div>
     <div class="card-body z-1">
