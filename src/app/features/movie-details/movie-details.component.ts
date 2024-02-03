@@ -1,11 +1,11 @@
 import { AsyncPipe, NgIf, NgStyle } from '@angular/common';
 import { ChangeDetectionStrategy, Component, OnInit, inject, OnDestroy, Input } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { LoadSpinnerComponent } from '@appComponents';
 import { urlsConstant } from '@appConstants';
 import { MovieModel } from '@appModels';
 
-import { Observable } from 'rxjs';
+import { Observable, take } from 'rxjs';
 
 import { TranslateModule } from '@ngx-translate/core';
 
@@ -36,6 +36,7 @@ export class MovieDetailsComponent implements OnInit, OnDestroy {
 
   #actionService = inject(MovieDetailsActionService);
   #stateService = inject(MovieDetailsStateService);
+  #router = inject(Router);
 
   constructor() {
     this.movie$ = this.#stateService.select(({ movie }) => movie);
@@ -52,5 +53,14 @@ export class MovieDetailsComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.#actionService.resetState();
+  }
+
+  onDeleteMovie(): void {
+    this.#actionService
+      .deleteMovie$(this.id)
+      .pipe(take(1))
+      .subscribe(() => {
+        this.#router.navigate(['..']);
+      });
   }
 }

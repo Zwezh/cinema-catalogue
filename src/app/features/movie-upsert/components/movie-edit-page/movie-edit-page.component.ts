@@ -4,7 +4,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { MovieDto, SettingsDto } from '@appDTOs';
 
-import { filter, forkJoin, take } from 'rxjs';
+import { combineLatest, filter, take } from 'rxjs';
 
 import { TranslateModule } from '@ngx-translate/core';
 
@@ -38,9 +38,11 @@ export class MovieEditPageComponent extends MovieUpsertPageBaseComponent {
     super.loadInitialData();
     const dataFromDb = this.stateService.select(({ movieDTO }) => movieDTO);
     const settings = this.settingsStateService.select(({ settings }) => settings);
-
-    forkJoin([dataFromDb, settings])
-      .pipe(takeUntilDestroyed(this.destroyRef), filter(Boolean))
+    combineLatest([dataFromDb, settings])
+      .pipe(
+        takeUntilDestroyed(this.destroyRef),
+        filter(([movie, settings]) => !!(movie && settings))
+      )
       .subscribe(([movie, settings]: [MovieDto, SettingsDto]) => this.form.setValuesFromDB(movie, settings));
     this.actionsService.loadDataDB(this.id);
   }

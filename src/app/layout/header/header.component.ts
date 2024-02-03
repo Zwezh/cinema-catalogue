@@ -4,12 +4,14 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
 
 import { TranslateModule } from '@ngx-translate/core';
 
+import { LogoComponent } from '../logo';
+
 @Component({
   selector: 'cc-header',
   standalone: true,
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss'],
-  imports: [RouterLink, RouterLinkActive, TranslateModule, NgOptimizedImage],
+  imports: [RouterLink, RouterLinkActive, TranslateModule, NgOptimizedImage, LogoComponent],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class HeaderComponent {}

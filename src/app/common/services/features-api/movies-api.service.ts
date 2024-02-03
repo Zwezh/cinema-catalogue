@@ -27,4 +27,7 @@ export class MoviesApiService extends FireApiService {
   addMovie$(dto: MovieDto): Observable<unknown> {
     return this.add$<MovieDto>(dto);
   }
+  deleteMovie$(id: string): Observable<unknown> {
+    return this.delete$({ id });
+  }
 }

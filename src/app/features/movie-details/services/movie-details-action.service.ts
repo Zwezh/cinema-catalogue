@@ -1,9 +1,10 @@
 import { inject, Injectable } from '@angular/core';
+import { storageKeysConstant } from '@appConstants';
 import { MovieDto } from '@appDTOs';
 import { MovieModel } from '@appModels';
 import { MoviesApiService } from '@appServices';
 
-import { take } from 'rxjs';
+import { Observable, take, tap } from 'rxjs';
 
 import { MovieDetailsStateService } from './movie-details-state.service';
 
@@ -23,6 +24,10 @@ export class MovieDetailsActionService {
 
   resetState(): void {
     this.#stateService.setState(MOVIE_DETAILS_INITIAL_STATE);
+  }
+
+  deleteMovie$(id: string): Observable<unknown> {
+    return this.#apiService.deleteMovie$(id).pipe(tap(() => sessionStorage.removeItem(storageKeysConstant.MOVIES)));
   }
 
   #updateStateAfterLoadMovie(movie: MovieDto): void {

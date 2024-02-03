@@ -1,7 +1,7 @@
 import { inject, Injectable } from '@angular/core';
 import { AngularFirestore, DocumentReference } from '@angular/fire/compat/firestore';
 import { QueryFn } from '@angular/fire/compat/firestore/interfaces';
-import { doc, docData, Firestore, updateDoc } from '@angular/fire/firestore';
+import { deleteDoc, doc, docData, Firestore, updateDoc } from '@angular/fire/firestore';
 
 import { map, Observable } from 'rxjs';
 
@@ -14,8 +14,8 @@ export abstract class FireApiService {
 
   readonly #collectionName: string;
 
-  constructor(collectinName: string) {
-    this.#collectionName = collectinName;
+  constructor(collectionName: string) {
+    this.#collectionName = collectionName;
   }
 
   protected getAll$<DataContract>(queryFn?: QueryFn): Observable<DataContract> {
@@ -52,7 +52,7 @@ export abstract class FireApiService {
   }
 
   protected update$<T extends { id: string }>(dataContract: T): Observable<void> {
-    const docRef = doc(this.firestore, `${this.#collectionName}/${dataContract.id}`);
+    const docRef = this.#getDocumentRef(dataContract.id);
     return new Observable((observer) => {
       updateDoc(docRef, { ...dataContract })
         .then((result) => {
@@ -67,13 +67,23 @@ export abstract class FireApiService {
         });
     });
   }
-  //
-  // delete(id: string) {
-  //   const docRef = doc(this.firestore, `${this.#collectionName}/${dataContract.id}`);
-  //   const pokemonDocumentReference = doc(this.firestore, `pokemon/${id}`);
-  //   return deleteDoc(pokemonDocumentReference);
-  // }
-  //
+  protected delete$<T extends { id: string }>(dataContract: T): Observable<void> {
+    const docRef = this.#getDocumentRef(dataContract.id);
+    return new Observable((observer) => {
+      deleteDoc(docRef)
+        .then((result) => {
+          observer.next(result);
+          observer.complete();
+        })
+        .catch((err) => {
+          observer.error(err);
+        })
+        .finally(() => {
+          observer.complete();
+        });
+    });
+  }
+
   #getDocumentRef(id: string) {
     return doc(this.firestore, `${this.#collectionName}/${id}`);
   }
