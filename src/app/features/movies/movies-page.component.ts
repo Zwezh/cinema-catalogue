@@ -1,4 +1,4 @@
-import { AsyncPipe, NgIf, SlicePipe } from '@angular/common';
+import { AsyncPipe, SlicePipe } from '@angular/common';
 import { ChangeDetectionStrategy, Component, inject, OnInit } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { LoadSpinnerComponent } from '@appComponents';
@@ -23,14 +23,13 @@ import { ActionsPanelComponent } from '../actions-panel';
   imports: [
     AsyncPipe,
     MoviesListComponent,
-    NgIf,
     NgbPagination,
     SlicePipe,
     TranslateModule,
     RouterLink,
     LoadSpinnerComponent,
     ActionsPanelComponent
-  ],
+],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class MoviesPageComponent implements OnInit {

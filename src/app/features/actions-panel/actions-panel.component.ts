@@ -1,4 +1,4 @@
-import { AsyncPipe, NgClass, NgFor, NgIf } from '@angular/common';
+import { AsyncPipe, NgClass } from '@angular/common';
 import {
   AfterViewInit,
   ChangeDetectionStrategy,
@@ -35,12 +35,10 @@ import { MoviesActionsService, MoviesPageParamsType, MoviesStateService } from '
     FiltersPanelComponent,
     NgbAccordionModule,
     NgClass,
-    NgIf,
     AsyncPipe,
     NgSelectModule,
-    NgFor,
     FormsModule
-  ],
+],
   templateUrl: './actions-panel.component.html',
   styleUrls: ['./actions-panel.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush

@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, DestroyRef, inject, OnInit } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { RouterModule } from '@angular/router';
+import { RouterOutlet } from '@angular/router';
 import { HeaderComponent } from '@appLayout';
 
 import { filter } from 'rxjs';
@@ -12,8 +12,7 @@ import { SettingsActionsService, SettingsStateService } from './features/setting
 @Component({
   selector: 'cc-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss'],
-  imports: [RouterModule, HeaderComponent],
+  imports: [RouterOutlet, HeaderComponent],
   standalone: true,
   changeDetection: ChangeDetectionStrategy.OnPush
 })

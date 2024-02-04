@@ -1,34 +1,38 @@
-<ng-container
-  *ngIf="{
+@if (
+  {
     loading: loading$ | async,
     pageSize: pageSize$ | async,
     currentPage: currentPage$ | async,
     movies: movies$ | async
-  } as state">
-  <div class="card shadow border-0" *ngIf="!state.loading">
-    <div class="card-header">
-      <cc-actions-panel></cc-actions-panel>
-    </div>
-    <div class="row">
-      <div class="col">
-        <cc-movies-list
-          [movies]="
-            state.movies | slice : state.currentPage * state.pageSize : (state.currentPage + 1) * state.pageSize
-          "></cc-movies-list>
+  };
+  as state
+) {
+  @if (!state.loading) {
+    <div class="card shadow border-0">
+      <div class="card-header">
+        <cc-actions-panel></cc-actions-panel>
+      </div>
+      <div class="row">
+        <div class="col">
+          <cc-movies-list
+            [movies]="
+              state.movies | slice: state.currentPage * state.pageSize : (state.currentPage + 1) * state.pageSize
+            "></cc-movies-list>
+        </div>
+      </div>
+      <div class="card-footer border-0">
+        <ngb-pagination
+          [rotate]="true"
+          [ellipses]="true"
+          [maxSize]="5"
+          [page]="state.currentPage + 1"
+          [pageSize]="state.pageSize"
+          [collectionSize]="state.movies.length"
+          (pageChange)="onChangePageChange($event)">
+        </ngb-pagination>
       </div>
     </div>
-
-    <div class="card-footer border-0">
-      <ngb-pagination
-        [rotate]="true"
-        [ellipses]="true"
-        [maxSize]="5"
-        [page]="state.currentPage + 1"
-        [pageSize]="state.pageSize"
-        [collectionSize]="state.movies.length"
-        (pageChange)="onChangePageChange($event)">
-      </ngb-pagination>
-    </div>
-  </div>
-  <cc-load-spinner [loading]="state.loading" />
-</ng-container>
+  } @else {
+    <cc-load-spinner />
+  }
+}

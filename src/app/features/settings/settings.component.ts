@@ -1,4 +1,4 @@
-import { AsyncPipe, KeyValuePipe, NgForOf, NgIf } from '@angular/common';
+import { AsyncPipe, KeyValuePipe } from '@angular/common';
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { FormArray, FormControl, ReactiveFormsModule } from '@angular/forms';
 import { LoadSpinnerComponent } from '@appComponents';
@@ -20,11 +20,9 @@ import { SettingsActionsService, SettingsStateService } from './services';
     AsyncPipe,
     LoadSpinnerComponent,
     ReactiveFormsModule,
-    NgIf,
-    NgForOf,
     KeyValuePipe,
     NgbTooltipModule
-  ],
+],
   templateUrl: './settings.component.html',
   styleUrls: ['./settings.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush

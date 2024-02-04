@@ -1,4 +1,3 @@
-import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 
 import { NgbRating, NgbTooltip } from '@ng-bootstrap/ng-bootstrap';
@@ -7,7 +6,7 @@ import { TranslateModule } from '@ngx-translate/core';
 @Component({
   selector: 'cc-rating',
   standalone: true,
-  imports: [CommonModule, NgbRating, NgbTooltip, TranslateModule],
+  imports: [NgbRating, NgbTooltip, TranslateModule],
   templateUrl: './rating.component.html',
   styleUrls: ['./rating.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush

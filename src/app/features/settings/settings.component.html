@@ -1,96 +1,102 @@
-<div class="container" *ngIf="form$ | async as form">
-  <div class="card" [formGroup]="form">
-    <div class="card-header">
-      <h1 class="card-title">{{ 'settings.header' | translate }}</h1>
-      <input type="hidden" name="id" formControlName="id" />
-    </div>
-    <div class="card-body">
-      <div class="mb-3 row">
-        <label class="col-md-3 col-form-label">
-          {{ 'settings.language' | translate }}
-          <i class="bi bi-info-circle" placement="bottom" [ngbTooltip]="'settings.languageHint' | translate"></i>
-        </label>
-        <div class="col-md-9">
-          <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
-            <ng-container *ngFor="let keyValue of languages | keyvalue">
-              <input
-                type="radio"
-                class="btn-check"
-                name="language"
-                [id]="keyValue.key"
-                autocomplete="off"
-                formControlName="language"
-                [value]="keyValue.value" />
-              <label class="btn btn-outline-primary" [for]="keyValue.key">{{ keyValue.key }}</label>
-            </ng-container>
+@if (form$ | async; as form) {
+  <div class="container">
+    <div class="card" [formGroup]="form">
+      <div class="card-header">
+        <h1 class="card-title">{{ 'settings.header' | translate }}</h1>
+        <input type="hidden" name="id" formControlName="id" />
+      </div>
+      <div class="card-body">
+        <div class="mb-3 row">
+          <label class="col-md-3 col-form-label">
+            {{ 'settings.language' | translate }}
+            <i class="bi bi-info-circle" placement="bottom" [ngbTooltip]="'settings.languageHint' | translate"></i>
+          </label>
+          <div class="col-md-9">
+            <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
+              @for (keyValue of languages | keyvalue; track keyValue) {
+                <input
+                  type="radio"
+                  class="btn-check"
+                  name="language"
+                  [id]="keyValue.key"
+                  autocomplete="off"
+                  formControlName="language"
+                  [value]="keyValue.value" />
+                <label class="btn btn-outline-primary" [for]="keyValue.key">{{ keyValue.key }}</label>
+              }
+            </div>
           </div>
         </div>
-      </div>
-      <div class="mb-3 row">
-        <label for="defaultQuality" class="col-md-3 col-form-label">
-          {{ 'settings.defaultQuality' | translate }}
-          <i class="bi bi-info-circle" placement="bottom" [ngbTooltip]="'settings.qualityHint' | translate"></i>
-        </label>
-        <div class="col-md-9">
-          <input
-            type="text"
-            id="defaultQuality"
-            class="form-control"
-            formControlName="quality"
-            [attr.aria-describedby]="'settings.defaultQuality' | translate" />
+        <div class="mb-3 row">
+          <label for="defaultQuality" class="col-md-3 col-form-label">
+            {{ 'settings.defaultQuality' | translate }}
+            <i class="bi bi-info-circle" placement="bottom" [ngbTooltip]="'settings.qualityHint' | translate"></i>
+          </label>
+          <div class="col-md-9">
+            <input
+              type="text"
+              id="defaultQuality"
+              class="form-control"
+              formControlName="quality"
+              [attr.aria-describedby]="'settings.defaultQuality' | translate" />
+          </div>
         </div>
-      </div>
-      <div class="mb-3 row">
-        <label for="defaultExtension" class="col-md-3 col-form-label"
-          >{{ 'settings.defaultExtension' | translate }}
-          <i class="bi bi-info-circle" placement="bottom" [ngbTooltip]="'settings.extensionHint' | translate"></i>
-        </label>
-        <div class="col-md-9">
-          <input
-            type="text"
-            id="defaultExtension"
-            class="form-control"
-            formControlName="extension"
-            [attr.aria-describedby]="'settings.defaultExtension' | translate" />
+        <div class="mb-3 row">
+          <label for="defaultExtension" class="col-md-3 col-form-label"
+            >{{ 'settings.defaultExtension' | translate }}
+            <i class="bi bi-info-circle" placement="bottom" [ngbTooltip]="'settings.extensionHint' | translate"></i>
+          </label>
+          <div class="col-md-9">
+            <input
+              type="text"
+              id="defaultExtension"
+              class="form-control"
+              formControlName="extension"
+              [attr.aria-describedby]="'settings.defaultExtension' | translate" />
+          </div>
         </div>
-      </div>
-      <div class="mb-3 row">
-        <label class="col-md-3 col-form-label">{{ 'settings.genresForFilters' | translate }}</label>
-        <div class="col-md-9">
-          <ng-container formArrayName="genresForFilters">
+        <div class="mb-3 row">
+          <label class="col-md-3 col-form-label">{{ 'settings.genresForFilters' | translate }}</label>
+          <div class="col-md-9">
+            <ng-container formArrayName="genresForFilters">
+              <div class="row">
+                @for (control of genres.controls; track control; let i = $index) {
+                  <div class="col-md-4 mb-3">
+                    <div class="input-group">
+                      <input
+                        [formControlName]="i"
+                        type="text"
+                        [id]="'genre' + i"
+                        class="form-control"
+                        [attr.aria-describedby]="'settings.genresForFilters' | translate" />
+                      <button class="btn btn-danger" type="button" (click)="onRemoveGenreField(i)">
+                        <i class="bi bi-x"></i>
+                      </button>
+                    </div>
+                  </div>
+                }
+              </div>
+            </ng-container>
             <div class="row">
-              <div class="col-md-4 mb-3" *ngFor="let control of genres.controls; index as i">
-                <div class="input-group">
-                  <input
-                    [formControlName]="i"
-                    type="text"
-                    [id]="'genre' + i"
-                    class="form-control"
-                    [attr.aria-describedby]="'settings.genresForFilters' | translate" />
-                  <button class="btn btn-danger" type="button" (click)="onRemoveGenreField(i)">
-                    <i class="bi bi-x"></i>
-                  </button>
-                </div>
+              <div class="col">
+                <button class="btn btn-outline-primary" (click)="onAddGenre()">{{ 'actions.add' | translate }}</button>
+                <button class="btn btn-outline-secondary ms-3" (click)="onFillFromMovieList()">
+                  {{ 'settings.fillGenres' | translate }}
+                </button>
               </div>
             </div>
-          </ng-container>
-          <div class="row">
-            <div class="col">
-              <button class="btn btn-outline-primary" (click)="onAddGenre()">{{ 'actions.add' | translate }}</button>
-              <button class="btn btn-outline-secondary ms-3" (click)="onFillFromMovieList()">
-                {{ 'settings.fillGenres' | translate }}
-              </button>
-            </div>
           </div>
         </div>
       </div>
-    </div>
-    <div class="card-footer text-center">
-      <button class="btn btn-secondary m-2">{{ 'actions.back' | translate }}</button>
-      <button class="btn btn-primary m-2" [disabled]="form.invalid || form.pristine" (click)="onUpdateSettings()">
-        {{ 'actions.save' | translate }}
-      </button>
+      <div class="card-footer text-center">
+        <button class="btn btn-secondary m-2">{{ 'actions.back' | translate }}</button>
+        <button class="btn btn-primary m-2" [disabled]="form.invalid || form.pristine" (click)="onUpdateSettings()">
+          {{ 'actions.save' | translate }}
+        </button>
+      </div>
     </div>
   </div>
-</div>
-<cc-load-spinner [loading]="loading$ | async" />
+}
+@if (loading$ | async) {
+  <cc-load-spinner />
+}

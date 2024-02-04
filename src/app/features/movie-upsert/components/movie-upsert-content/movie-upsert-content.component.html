@@ -5,9 +5,9 @@
       <label for="poster" class="form-label">{{ 'movie.poster' | translate }}</label>
       <input type="text" class="form-control" id="poster" formControlName="posterUrl" />
     </div>
-    <ng-container *ngIf="formValues?.posterUrl">
+    @if (formValues?.posterUrl) {
       <img class="poster" [alt]="'movie.poster' | translate" [src]="formValues.posterUrl" />
-    </ng-container>
+    }
   </div>
   <div class="col-9">
     <div class="row mb-2">

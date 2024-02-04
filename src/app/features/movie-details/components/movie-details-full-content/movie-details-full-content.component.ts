@@ -1,4 +1,4 @@
-import { NgForOf, NgIf } from '@angular/common';
+
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { urlsConstant } from '@appConstants';
 import { MovieModel } from '@appModels';
@@ -12,7 +12,7 @@ import { RatingComponent } from '../rating/rating.component';
   standalone: true,
   templateUrl: './movie-details-full-content.component.html',
   styleUrls: ['./movie-details-full-content.component.scss'],
-  imports: [RatingComponent, TranslateModule, NgForOf, NgIf],
+  imports: [RatingComponent, TranslateModule],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class MovieDetailsFullContentComponent {

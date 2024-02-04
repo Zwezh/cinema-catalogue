@@ -1,4 +1,4 @@
-import { AsyncPipe, NgIf, NgStyle } from '@angular/common';
+import { AsyncPipe, NgStyle } from '@angular/common';
 import { ChangeDetectionStrategy, Component, OnInit, inject, OnDestroy, Input } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { LoadSpinnerComponent } from '@appComponents';
@@ -16,7 +16,6 @@ import { MovieDetailsActionService, MovieDetailsStateService } from './services'
   selector: 'cc-movie-details',
   standalone: true,
   imports: [
-    NgIf,
     RouterLink,
     LoadSpinnerComponent,
     AsyncPipe,
@@ -24,7 +23,7 @@ import { MovieDetailsActionService, MovieDetailsStateService } from './services'
     MovieDetailsFullContentComponent,
     TranslateModule,
     NgStyle
-  ],
+],
   templateUrl: './movie-details.component.html',
   styleUrls: ['./movie-details.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush

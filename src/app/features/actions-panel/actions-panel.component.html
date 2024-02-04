@@ -26,13 +26,19 @@
       bindValue="value"
       [clearable]="false"
       (change)="onChangeSortingKey($event)">
-      <ng-option *ngFor="let item of sortingList" [value]="item.value">
-        {{ 'movie.' + item.value | translate }}
-      </ng-option>
+      @for (item of sortingList; track item) {
+        <ng-option [value]="item.value">
+          {{ 'movie.' + item.value | translate }}
+        </ng-option>
+      }
     </ng-select>
     <button class="btn" type="button" (click)="onChangeSortingDirection()">
-      <i *ngIf="selectedSortItem().direction === sortingDirections.desc" class="bi bi-sort-down"></i>
-      <i *ngIf="selectedSortItem().direction === sortingDirections.asc" class="bi bi-sort-up"></i>
+      @if (selectedSortItem().direction === sortingDirections.desc) {
+        <i class="bi bi-sort-down"></i>
+      }
+      @if (selectedSortItem().direction === sortingDirections.asc) {
+        <i class="bi bi-sort-up"></i>
+      }
     </button>
   </div>
   <div>

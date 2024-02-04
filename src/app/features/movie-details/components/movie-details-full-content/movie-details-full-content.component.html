@@ -12,9 +12,9 @@
       <div class="col">
         <h3>
           {{ movie.name }}
-          <ng-container *ngIf="movie.isSeries">
+          @if (movie.isSeries) {
             <span class="badge text-bg-warning">{{ 'movie.series' | translate }}</span>
-          </ng-container>
+          }
         </h3>
         <h5 class="text-secondary">{{ movie.enName }}</h5>
       </div>
@@ -71,25 +71,25 @@
         <div>
           <div>{{ 'movie.actors' | translate }}</div>
           <ul class="list-unstyled text-secondary">
-            <ng-container *ngFor="let actor of movie.actors">
+            @for (actor of movie.actors; track actor) {
               <li class="mb-2">{{ actor }}</li>
-            </ng-container>
+            }
           </ul>
         </div>
       </div>
     </div>
     <div class="row">
       <div class="col">
-        <ng-container *ngIf="movie?.sequelsAndPrequels">
+        @if (movie?.sequelsAndPrequels) {
           <h5>{{ 'movie.sequelsAndPrequels' | translate }}</h5>
           <p class="text-secondary">{{ movie.sequelsAndPrequels }}</p>
-        </ng-container>
-        <ng-container *ngIf="movie?.similarMovies">
+        }
+        @if (movie?.similarMovies) {
           <h5>{{ 'movie.similarMovies' | translate }}</h5>
           <p class="text-secondary">
             {{ movie.similarMovies }}
           </p>
-        </ng-container>
+        }
       </div>
     </div>
   </div>
