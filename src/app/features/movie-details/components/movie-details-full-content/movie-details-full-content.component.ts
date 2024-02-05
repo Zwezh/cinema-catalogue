@@ -1,4 +1,3 @@
-
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { urlsConstant } from '@appConstants';
 import { MovieModel } from '@appModels';

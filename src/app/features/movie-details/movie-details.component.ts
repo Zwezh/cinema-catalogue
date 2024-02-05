@@ -23,7 +23,7 @@ import { MovieDetailsActionService, MovieDetailsStateService } from './services'
     MovieDetailsFullContentComponent,
     TranslateModule,
     NgStyle
-],
+  ],
   templateUrl: './movie-details.component.html',
   styleUrls: ['./movie-details.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush

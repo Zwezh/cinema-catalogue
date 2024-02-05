@@ -1,6 +1,5 @@
 import { inject, Injectable } from '@angular/core';
-import { AngularFirestore, DocumentReference } from '@angular/fire/compat/firestore';
-import { QueryFn } from '@angular/fire/compat/firestore/interfaces';
+import { AngularFirestore, DocumentReference, QueryFn } from '@angular/fire/compat/firestore';
 import { deleteDoc, doc, docData, Firestore, updateDoc } from '@angular/fire/firestore';
 
 import { map, Observable } from 'rxjs';
@@ -14,7 +13,7 @@ export abstract class FireApiService {
 
   readonly #collectionName: string;
 
-  constructor(collectionName: string) {
+  protected constructor(collectionName: string) {
     this.#collectionName = collectionName;
   }
 
@@ -28,7 +27,7 @@ export abstract class FireApiService {
       );
   }
 
-  protected getById$<DataContract>(id: string): Observable<DataContract> {
+  protected getById$<DataContract extends { id: string }>(id: string): Observable<DataContract> {
     return docData(this.#getDocumentRef(id), { idField: 'id' }) as Observable<DataContract>;
   }
 

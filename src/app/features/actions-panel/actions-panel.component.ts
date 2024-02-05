@@ -38,7 +38,7 @@ import { MoviesActionsService, MoviesPageParamsType, MoviesStateService } from '
     AsyncPipe,
     NgSelectModule,
     FormsModule
-],
+  ],
   templateUrl: './actions-panel.component.html',
   styleUrls: ['./actions-panel.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush

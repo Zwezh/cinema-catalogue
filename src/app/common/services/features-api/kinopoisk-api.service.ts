@@ -13,7 +13,7 @@ export class KinopoiskApiService {
   #http = inject(HttpClient);
   #kpToken: string;
 
-  #baseURL = 'https://api.kinopoisk.dev/v1.3/';
+  #baseURL = 'https://api.kinopoisk.dev/v1.4/';
 
   constructor(@Inject(ENVIRONMENT) environment: Environment) {
     this.#kpToken = environment.kinopoiskToken;

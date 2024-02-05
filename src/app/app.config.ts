@@ -4,7 +4,7 @@ import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
 import { FIREBASE_OPTIONS } from '@angular/fire/compat';
 import { AngularFireDatabaseModule } from '@angular/fire/compat/database';
 import { getFirestore, provideFirestore } from '@angular/fire/firestore';
-import { provideRouter, TitleStrategy, withComponentInputBinding } from '@angular/router';
+import { provideRouter, TitleStrategy, withComponentInputBinding, withViewTransitions } from '@angular/router';
 import { LanguagesConstant } from '@appConstants';
 import { TitleStrategyService } from '@appServices';
 import { ENVIRONMENT } from '@appTokens';
@@ -22,7 +22,7 @@ export function HttpLoaderFactory(http: HttpClient) {
 
 export const APP_CONFIG: ApplicationConfig = {
   providers: [
-    provideRouter(APP_ROUTES, withComponentInputBinding()),
+    provideRouter(APP_ROUTES, withViewTransitions(), withComponentInputBinding()),
     AngularFireDatabaseModule,
     { provide: ENVIRONMENT, useValue: environment },
     importProvidersFrom(provideFirebaseApp(() => initializeApp(environment.firebaseOptions))),

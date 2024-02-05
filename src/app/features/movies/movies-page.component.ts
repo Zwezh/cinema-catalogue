@@ -29,7 +29,7 @@ import { ActionsPanelComponent } from '../actions-panel';
     RouterLink,
     LoadSpinnerComponent,
     ActionsPanelComponent
-],
+  ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class MoviesPageComponent implements OnInit {

@@ -1,4 +1,3 @@
-
 import { ChangeDetectionStrategy, Component, Input, TrackByFunction } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { MovieModel } from '@appModels';

@@ -15,14 +15,7 @@ import { SettingsActionsService, SettingsStateService } from './services';
 @Component({
   selector: 'cc-settings',
   standalone: true,
-  imports: [
-    TranslateModule,
-    AsyncPipe,
-    LoadSpinnerComponent,
-    ReactiveFormsModule,
-    KeyValuePipe,
-    NgbTooltipModule
-],
+  imports: [TranslateModule, AsyncPipe, LoadSpinnerComponent, ReactiveFormsModule, KeyValuePipe, NgbTooltipModule],
   templateUrl: './settings.component.html',
   styleUrls: ['./settings.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
