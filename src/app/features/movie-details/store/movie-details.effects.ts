@@ -6,24 +6,22 @@ import { MoviesApiService } from '@appServices';
 
 import { Observable, take, tap } from 'rxjs';
 
-import { MovieDetailsStateService } from './movie-details-state.service';
+import { MovieDetailsStore } from './movie-details.store';
 
-import { MOVIE_DETAILS_INITIAL_STATE } from '../constants';
-
-@Injectable({
-  providedIn: 'root'
-})
-export class MovieDetailsActionService {
+@Injectable({ providedIn: 'root' })
+export class MovieDetailsEffects {
+  #store = inject(MovieDetailsStore);
   #apiService = inject(MoviesApiService);
-  #stateService = inject(MovieDetailsStateService);
+
+  constructor() {}
 
   loadMovieById(id: string): void {
-    this.#stateService.setState({ ...this.#stateService.state, loading: true });
+    this.#store.update((state) => ({ ...state, loading: true }));
     this.#apiService.getMovieById$(id).pipe(take(1)).subscribe(this.#updateStateAfterLoadMovie.bind(this));
   }
 
   resetState(): void {
-    this.#stateService.setState(MOVIE_DETAILS_INITIAL_STATE);
+    this.#store.reset();
   }
 
   deleteMovie$(id: string): Observable<unknown> {
@@ -31,7 +29,6 @@ export class MovieDetailsActionService {
   }
 
   #updateStateAfterLoadMovie(movie: MovieDto): void {
-    const newState = { ...this.#stateService.state, movie: new MovieModel(movie), loading: false };
-    this.#stateService.setState(newState);
+    this.#store.update((state) => ({ ...state, movie: new MovieModel(movie), loading: false }));
   }
 }

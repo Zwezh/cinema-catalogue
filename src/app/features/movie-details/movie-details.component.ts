@@ -1,16 +1,16 @@
-import { AsyncPipe, NgStyle } from '@angular/common';
-import { ChangeDetectionStrategy, Component, OnInit, inject, OnDestroy, Input } from '@angular/core';
+import { NgStyle } from '@angular/common';
+import { ChangeDetectionStrategy, Component, OnInit, inject, OnDestroy, Input, Signal } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { LoadSpinnerComponent } from '@appComponents';
 import { urlsConstant } from '@appConstants';
 import { MovieModel } from '@appModels';
 
-import { Observable, take } from 'rxjs';
+import { take } from 'rxjs';
 
 import { TranslateModule } from '@ngx-translate/core';
 
 import { MovieDetailsFullContentComponent, MovieDetailsRawContentComponent } from './components';
-import { MovieDetailsActionService, MovieDetailsStateService } from './services';
+import { MovieDetailsEffects, MovieDetailsStore } from './store';
 
 @Component({
   selector: 'cc-movie-details',
@@ -18,7 +18,6 @@ import { MovieDetailsActionService, MovieDetailsStateService } from './services'
   imports: [
     RouterLink,
     LoadSpinnerComponent,
-    AsyncPipe,
     MovieDetailsRawContentComponent,
     MovieDetailsFullContentComponent,
     TranslateModule,
@@ -30,16 +29,16 @@ import { MovieDetailsActionService, MovieDetailsStateService } from './services'
 })
 export class MovieDetailsComponent implements OnInit, OnDestroy {
   @Input() id?: string;
-  movie$: Observable<MovieModel>;
-  loading$: Observable<boolean>;
+  $movie: Signal<MovieModel>;
+  $loading: Signal<boolean>;
 
-  #actionService = inject(MovieDetailsActionService);
-  #stateService = inject(MovieDetailsStateService);
+  #effects = inject(MovieDetailsEffects);
+  #store = inject(MovieDetailsStore);
   #router = inject(Router);
 
   constructor() {
-    this.movie$ = this.#stateService.select(({ movie }) => movie);
-    this.loading$ = this.#stateService.select(({ loading }) => loading);
+    this.$movie = this.#store.select(({ movie }) => movie);
+    this.$loading = this.#store.select(({ loading }) => loading);
   }
 
   get noPictureUrl(): string {
@@ -47,15 +46,15 @@ export class MovieDetailsComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.#actionService.loadMovieById(this.id);
+    this.#effects.loadMovieById(this.id);
   }
 
   ngOnDestroy(): void {
-    this.#actionService.resetState();
+    this.#effects.resetState();
   }
 
   onDeleteMovie(): void {
-    this.#actionService
+    this.#effects
       .deleteMovie$(this.id)
       .pipe(take(1))
       .subscribe(() => {

@@ -1,6 +1,4 @@
 import { inject, Injectable } from '@angular/core';
-import { SortingType } from '@app/features/actions-panel';
-import { SortingDirectionConstant, SortingKeyConstant } from '@app/features/actions-panel/constants';
 import { storageKeysConstant } from '@appConstants';
 import { MovieDto } from '@appDTOs';
 import { MovieModel } from '@appModels';
@@ -8,17 +6,16 @@ import { MoviesApiService } from '@appServices';
 
 import { map, take, tap } from 'rxjs';
 
-import { MoviesStateService } from './movies-state.service';
+import { MoviesStore } from './movies.store';
 
+import { SortingDirectionConstant, SortingKeyConstant, SortingType } from '../../actions-panel';
 import { moviesFilterHelper, moviesSortingHelper } from '../helpers';
-import { MoviesPageParamsType, MoviesState } from '../types';
+import { MoviesPageParamsType } from '../types';
 
-@Injectable({
-  providedIn: 'root'
-})
-export class MoviesActionsService {
+@Injectable({ providedIn: 'root' })
+export class MoviesEffects {
+  #store = inject(MoviesStore);
   #apiService = inject(MoviesApiService);
-  #stateService = inject(MoviesStateService);
   #sourceMovies: MovieModel[];
 
   loadAllMovies(): void {
@@ -43,19 +40,20 @@ export class MoviesActionsService {
   }
 
   setMovieListParams(params: MoviesPageParamsType): void {
-    const state: MoviesState = params.resetState
-      ? {
-          ...this.#stateService.state,
-          currentPage: 0,
-          movies: this.#getMoviesByParams(params),
-          searchValue: params.search
-        }
-      : {
-          ...this.#stateService.state,
-          movies: [...this.#stateService.state.movies],
-          currentPage: params.page ? +params.page - 1 : 0
-        };
-    this.#stateService.setState(state);
+    this.#store.update((state) =>
+      params.resetState
+        ? {
+            ...state,
+            currentPage: 0,
+            movies: this.#getMoviesByParams(params),
+            searchValue: params.search
+          }
+        : {
+            ...state,
+            movies: [...this.#store.state().movies],
+            currentPage: params.page ? +params.page - 1 : 0
+          }
+    );
   }
 
   changeSortingKey(key: SortingKeyConstant): void {
@@ -65,7 +63,7 @@ export class MoviesActionsService {
 
   changeSortingDirection(): void {
     const direction = this.#getSortDirection();
-    this.#changeSorting({ direction, key: this.#stateService.state.sorting.key });
+    this.#changeSorting({ direction, key: this.#store.state().sorting.key });
   }
 
   #getMoviesByParams(params: MoviesPageParamsType): MovieModel[] {
@@ -86,7 +84,7 @@ export class MoviesActionsService {
   }
 
   #updateStateAfterLoad(): void {
-    const { currentPage: page, searchValue: search } = this.#stateService.state;
+    const { currentPage: page, searchValue: search } = this.#store.state();
     this.setMovieListParams({ page: page.toString(), search, resetState: true });
     this.#updateStateByLoading(false);
   }
@@ -96,20 +94,20 @@ export class MoviesActionsService {
   }
 
   #updateStateByLoading(loading: boolean): void {
-    this.#stateService.setState({ ...this.#stateService.state, loading });
+    this.#store.update((state) => ({ ...state, loading }));
   }
 
   #getSortDirection(): SortingDirectionConstant {
-    return this.#stateService.state.sorting.direction === SortingDirectionConstant.desc
+    return this.#store.state().sorting.direction === SortingDirectionConstant.desc
       ? SortingDirectionConstant.asc
       : SortingDirectionConstant.desc;
   }
 
   #changeSorting(sorting: SortingType): void {
-    this.#stateService.setState({
-      ...this.#stateService.state,
-      movies: moviesSortingHelper(this.#stateService.state.movies, sorting),
+    this.#store.update((state) => ({
+      ...state,
+      movies: moviesSortingHelper(state.movies, sorting),
       sorting
-    });
+    }));
   }
 }

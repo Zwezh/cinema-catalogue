@@ -1,13 +1,10 @@
-import { ChangeDetectionStrategy, Component, DestroyRef, inject, OnInit } from '@angular/core';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { ChangeDetectionStrategy, Component, effect, inject } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { HeaderComponent } from '@appLayout';
 
-import { filter } from 'rxjs';
-
 import { TranslateService } from '@ngx-translate/core';
 
-import { SettingsActionsService, SettingsStateService } from './features/settings';
+import { SettingsEffects, SettingsState, SettingsStore } from './features/settings';
 
 @Component({
   selector: 'cc-root',
@@ -16,16 +13,17 @@ import { SettingsActionsService, SettingsStateService } from './features/setting
   standalone: true,
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class AppComponent implements OnInit {
-  #settingsActionService = inject(SettingsActionsService);
-  #settingsStateService = inject(SettingsStateService);
+export class AppComponent {
   #translateService = inject(TranslateService);
-  #destroyRef = inject(DestroyRef);
-  ngOnInit(): void {
-    this.#settingsActionService.loadData();
-    this.#settingsStateService
-      .select(({ settings }) => settings?.language)
-      .pipe(takeUntilDestroyed(this.#destroyRef), filter(Boolean))
-      .subscribe((language) => this.#translateService.use(language));
+  #settingsStore = inject(SettingsStore);
+
+  constructor() {
+    inject(SettingsEffects).load();
+    effect(() => {
+      const settings = this.#settingsStore.select((state: SettingsState) => state.settings);
+      if (settings()?.language) {
+        this.#translateService.use(settings()?.language);
+      }
+    });
   }
 }

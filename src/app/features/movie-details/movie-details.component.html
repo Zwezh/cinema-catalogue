@@ -1,4 +1,4 @@
-@if (movie$ | async; as movie) {
+@if ($movie(); as movie) {
   <div class="card shadow border-0 fallback">
     <div class="card-header border-0 text-end z-1">
       <a routerLink="edit" class="btn btn-outline-primary">{{ 'actions.edit' | translate }}</a>
@@ -21,6 +21,6 @@
       }"></div>
   </div>
 }
-@if (loading$ | async) {
+@if ($loading()) {
   <cc-load-spinner />
 }

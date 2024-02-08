@@ -1,6 +1,6 @@
 <table class="table align-middle mb-0 bg-white">
   <tbody>
-    @for (movie of movies; track trackByBookId($index, movie)) {
+    @for (movie of movies; track movie.id) {
       <tr cc-movie-list-item [movie]="movie"></tr>
     }
   </tbody>

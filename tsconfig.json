@@ -10,7 +10,8 @@
       "@appLayout": ["./src/app/layout"],
       "@appDTOs": ["./src/app/common/dtos"],
       "@appComponents": ["./src/app/common/components"],
-      "@appConstants": ["./src/app/common/constants"]
+      "@appConstants": ["./src/app/common/constants"],
+      "@appStore": ["./src/app/common/store"]
     },
     "outDir": "./dist/out-tsc",
     "forceConsistentCasingInFileNames": true,

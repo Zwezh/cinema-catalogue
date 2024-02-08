@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 
-import { SettingsStateService } from './settings-state.service';
+import { SettingsStore } from './settings.store';
 
-describe('MovieUpsertStateService', () => {
-  let service: SettingsStateService;
+describe('SettingsStoreService', () => {
+  let service: SettingsStore;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(SettingsStateService);
+    service = TestBed.inject(SettingsStore);
   });
 
   it('should be created', () => {

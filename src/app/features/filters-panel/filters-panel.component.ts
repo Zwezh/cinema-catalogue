@@ -1,8 +1,5 @@
-import { AsyncPipe } from '@angular/common';
-import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, effect, EventEmitter, input, Output, signal } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
-
-import { BehaviorSubject } from 'rxjs';
 
 import { NgSelectModule } from '@ng-select/ng-select';
 import { TranslateModule } from '@ngx-translate/core';
@@ -14,25 +11,32 @@ import { FiltersListType, FiltersValueType } from './types';
 @Component({
   selector: 'cc-filters-panel',
   standalone: true,
-  imports: [TranslateModule, ReactiveFormsModule, NgSelectModule, AsyncPipe],
+  imports: [TranslateModule, ReactiveFormsModule, NgSelectModule],
   templateUrl: './filters-panel.component.html',
   styleUrls: ['./filters-panel.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class FiltersPanelComponent implements OnInit {
-  @Input({ required: true }) filters: Partial<FiltersValueType>;
+export class FiltersPanelComponent {
   @Output() changeFilters = new EventEmitter<Partial<FiltersValueType>>();
+  filters = input.required<Partial<FiltersValueType>>();
   form = new FiltersForm();
 
   ratingList = filtersRatingListBuilder();
 
-  fromYearList$ = new BehaviorSubject<FiltersListType>(filtersYearListBuilder({}));
-  toYearList$ = new BehaviorSubject<FiltersListType>(filtersYearListBuilder({}));
+  $fromYearList = signal<FiltersListType>(filtersYearListBuilder({}));
+  $toYearList = signal<FiltersListType>(filtersYearListBuilder({}));
 
-  ngOnInit(): void {
-    this.onChangeFromYearField({ value: this.filters?.fromYear });
-    this.onChangeToYearField({ value: this.filters?.toYear });
-    this.filters && this.form.patchValue(this.filters);
+  constructor() {
+    effect(
+      () => {
+        if (this.filters()) {
+          this.onChangeFromYearField({ value: this.filters()?.fromYear });
+          this.onChangeToYearField({ value: this.filters()?.toYear });
+          this.filters && this.form.patchValue(this.filters());
+        }
+      },
+      { allowSignalWrites: true }
+    );
   }
 
   onApplyFilters(): void {
@@ -45,10 +49,10 @@ export class FiltersPanelComponent implements OnInit {
   }
 
   onChangeToYearField(change: { value?: number }): void {
-    this.fromYearList$.next(filtersYearListBuilder({ to: change?.value }));
+    this.$fromYearList.update(() => filtersYearListBuilder({ to: change?.value }));
   }
 
   onChangeFromYearField(change: { value?: number }): void {
-    this.toYearList$.next(filtersYearListBuilder({ from: change?.value }));
+    this.$toYearList.update(() => filtersYearListBuilder({ from: change?.value }));
   }
 }

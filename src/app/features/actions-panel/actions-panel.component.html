@@ -19,7 +19,7 @@
     </button>
     <ng-select
       [searchable]="false"
-      [ngModel]="selectedSortItem().key"
+      [ngModel]="$selectedSortItem().key"
       class="sort-dropdown ms-3"
       id="sorting"
       bindLabel="value"
@@ -33,10 +33,10 @@
       }
     </ng-select>
     <button class="btn" type="button" (click)="onChangeSortingDirection()">
-      @if (selectedSortItem().direction === sortingDirections.desc) {
+      @if ($selectedSortItem().direction === sortingDirections.desc) {
         <i class="bi bi-sort-down"></i>
       }
-      @if (selectedSortItem().direction === sortingDirections.asc) {
+      @if ($selectedSortItem().direction === sortingDirections.asc) {
         <i class="bi bi-sort-up"></i>
       }
     </button>
@@ -49,7 +49,7 @@
   <div ngbAccordionItem="filters" class="filters__accordion">
     <div ngbAccordionCollapse>
       <div ngbAccordionBody>
-        <cc-filters-panel [filters]="filters$ | async" (changeFilters)="onChangeFilters($event)"></cc-filters-panel>
+        <cc-filters-panel [filters]="$filters()" (changeFilters)="onChangeFilters($event)"></cc-filters-panel>
       </div>
     </div>
   </div>

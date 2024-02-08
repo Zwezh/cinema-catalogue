@@ -1,10 +1,8 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, inject, OnInit } from '@angular/core';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { ChangeDetectionStrategy, Component, effect, inject } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
-import { SettingsDto } from '@appDTOs';
 
-import { filter, take } from 'rxjs';
+import { take } from 'rxjs';
 
 import { TranslateModule } from '@ngx-translate/core';
 
@@ -19,17 +17,17 @@ import { MovieUpsertPageBaseComponent } from '../movie-upsert-page-base.componen
   styleUrls: ['./movie-add-page.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class MovieAddPageComponent extends MovieUpsertPageBaseComponent implements OnInit {
+export class MovieAddPageComponent extends MovieUpsertPageBaseComponent {
   #router = inject(Router);
   #activatedRoute = inject(ActivatedRoute);
 
-  override ngOnInit() {
-    super.ngOnInit();
+  constructor() {
+    super();
     this.#loadSettingData();
   }
 
   onAddMovie(): void {
-    this.actionsService
+    this.effects
       .addMovie$(this.form.getMovieValue())
       .pipe(take(1))
       .subscribe(() => {
@@ -39,15 +37,17 @@ export class MovieAddPageComponent extends MovieUpsertPageBaseComponent implemen
   }
 
   onAddMovieAndContinue(): void {
-    this.actionsService
+    this.effects
       .addMovie$(this.form.getMovieValue())
       .pipe(take(1))
       .subscribe(() => this.form.reset());
   }
   #loadSettingData(): void {
-    this.settingsStateService
-      .select(({ settings }) => settings)
-      .pipe(takeUntilDestroyed(this.destroyRef), filter(Boolean))
-      .subscribe((settings: SettingsDto) => this.form.setSettingsValues(settings));
+    effect(() => {
+      const settings = this.settingsStore.select(({ settings }) => settings);
+      if (settings()) {
+        this.form.setSettingsValues(settings());
+      }
+    });
   }
 }

@@ -1,34 +1,31 @@
 import { inject, Injectable } from '@angular/core';
-import { MovieDto } from '@app/common/dtos';
 import { storageKeysConstant } from '@appConstants';
+import { MovieDto } from '@appDTOs';
 import { KinopoiskApiService, MoviesApiService } from '@appServices';
 
 import { Observable, take, tap } from 'rxjs';
 
-import { MovieUpsertStateService } from './movie-upsert-state.service';
+import { MovieUpsertStore } from './movie-upsert.store';
 
-import { MOVIE_UPSERT_INITIAL_STATE } from '../constants';
-
-@Injectable({
-  providedIn: 'root'
-})
-export class MovieUpsertActionsService {
+@Injectable({ providedIn: 'root' })
+export class MovieUpsertEffects {
+  #store = inject(MovieUpsertStore);
   #kpApiService = inject(KinopoiskApiService);
   #moviesApi = inject(MoviesApiService);
-  #stateService = inject(MovieUpsertStateService);
+  constructor() {}
 
   loadDataFromKP(id: number): void {
     this.#kpApiService
       .getMovieById(id)
       .pipe(take(1))
-      .subscribe((result) => this.#stateService.setState({ ...this.#stateService.state, kinopoiskDTO: result }));
+      .subscribe((kinopoiskDTO) => this.#store.update((state) => ({ ...state, kinopoiskDTO })));
   }
 
   loadDataDB(id: string): void {
     this.#moviesApi
       .getMovieById$(id)
       .pipe(take(1))
-      .subscribe((result) => this.#stateService.setState({ ...this.#stateService.state, movieDTO: result }));
+      .subscribe((result) => this.#store.update((state) => ({ ...state, movieDTO: result })));
   }
 
   updateMovie$(movie: MovieDto): Observable<void> {
@@ -40,6 +37,6 @@ export class MovieUpsertActionsService {
   }
 
   resetState(): void {
-    this.#stateService.setState(MOVIE_UPSERT_INITIAL_STATE);
+    this.#store.reset();
   }
 }

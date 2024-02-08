@@ -1,6 +1,6 @@
-@if (form$ | async; as form) {
+@if ($form()) {
   <div class="container">
-    <div class="card" [formGroup]="form">
+    <div class="card" [formGroup]="$form()">
       <div class="card-header">
         <h1 class="card-title">{{ 'settings.header' | translate }}</h1>
         <input type="hidden" name="id" formControlName="id" />
@@ -60,7 +60,7 @@
           <div class="col-md-9">
             <ng-container formArrayName="genresForFilters">
               <div class="row">
-                @for (control of genres.controls; track control; let i = $index) {
+                @for (control of $genres()?.controls; track control; let i = $index) {
                   <div class="col-md-4 mb-3">
                     <div class="input-group">
                       <input
@@ -90,13 +90,16 @@
       </div>
       <div class="card-footer text-center">
         <button class="btn btn-secondary m-2">{{ 'actions.back' | translate }}</button>
-        <button class="btn btn-primary m-2" [disabled]="form.invalid || form.pristine" (click)="onUpdateSettings()">
+        <button
+          class="btn btn-primary m-2"
+          [disabled]="$form().invalid || $form().pristine"
+          (click)="onUpdateSettings()">
           {{ 'actions.save' | translate }}
         </button>
       </div>
     </div>
   </div>
 }
-@if (loading$ | async) {
+@if ($loading()) {
   <cc-load-spinner />
 }

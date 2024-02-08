@@ -1,41 +1,39 @@
-import { Component, DestroyRef, inject, OnDestroy, OnInit } from '@angular/core';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { KinopoiskDto } from '@appDTOs';
+import { Component, effect, inject, OnDestroy } from '@angular/core';
 
-import { filter } from 'rxjs';
-
-import { SettingsStateService } from '../../settings';
+import { SettingsStore } from '../../settings';
 import { MovieUpsertForm } from '../forms';
-import { MovieUpsertActionsService, MovieUpsertStateService } from '../services';
+import { MovieUpsertState } from '../models';
+import { MovieUpsertEffects, MovieUpsertStore } from '../store';
 
 @Component({ template: '' })
-export abstract class MovieUpsertPageBaseComponent implements OnInit, OnDestroy {
+export abstract class MovieUpsertPageBaseComponent implements OnDestroy {
   form: MovieUpsertForm;
-  protected actionsService = inject(MovieUpsertActionsService);
-  protected stateService = inject(MovieUpsertStateService);
-  protected settingsStateService = inject(SettingsStateService);
-  protected destroyRef = inject(DestroyRef);
+  protected effects = inject(MovieUpsertEffects);
+  protected store = inject(MovieUpsertStore);
+  protected settingsStore = inject(SettingsStore);
 
-  ngOnInit(): void {
+  constructor() {
     this.form = new MovieUpsertForm();
     this.loadInitialData();
   }
 
   ngOnDestroy(): void {
-    this.actionsService.resetState();
+    this.effects.resetState();
   }
 
   onLoadDataFromKP(): void {
     if (!this.form.value.kpId) {
       return;
     }
-    this.actionsService.loadDataFromKP(this.form.value.kpId);
+    this.effects.loadDataFromKP(this.form.value.kpId);
   }
 
   protected loadInitialData(): void {
-    this.stateService
-      .select(({ kinopoiskDTO }) => kinopoiskDTO)
-      .pipe(takeUntilDestroyed(this.destroyRef), filter(Boolean))
-      .subscribe((result: KinopoiskDto) => this.form.setValuesFromKinopoisk(result));
+    effect(() => {
+      const kpData = this.store.select((state: MovieUpsertState) => state.kinopoiskDTO);
+      if (kpData()) {
+        this.form.setValuesFromKinopoisk(kpData());
+      }
+    });
   }
 }

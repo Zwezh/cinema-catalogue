@@ -1,19 +1,16 @@
-import { AsyncPipe, SlicePipe } from '@angular/common';
-import { ChangeDetectionStrategy, Component, inject, OnInit } from '@angular/core';
+import { SlicePipe } from '@angular/common';
+import { ChangeDetectionStrategy, Component, computed, inject, OnInit, Signal } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { LoadSpinnerComponent } from '@appComponents';
 import { MovieModel } from '@appModels';
-
-import { Observable } from 'rxjs';
 
 import { NgbPagination } from '@ng-bootstrap/ng-bootstrap';
 import { TranslateModule } from '@ngx-translate/core';
 
 import { MoviesListComponent } from './components';
+import { MoviesEffects, MoviesStore } from './store';
 import { MoviesPageParamsType } from './types';
 
-import { MoviesActionsService } from './services/movies-actions.service';
-import { MoviesStateService } from './services/movies-state.service';
 import { ActionsPanelComponent } from '../actions-panel';
 
 @Component({
@@ -21,7 +18,6 @@ import { ActionsPanelComponent } from '../actions-panel';
   styleUrls: ['./movies-page.component.scss'],
   standalone: true,
   imports: [
-    AsyncPipe,
     MoviesListComponent,
     NgbPagination,
     SlicePipe,
@@ -33,20 +29,23 @@ import { ActionsPanelComponent } from '../actions-panel';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class MoviesPageComponent implements OnInit {
-  movies$: Observable<MovieModel[]>;
-  currentPage$: Observable<number>;
-  pageSize$: Observable<number>;
-  loading$: Observable<boolean>;
+  $movies: Signal<MovieModel[]>;
+  $currentPage: Signal<number>;
+  $pageSize: Signal<number>;
+  $loading: Signal<boolean>;
+  $indexFrom = computed(() => this.$currentPage() * this.$pageSize());
+  $indexTo = computed(() => (this.$currentPage() + 1) * this.$pageSize());
+  $collectionSize = computed(() => this.$movies().length);
 
   #router = inject(Router);
-  #actionService = inject(MoviesActionsService);
-  #stateService = inject(MoviesStateService);
+  #actionService = inject(MoviesEffects);
+  #store = inject(MoviesStore);
 
   constructor() {
-    this.movies$ = this.#stateService.select(({ movies }) => movies);
-    this.currentPage$ = this.#stateService.select(({ currentPage }) => currentPage);
-    this.pageSize$ = this.#stateService.select(({ pageSize }) => pageSize);
-    this.loading$ = this.#stateService.select(({ loading }) => loading);
+    this.$movies = this.#store.select(({ movies }) => movies);
+    this.$currentPage = this.#store.select(({ currentPage }) => currentPage);
+    this.$pageSize = this.#store.select(({ pageSize }) => pageSize);
+    this.$loading = this.#store.select(({ loading }) => loading);
   }
 
   ngOnInit(): void {

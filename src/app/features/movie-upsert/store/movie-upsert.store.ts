@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BaseStateService } from '@appServices';
+import { BaseStore } from '@appStore';
 
 import { MOVIE_UPSERT_INITIAL_STATE } from '../constants';
 import { MovieUpsertState } from '../models';
@@ -7,7 +7,7 @@ import { MovieUpsertState } from '../models';
 @Injectable({
   providedIn: 'root'
 })
-export class MovieUpsertStateService extends BaseStateService<MovieUpsertState> {
+export class MovieUpsertStore extends BaseStore<MovieUpsertState> {
   constructor() {
     super(MOVIE_UPSERT_INITIAL_STATE);
   }

@@ -1,4 +1,4 @@
-import { AsyncPipe, NgClass } from '@angular/common';
+import { NgClass } from '@angular/common';
 import {
   AfterViewInit,
   ChangeDetectionStrategy,
@@ -7,13 +7,14 @@ import {
   OnInit,
   Signal,
   ViewChild,
-  inject
+  inject,
+  signal
 } from '@angular/core';
-import { takeUntilDestroyed, toSignal } from '@angular/core/rxjs-interop';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 
-import { BehaviorSubject, Observable, debounceTime } from 'rxjs';
+import { debounceTime } from 'rxjs';
 
 import { NgbAccordionDirective, NgbAccordionModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgSelectModule } from '@ng-select/ng-select';
@@ -23,7 +24,7 @@ import { SortingDirectionConstant, SortingKeyConstant } from './constants';
 import { SortingType } from './types';
 
 import { FiltersPanelComponent, FiltersValueType } from '../filters-panel';
-import { MoviesActionsService, MoviesPageParamsType, MoviesStateService } from '../movies';
+import { MoviesEffects, MoviesPageParamsType, MoviesStore } from '../movies';
 
 @Component({
   selector: 'cc-actions-panel',
@@ -35,7 +36,6 @@ import { MoviesActionsService, MoviesPageParamsType, MoviesStateService } from '
     FiltersPanelComponent,
     NgbAccordionModule,
     NgClass,
-    AsyncPipe,
     NgSelectModule,
     FormsModule
   ],
@@ -47,22 +47,19 @@ export class ActionsPanelComponent implements OnInit, AfterViewInit {
   @ViewChild('accordion', { static: true }) accordion: NgbAccordionDirective;
   searchControl = new FormControl();
   active = false;
-  filters$: Observable<Partial<FiltersValueType>>;
 
   sortingList = Object.values(SortingKeyConstant).map((key) => ({ value: key }));
   sortingDirections = SortingDirectionConstant;
-  selectedSortItem: Signal<SortingType>;
-
+  $selectedSortItem: Signal<SortingType>;
+  $filters = signal<Partial<FiltersValueType>>(undefined);
   #activatedRoute = inject(ActivatedRoute);
   #router = inject(Router);
-  #actionService = inject(MoviesActionsService);
-  #stateService = inject(MoviesStateService);
+  #actionService = inject(MoviesEffects);
+  #store = inject(MoviesStore);
   #destroyRef = inject(DestroyRef);
-  #filters$ = new BehaviorSubject<Partial<FiltersValueType>>(undefined);
 
   constructor() {
-    this.filters$ = this.#filters$.asObservable();
-    this.selectedSortItem = toSignal(this.#stateService.select(({ sorting }) => sorting));
+    this.$selectedSortItem = this.#store.select(({ sorting }) => sorting);
   }
 
   ngOnInit(): void {
@@ -76,7 +73,7 @@ export class ActionsPanelComponent implements OnInit, AfterViewInit {
         this.searchControl.patchValue(params.search, { emitEvent: false });
         if (params.filters) {
           const filters = JSON.parse(decodeURIComponent(params.filters));
-          this.#filters$.next(filters);
+          this.$filters.set(filters);
         }
       });
     this.active = !!this.#activatedRoute.snapshot.queryParams['filters'];

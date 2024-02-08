@@ -3,7 +3,7 @@
     <label for="fromYear" class="form-label">{{ 'filters.fromYear' | translate }}</label>
     <ng-select
       id="fromYear"
-      [items]="fromYearList$ | async"
+      [items]="$fromYearList()"
       bindLabel="value"
       bindValue="value"
       formControlName="fromYear"
@@ -14,7 +14,7 @@
     <label for="toYear" class="form-label">{{ 'filters.toYear' | translate }}</label>
     <ng-select
       id="toYear"
-      [items]="toYearList$ | async"
+      [items]="$toYearList()"
       bindLabel="value"
       bindValue="value"
       formControlName="toYear"
@@ -24,6 +24,7 @@
   <div class="col-md-4 col-sm-6">
     <label for="rating" class="form-label">{{ 'filters.rating' | translate }}</label>
     <ng-select
+      id="rating"
       [items]="ratingList"
       bindLabel="value"
       bindValue="value"

@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, Input, TrackByFunction } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { MovieModel } from '@appModels';
 
@@ -15,6 +15,5 @@ import { MovieListItemComponent } from '../movie-list-item';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class MoviesListComponent {
-  @Input() movies!: MovieModel[];
-  trackByBookId: TrackByFunction<MovieModel> = (index, movie) => movie.id;
+  @Input({ required: true }) movies!: MovieModel[];
 }

@@ -1,10 +1,8 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, inject, Input } from '@angular/core';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { ChangeDetectionStrategy, Component, effect, inject, Input, OnInit } from '@angular/core';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
-import { MovieDto, SettingsDto } from '@appDTOs';
 
-import { combineLatest, filter, take } from 'rxjs';
+import { take } from 'rxjs';
 
 import { TranslateModule } from '@ngx-translate/core';
 
@@ -19,14 +17,22 @@ import { MovieUpsertPageBaseComponent } from '../movie-upsert-page-base.componen
   styleUrls: ['./movie-edit-page.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class MovieEditPageComponent extends MovieUpsertPageBaseComponent {
+export class MovieEditPageComponent extends MovieUpsertPageBaseComponent implements OnInit {
   @Input() id?: string;
 
   #activatedRoute = inject(ActivatedRoute);
   #router = inject(Router);
 
+  constructor() {
+    super();
+  }
+
+  ngOnInit(): void {
+    this.effects.loadDataDB(this.id);
+  }
+
   onUpdateMovie(): void {
-    this.actionsService
+    this.effects
       .updateMovie$(this.form.getMovieValue())
       .pipe(take(1))
       .subscribe(() => {
@@ -36,14 +42,12 @@ export class MovieEditPageComponent extends MovieUpsertPageBaseComponent {
 
   override loadInitialData(): void {
     super.loadInitialData();
-    const dataFromDb = this.stateService.select(({ movieDTO }) => movieDTO);
-    const settings = this.settingsStateService.select(({ settings }) => settings);
-    combineLatest([dataFromDb, settings])
-      .pipe(
-        takeUntilDestroyed(this.destroyRef),
-        filter(([movie, settings]) => !!(movie && settings))
-      )
-      .subscribe(([movie, settings]: [MovieDto, SettingsDto]) => this.form.setValuesFromDB(movie, settings));
-    this.actionsService.loadDataDB(this.id);
+    effect(() => {
+      const movie = this.store.select(({ movieDTO }) => movieDTO);
+      const settings = this.settingsStore.select(({ settings }) => settings);
+      if (movie() && settings()) {
+        this.form.setValuesFromDB(movie(), settings());
+      }
+    });
   }
 }
