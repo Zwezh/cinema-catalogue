@@ -6,6 +6,8 @@ export interface MovieUpsertFormModel {
   actors: FormControl<string>;
   addedDate: FormControl<string>;
   ageRating: FormControl<number>;
+  backdropUrl: FormControl<string>;
+  compactPosterUrl: FormControl<string>;
   countries: FormControl<string>;
   description: FormControl<string>;
   director: FormControl<string>;

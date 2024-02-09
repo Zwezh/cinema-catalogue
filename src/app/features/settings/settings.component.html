@@ -89,7 +89,7 @@
         </div>
       </div>
       <div class="card-footer text-center">
-        <button class="btn btn-secondary m-2">{{ 'actions.back' | translate }}</button>
+        <a role="button" routerLink="/" class="btn btn-secondary">{{ 'actions.cancel' | translate }}</a>
         <button
           class="btn btn-primary m-2"
           [disabled]="$form().invalid || $form().pristine"

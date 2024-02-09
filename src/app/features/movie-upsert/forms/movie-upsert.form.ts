@@ -15,6 +15,8 @@ export class MovieUpsertForm extends FormGroup<MovieUpsertFormModel> {
       actors: new FormControl<string>(null, { validators: Validators.required, nonNullable: true }),
       addedDate: new FormControl<string>(null, { validators: Validators.required, nonNullable: true }),
       ageRating: new FormControl<number>(null, { nonNullable: true }),
+      backdropUrl: new FormControl<string>(null, { validators: Validators.required, nonNullable: true }),
+      compactPosterUrl: new FormControl<string>(null, { validators: Validators.required, nonNullable: true }),
       countries: new FormControl<string>(null, { validators: Validators.required, nonNullable: true }),
       description: new FormControl<string>(null, { validators: Validators.required, nonNullable: true }),
       director: new FormControl<string>(null, { validators: Validators.required, nonNullable: true }),
@@ -44,6 +46,8 @@ export class MovieUpsertForm extends FormGroup<MovieUpsertFormModel> {
       actors: value?.actors?.join(', '),
       addedDate: value?.addedDate,
       ageRating: value?.ageRating,
+      backdropUrl: value?.backdropUrl,
+      compactPosterUrl: value?.compactPosterUrl,
       countries: value?.countries?.join(', '),
       description: value?.description,
       director: value?.director?.join(', '),
@@ -65,30 +69,37 @@ export class MovieUpsertForm extends FormGroup<MovieUpsertFormModel> {
   }
 
   setValuesFromKinopoisk(value?: KinopoiskDto): void {
-    this.patchValue({
-      kpId: value.id,
-      name: value.name,
-      enName: value.alternativeName,
-      year: this.#getYear(value),
-      description: value.description,
-      director: this.#getPersonsFromDto(value.persons, MovieProfessionConstant.DIRECTOR),
-      isSeries: value.isSeries,
-      rating: value.rating.kp,
-      movieLength: this.#getDuration(value),
-      ageRating: value.ageRating,
-      posterUrl: value.poster.url,
-      genres: this.#getNamesFromDto(value.genres),
-      countries: this.#getNamesFromDto(value.countries),
-      actors: this.#getPersonsFromDto(value.persons, MovieProfessionConstant.ACTOR),
-      similarMovies: this.#getNamesFromDto(value.similarMovies),
-      sequelsAndPrequels: this.#getNamesFromDto(value.sequelsAndPrequels)
-    });
+    this.patchValue(
+      {
+        kpId: value.id,
+        name: value.name,
+        enName: value.alternativeName,
+        year: this.#getYear(value),
+        description: value.description,
+        director: this.#getPersonsFromDto(value.persons, MovieProfessionConstant.DIRECTOR),
+        isSeries: value.isSeries,
+        rating: value.rating.kp,
+        movieLength: this.#getDuration(value),
+        ageRating: value.ageRating,
+        posterUrl: value.poster.url,
+        backdropUrl: value.backdrop.url || value.poster.url,
+        compactPosterUrl: value.poster.mini || value.poster.previewUrl,
+        genres: this.#getNamesFromDto(value.genres),
+        countries: this.#getNamesFromDto(value.countries),
+        actors: this.#getPersonsFromDto(value.persons, MovieProfessionConstant.ACTOR),
+        similarMovies: this.#getNamesFromDto(value.similarMovies),
+        sequelsAndPrequels: this.#getNamesFromDto(value.sequelsAndPrequels)
+      },
+      { emitEvent: true }
+    );
   }
 
   getMovieValue(): MovieDto {
     return {
       addedDate: this.value.addedDate,
       ageRating: this.value.ageRating,
+      backdropUrl: this.value.backdropUrl,
+      compactPosterUrl: this.value.compactPosterUrl,
       countries: this.value.countries.split(', '),
       description: this.value.description,
       director: this.value.director.split(', '),

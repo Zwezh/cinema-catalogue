@@ -5,6 +5,14 @@
       <label for="poster" class="form-label">{{ 'movie.poster' | translate }}</label>
       <input type="text" class="form-control" id="poster" formControlName="posterUrl" />
     </div>
+    <div class="mb-2">
+      <label for="backdropUrl" class="form-label">{{ 'movie.poster' | translate }}</label>
+      <input type="text" class="form-control" id="backdropUrl" formControlName="backdropUrl" />
+    </div>
+    <div class="mb-2">
+      <label for="compactPosterUrl" class="form-label">{{ 'movie.poster' | translate }}</label>
+      <input type="text" class="form-control" id="compactPosterUrl" formControlName="compactPosterUrl" />
+    </div>
     @if (formValues?.posterUrl) {
       <img class="poster" [alt]="'movie.poster' | translate" [src]="formValues.posterUrl" />
     }

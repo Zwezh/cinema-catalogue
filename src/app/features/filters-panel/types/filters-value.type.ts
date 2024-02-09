@@ -3,7 +3,7 @@ export type FiltersValueType = {
   actors: string;
   rating: number;
   directors: string;
-  genres: string;
+  genres: string[];
   fromYear: number;
   toYear: number;
 };

@@ -6,6 +6,8 @@ export class MovieModel {
   readonly addedDate: string;
   readonly ageRating: number;
   readonly countries: string;
+  readonly backdropUrl: string;
+  readonly compactPosterUrl: string;
   readonly description: string;
   readonly director: string;
   readonly enName: string;
@@ -27,6 +29,8 @@ export class MovieModel {
     this.actors = value?.actors;
     this.addedDate = value?.addedDate;
     this.ageRating = value?.ageRating;
+    this.backdropUrl = value?.backdropUrl || urlsConstant.NO_PICTURE_URL;
+    this.compactPosterUrl = value?.compactPosterUrl || urlsConstant.NO_PICTURE_URL;
     this.countries = value?.countries?.join(', ');
     this.description = value?.description;
     this.director = value?.director?.join(', ');

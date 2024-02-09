@@ -1,6 +1,8 @@
 export interface MovieDto {
   addedDate: string;
   ageRating: number;
+  backdropUrl: string;
+  compactPosterUrl: string;
   countries: string[];
   description: string;
   director: string[];

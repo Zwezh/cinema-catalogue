@@ -3,7 +3,7 @@ import { storageKeysConstant } from '@appConstants';
 import { MovieDto } from '@appDTOs';
 import { KinopoiskApiService, MoviesApiService } from '@appServices';
 
-import { Observable, take, tap } from 'rxjs';
+import { forkJoin, map, Observable, take, tap } from 'rxjs';
 
 import { MovieUpsertStore } from './movie-upsert.store';
 
@@ -15,9 +15,16 @@ export class MovieUpsertEffects {
   constructor() {}
 
   loadDataFromKP(id: number): void {
-    this.#kpApiService
-      .getMovieById(id)
-      .pipe(take(1))
+    const getMovieDTO$ = this.#kpApiService.getMovieById(id);
+    const getCoverImageUrl$ = this.#kpApiService.getMinimizedCoverURLImage(id);
+    forkJoin({ kinopoiskDTO: getMovieDTO$, cover: getCoverImageUrl$ })
+      .pipe(
+        take(1),
+        map(({ kinopoiskDTO, cover }) => {
+          kinopoiskDTO.poster.mini = cover;
+          return { ...kinopoiskDTO };
+        })
+      )
       .subscribe((kinopoiskDTO) => this.#store.update((state) => ({ ...state, kinopoiskDTO })));
   }
 

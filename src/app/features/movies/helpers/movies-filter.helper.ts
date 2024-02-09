@@ -13,9 +13,8 @@ export const moviesFilterHelper = (movie: MovieModel, filtersString: string): bo
   if (filters.toYear && filters.toYear < +movie?.year) {
     return false;
   }
-  if (filters.genres) {
-    const genres = filters.genres.split(',');
-    if (!genres.every((genre: string) => movie?.genres?.includes(genre))) {
+  if (filters?.genres?.length) {
+    if (!filters.genres.every((genre: string) => movie?.genres?.includes(genre))) {
       return false;
     }
   }

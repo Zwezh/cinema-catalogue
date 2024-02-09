@@ -19,6 +19,10 @@ import { FiltersListType, FiltersValueType } from './types';
 export class FiltersPanelComponent {
   @Output() changeFilters = new EventEmitter<Partial<FiltersValueType>>();
   filters = input.required<Partial<FiltersValueType>>();
+  $genres = input.required<{ value: string }[], string[]>({
+    alias: 'genresForFilters',
+    transform: (genres: string[]) => genres.map((genre) => ({ value: genre }))
+  });
   form = new FiltersForm();
 
   ratingList = filtersRatingListBuilder();

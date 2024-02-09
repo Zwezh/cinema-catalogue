@@ -33,6 +33,7 @@ export abstract class MovieUpsertPageBaseComponent implements OnDestroy {
       const kpData = this.store.select((state: MovieUpsertState) => state.kinopoiskDTO);
       if (kpData()) {
         this.form.setValuesFromKinopoisk(kpData());
+        this.form.markAsDirty();
       }
     });
   }

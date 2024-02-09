@@ -41,7 +41,14 @@
   </div>
   <div class="col-md-4 col-sm-6">
     <label for="genres" class="form-label">{{ 'filters.genres' | translate }}</label>
-    <input type="text" class="form-control" id="genres" formControlName="genres" />
+    <ng-select
+      id="genres"
+      [items]="$genres()"
+      bindLabel="value"
+      bindValue="value"
+      formControlName="genres"
+      [searchable]="true"
+      [multiple]="true"></ng-select>
   </div>
 </div>
 <div class="row">

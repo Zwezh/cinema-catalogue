@@ -12,7 +12,7 @@ export class FiltersForm extends FormGroup<FiltersFormType> {
       actors: new FormControl<string>(undefined),
       rating: new FormControl<number>(undefined),
       directors: new FormControl<string>(undefined),
-      genres: new FormControl<string>(undefined),
+      genres: new FormControl<string[]>(undefined),
       fromYear: new FormControl<number>(undefined),
       toYear: new FormControl<number>(undefined)
     });

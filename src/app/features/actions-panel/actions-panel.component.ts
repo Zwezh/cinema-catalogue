@@ -25,6 +25,7 @@ import { SortingType } from './types';
 
 import { FiltersPanelComponent, FiltersValueType } from '../filters-panel';
 import { MoviesEffects, MoviesPageParamsType, MoviesStore } from '../movies';
+import { SettingsStore } from '../settings';
 
 @Component({
   selector: 'cc-actions-panel',
@@ -52,9 +53,10 @@ export class ActionsPanelComponent implements OnInit, AfterViewInit {
   sortingDirections = SortingDirectionConstant;
   $selectedSortItem: Signal<SortingType>;
   $filters = signal<Partial<FiltersValueType>>(undefined);
+  $genresForFilters = inject(SettingsStore).select(({ settings }) => settings?.genresForFilters || []);
   #activatedRoute = inject(ActivatedRoute);
   #router = inject(Router);
-  #actionService = inject(MoviesEffects);
+  #effects = inject(MoviesEffects);
   #store = inject(MoviesStore);
   #destroyRef = inject(DestroyRef);
 
@@ -69,7 +71,7 @@ export class ActionsPanelComponent implements OnInit, AfterViewInit {
     this.#activatedRoute.queryParams
       .pipe(takeUntilDestroyed(this.#destroyRef))
       .subscribe((params: MoviesPageParamsType) => {
-        this.#actionService.setMovieListParams(params);
+        this.#effects.setMovieListParams(params);
         this.searchControl.patchValue(params.search, { emitEvent: false });
         if (params.filters) {
           const filters = JSON.parse(decodeURIComponent(params.filters));
@@ -90,11 +92,11 @@ export class ActionsPanelComponent implements OnInit, AfterViewInit {
   }
 
   onChangeSortingKey(value: SortingKeyConstant): void {
-    this.#actionService.changeSortingKey(value);
+    this.#effects.changeSortingKey(value);
   }
 
   onChangeSortingDirection(): void {
-    this.#actionService.changeSortingDirection();
+    this.#effects.changeSortingDirection();
   }
 
   #navigateChange(queryParams: MoviesPageParamsType): void {

@@ -5,7 +5,7 @@ export type FiltersFormType = {
   actors: FormControl<string>;
   rating: FormControl<number>;
   directors: FormControl<string>;
-  genres: FormControl<string>;
+  genres: FormControl<string[]>;
   fromYear: FormControl<number>;
   toYear: FormControl<number>;
 };
