@@ -15,6 +15,13 @@ export abstract class MovieUpsertPageBaseComponent implements OnDestroy {
   constructor() {
     this.form = new MovieUpsertForm();
     this.loadInitialData();
+    effect(() => {
+      if (this.store.state().loading) {
+        this.form.disable();
+      } else {
+        this.form.enable();
+      }
+    });
   }
 
   ngOnDestroy(): void {

@@ -2,6 +2,8 @@
   <tbody>
     @for (movie of movies; track movie.id) {
       <tr cc-movie-list-item [movie]="movie"></tr>
+    } @empty {
+      <cc-empty-container>{{ 'movies.noItems' | translate }}</cc-empty-container>
     }
   </tbody>
 </table>

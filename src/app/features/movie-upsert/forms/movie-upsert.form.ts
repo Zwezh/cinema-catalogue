@@ -25,7 +25,10 @@ export class MovieUpsertForm extends FormGroup<MovieUpsertFormModel> {
       genres: new FormControl<string>(null, { validators: Validators.required, nonNullable: true }),
       id: new FormControl<string>(null, { nonNullable: true }),
       isSeries: new FormControl<boolean>(null, { nonNullable: true }),
-      kpId: new FormControl<number>(null, { validators: Validators.required, nonNullable: true }),
+      kpId: new FormControl<number>(null, {
+        validators: [Validators.required, Validators.pattern('^[0-9]*$')],
+        nonNullable: true
+      }),
       movieLength: new FormControl<number>(null, { nonNullable: true }),
       name: new FormControl<string>(null, { validators: Validators.required, nonNullable: true }),
       posterUrl: new FormControl<string>(null, { validators: Validators.required, nonNullable: true }),
@@ -81,7 +84,7 @@ export class MovieUpsertForm extends FormGroup<MovieUpsertFormModel> {
         rating: value.rating.kp,
         movieLength: this.#getDuration(value),
         ageRating: value.ageRating,
-        posterUrl: value.poster.url,
+        posterUrl: value.poster.previewUrl || value.poster.url,
         backdropUrl: value.backdrop.url || value.poster.url,
         compactPosterUrl: value.poster.mini || value.poster.previewUrl,
         genres: this.#getNamesFromDto(value.genres),

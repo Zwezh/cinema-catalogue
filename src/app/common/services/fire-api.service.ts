@@ -17,14 +17,11 @@ export abstract class FireApiService {
     this.#collectionName = collectionName;
   }
 
-  protected getAll$<DataContract>(queryFn?: QueryFn): Observable<DataContract> {
+  protected getAll$<DataContract>(queryFn?: QueryFn): Observable<DataContract[]> {
     return this.aFirestore
       .collection(this.#collectionName, queryFn)
       .snapshotChanges()
-      .pipe(
-        map((changes) => changes.map((x) => extractDocumentHelper(x))),
-        map((res) => res as DataContract)
-      );
+      .pipe(map((changes) => changes.map((x) => extractDocumentHelper<DataContract>(x))));
   }
 
   protected getById$<DataContract extends { id: string }>(id: string): Observable<DataContract> {

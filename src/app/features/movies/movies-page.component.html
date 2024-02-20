@@ -1,4 +1,4 @@
-@if (!$loading()) {
+@if (!$loading() && $movies().length) {
   <div class="card shadow border-0">
     <div class="card-header">
       <cc-actions-panel></cc-actions-panel>
@@ -20,6 +20,8 @@
       </ngb-pagination>
     </div>
   </div>
-} @else {
-  <cc-load-spinner />
+}
+
+@if ($loading()) {
+  <cc-empty-container>{{ 'loading' | translate }}</cc-empty-container>
 }

@@ -4,6 +4,11 @@
     "movies": "Movies",
     "settings": "Settings"
   },
+  "movies": {
+    "noItems": "There are no movies available.",
+    "loadedWithErrors": "Something went wrong during getting movies from DB.",
+    "successfulLoaded": "Movies are loaded successfully."
+  },
   "actions": {
     "add": "Add",
     "edit": "Edit",
@@ -30,7 +35,9 @@
   "getFromKp": "Get data from KP",
   "movie": {
     "name": "Russian name",
-    "poster": "Poster",
+    "poster": "Poster Image Link",
+    "backdrop": "Backdrop Image Link",
+    "compactPoster": "Compact Poster Image Link",
     "kpId": "Kinopoisk id",
     "enName": "Name",
     "rating": "Rating",
@@ -51,7 +58,19 @@
     "similarMovies": "Similar movies",
     "seriesLength": "Series length",
     "totalSeriesLength": "Total series length",
-    "isSeries": "Is series"
+    "isSeries": "Is series",
+    "notifications": {
+      "loadingError": "Something went wrong, the movie isn't got from DB.",
+      "updateError": "Something went wrong during updating the movie.",
+      "addError": "Something went wrong during adding the movie.",
+      "deleteError": "Something went wrong during deleting the movie.",
+      "loaded": "The movie is loaded successfully.",
+      "updated": "The movie is updated successfully.",
+      "added": "The movie is added successfully.",
+      "deleted": "The movie is deleted successfully.",
+      "loadingErrorFromKP": "Something went wrong, the movie isn't got from Kinopoisk.",
+      "loadedFromKP": "The movie is loaded successfully from Kinopoisk."
+    }
   },
   "ratingIs": "Rating is:",
   "settings": {
@@ -64,6 +83,13 @@
     "defaultExtension": "Default extension",
     "qualityHint": "You can set default quality value for adding and updating movies if that field is empty, that value automatically will be inserted to form control",
     "extensionHint": "You can set default extension value for adding and updating movies if that field is empty, that value automatically will be inserted to form control",
-    "fillGenres": "Fill from movie list"
-  }
+    "fillGenres": "Fill from movie list",
+    "notifications": {
+      "loadingError": "Something went wrong, settings aren't got from DB.",
+      "updateError": "Something went wrong during update settings.",
+      "loaded": "Settings are loaded successfully.",
+      "updated": "Settings are updated successfully."
+    }
+  },
+  "loading": "Loading..."
 }

@@ -1,10 +1,12 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, effect, inject, Input, OnInit } from '@angular/core';
+import { toSignal } from '@angular/core/rxjs-interop';
+import { Title } from '@angular/platform-browser';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 
 import { take } from 'rxjs';
 
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
 import { MovieUpsertContentComponent } from '../movie-upsert-content';
 import { MovieUpsertPageBaseComponent } from '../movie-upsert-page-base.component';
@@ -22,9 +24,14 @@ export class MovieEditPageComponent extends MovieUpsertPageBaseComponent impleme
 
   #activatedRoute = inject(ActivatedRoute);
   #router = inject(Router);
-
+  #title = inject(Title);
+  #titleLabel = toSignal(inject(TranslateService).get('actions.edit'));
   constructor() {
     super();
+    effect(() => {
+      const name = this.store.select(({ movieDTO }) => movieDTO)()?.name;
+      this.#title.setTitle(`${name} - ${this.#titleLabel()}`);
+    });
   }
 
   ngOnInit(): void {

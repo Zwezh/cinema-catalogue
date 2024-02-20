@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, effect, inject } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { HeaderComponent } from '@appLayout';
+import { HeaderComponent, ToastsComponent } from '@appLayout';
 
 import { TranslateService } from '@ngx-translate/core';
 
@@ -9,7 +9,7 @@ import { SettingsEffects, SettingsState, SettingsStore } from './features/settin
 @Component({
   selector: 'cc-root',
   templateUrl: './app.component.html',
-  imports: [RouterOutlet, HeaderComponent],
+  imports: [RouterOutlet, HeaderComponent, ToastsComponent],
   standalone: true,
   changeDetection: ChangeDetectionStrategy.OnPush
 })

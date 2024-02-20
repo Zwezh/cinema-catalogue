@@ -1,7 +1,7 @@
 import { SlicePipe } from '@angular/common';
 import { ChangeDetectionStrategy, Component, computed, inject, OnInit, Signal } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
-import { LoadSpinnerComponent } from '@appComponents';
+import { EmptyContainerComponent } from '@appComponents';
 import { MovieModel } from '@appModels';
 
 import { NgbPagination } from '@ng-bootstrap/ng-bootstrap';
@@ -23,8 +23,8 @@ import { ActionsPanelComponent } from '../actions-panel';
     SlicePipe,
     TranslateModule,
     RouterLink,
-    LoadSpinnerComponent,
-    ActionsPanelComponent
+    ActionsPanelComponent,
+    EmptyContainerComponent
   ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })

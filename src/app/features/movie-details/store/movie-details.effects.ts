@@ -1,6 +1,7 @@
-import { inject, Injectable } from '@angular/core';
+import { effect, inject, Injectable } from '@angular/core';
 import { storageKeysConstant } from '@appConstants';
 import { MovieDto } from '@appDTOs';
+import { LoadingBarStore, ToastsService } from '@appLayout';
 import { MovieModel } from '@appModels';
 import { MoviesApiService } from '@appServices';
 
@@ -12,12 +13,46 @@ import { MovieDetailsStore } from './movie-details.store';
 export class MovieDetailsEffects {
   #store = inject(MovieDetailsStore);
   #apiService = inject(MoviesApiService);
+  #toastService = inject(ToastsService);
+  #loadingBarStore = inject(LoadingBarStore);
 
-  constructor() {}
+  constructor() {
+    effect(
+      () => {
+        const loading = this.#store.select(({ loading }) => loading);
+        if (typeof loading() === 'boolean') {
+          if (this.#store.state().loading) {
+            this.#loadingBarStore.show();
+          } else {
+            this.#loadingBarStore.hide();
+          }
+        }
+      },
+      { allowSignalWrites: true }
+    );
+  }
 
   loadMovieById(id: string): void {
     this.#store.update((state) => ({ ...state, loading: true }));
-    this.#apiService.getMovieById$(id).pipe(take(1)).subscribe(this.#updateStateAfterLoadMovie.bind(this));
+    this.#apiService
+      .getMovieById$(id)
+      .pipe(
+        take(1),
+        tap((res) => {
+          if (res) {
+            this.#toastService.show({
+              type: 'success',
+              translateKey: 'movie.notifications.loaded'
+            });
+          } else {
+            this.#toastService.show({
+              type: 'danger',
+              translateKey: 'movie.notifications.loadingError'
+            });
+          }
+        })
+      )
+      .subscribe(this.#updateStateAfterLoadMovie.bind(this));
   }
 
   resetState(): void {
@@ -25,7 +60,24 @@ export class MovieDetailsEffects {
   }
 
   deleteMovie$(id: string): Observable<unknown> {
-    return this.#apiService.deleteMovie$(id).pipe(tap(() => sessionStorage.removeItem(storageKeysConstant.MOVIES)));
+    this.#store.update((state) => ({ ...state, loading: true }));
+    return this.#apiService.deleteMovie$(id).pipe(
+      tap(() => this.#store.update((state) => ({ ...state, loading: false }))),
+      tap(() => sessionStorage.removeItem(storageKeysConstant.MOVIES)),
+      tap((res) => {
+        if (res) {
+          this.#toastService.show({
+            type: 'success',
+            translateKey: 'movie.notifications.deleted'
+          });
+        } else {
+          this.#toastService.show({
+            type: 'danger',
+            translateKey: 'movie.notifications.deleteError'
+          });
+        }
+      })
+    );
   }
 
   #updateStateAfterLoadMovie(movie: MovieDto): void {

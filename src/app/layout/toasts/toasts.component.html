@@ -1,0 +1,10 @@
+@for (toast of toasts(); track toast) {
+  <ngb-toast
+    class="text-light"
+    [ngClass]="toastType(toast)"
+    [autohide]="true"
+    (hidden)="onHidden(toast)"
+    [delay]="toast.delay || 4000">
+    {{ toast.translateKey | translate: toast.translateParams }}
+  </ngb-toast>
+}

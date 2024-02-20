@@ -6,11 +6,11 @@
       <input type="text" class="form-control" id="poster" formControlName="posterUrl" />
     </div>
     <div class="mb-2">
-      <label for="backdropUrl" class="form-label">{{ 'movie.poster' | translate }}</label>
+      <label for="backdropUrl" class="form-label">{{ 'movie.backdrop' | translate }}</label>
       <input type="text" class="form-control" id="backdropUrl" formControlName="backdropUrl" />
     </div>
     <div class="mb-2">
-      <label for="compactPosterUrl" class="form-label">{{ 'movie.poster' | translate }}</label>
+      <label for="compactPosterUrl" class="form-label">{{ 'movie.compactPoster' | translate }}</label>
       <input type="text" class="form-control" id="compactPosterUrl" formControlName="compactPosterUrl" />
     </div>
     @if (formValues?.posterUrl) {
@@ -23,7 +23,12 @@
         <label for="kpId" class="form-label">{{ 'movie.kpId' | translate }}</label>
         <div class="input-group">
           <input type="number" class="form-control" formControlName="kpId" id="kpId" />
-          <button class="btn btn-outline-secondary" (click)="loadFromKP.emit()">{{ 'getFromKp' | translate }}</button>
+          <button
+            class="btn btn-outline-secondary"
+            [disabled]="!form.controls.kpId.valid || form.disabled"
+            (click)="loadFromKP.emit()">
+            {{ 'getFromKp' | translate }}
+          </button>
         </div>
       </div>
     </div>

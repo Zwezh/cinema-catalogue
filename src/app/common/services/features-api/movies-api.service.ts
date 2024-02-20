@@ -13,7 +13,7 @@ export class MoviesApiService extends FireApiService {
   }
 
   getAllMovies$(): Observable<MovieDto[]> {
-    return this.getAll$<MovieDto[]>((ref) => ref.orderBy('addedDate', 'desc'));
+    return this.getAll$<MovieDto>((ref) => ref.orderBy('addedDate', 'desc'));
   }
 
   getMovieById$(id: string): Observable<MovieDto> {

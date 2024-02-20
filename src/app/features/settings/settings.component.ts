@@ -2,7 +2,7 @@ import { KeyValuePipe } from '@angular/common';
 import { ChangeDetectionStrategy, Component, computed, inject, signal, Signal } from '@angular/core';
 import { FormArray, FormControl, ReactiveFormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
-import { LoadSpinnerComponent } from '@appComponents';
+import { EmptyContainerComponent } from '@appComponents';
 import { LanguagesConstant } from '@appConstants';
 
 import { NgbTooltipModule } from '@ng-bootstrap/ng-bootstrap';
@@ -16,7 +16,7 @@ import { getCachedGenresUtil } from './utils';
 @Component({
   selector: 'cc-settings',
   standalone: true,
-  imports: [TranslateModule, LoadSpinnerComponent, ReactiveFormsModule, KeyValuePipe, NgbTooltipModule, RouterLink],
+  imports: [TranslateModule, ReactiveFormsModule, KeyValuePipe, NgbTooltipModule, RouterLink, EmptyContainerComponent],
   templateUrl: './settings.component.html',
   styleUrls: ['./settings.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush

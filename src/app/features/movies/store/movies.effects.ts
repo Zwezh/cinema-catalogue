@@ -1,10 +1,11 @@
-import { inject, Injectable } from '@angular/core';
+import { effect, inject, Injectable } from '@angular/core';
 import { storageKeysConstant } from '@appConstants';
 import { MovieDto } from '@appDTOs';
+import { LoadingBarStore, Toast, ToastsService } from '@appLayout';
 import { MovieModel } from '@appModels';
 import { MoviesApiService } from '@appServices';
 
-import { map, take, tap } from 'rxjs';
+import { filter, map, take, tap } from 'rxjs';
 
 import { MoviesStore } from './movies.store';
 
@@ -16,13 +17,32 @@ import { MoviesPageParamsType } from '../types';
 export class MoviesEffects {
   #store = inject(MoviesStore);
   #apiService = inject(MoviesApiService);
+  #toastService = inject(ToastsService);
+  #loadingBarStore = inject(LoadingBarStore);
   #sourceMovies: MovieModel[];
+
+  constructor() {
+    effect(
+      () => {
+        const loading = this.#store.select(({ loading }) => loading);
+        if (typeof loading() === 'boolean') {
+          if (this.#store.state().loading) {
+            this.#loadingBarStore.show();
+          } else {
+            this.#loadingBarStore.hide();
+          }
+        }
+      },
+      { allowSignalWrites: true }
+    );
+  }
 
   loadAllMovies(): void {
     this.#updateStateByLoading(true);
     const cachedMovies = sessionStorage.getItem(storageKeysConstant.MOVIES);
-    if (cachedMovies) {
-      const movieList = this.#convertDtoListToModel(JSON.parse(cachedMovies) as MovieDto[]);
+    const movies = JSON.parse(cachedMovies) as MovieDto[];
+    if (cachedMovies && movies.length) {
+      const movieList = this.#convertDtoListToModel(movies);
       this.#sourceMovies = [...movieList];
       this.#updateStateAfterLoad();
       this.#updateStateByLoading(false);
@@ -32,6 +52,19 @@ export class MoviesEffects {
       .getAllMovies$()
       .pipe(
         take(1),
+        tap((res) => {
+          const toast: Toast = res.length
+            ? {
+                type: 'success',
+                translateKey: 'movies.successfulLoaded'
+              }
+            : {
+                type: 'danger',
+                translateKey: 'movies.loadedWithErrors'
+              };
+          this.#toastService.show(toast);
+        }),
+        filter(Boolean),
         tap((movies: MovieDto[]) => sessionStorage.setItem(storageKeysConstant.MOVIES, JSON.stringify(movies))),
         map(this.#convertDtoListToModel),
         tap((movies: MovieModel[]) => (this.#sourceMovies = [...movies]))

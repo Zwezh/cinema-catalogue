@@ -4,7 +4,7 @@ import { MoviesState } from '../types';
 
 export const MOVIES_INITIAL_STATE: MoviesState = {
   currentPage: 1,
-  loading: false,
+  loading: null,
   movies: [],
   sorting: {
     direction: SortingDirectionConstant.desc,
