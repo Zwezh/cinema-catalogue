@@ -4,7 +4,7 @@ import { MovieDto } from '@appDTOs';
 export class MovieModel {
   readonly actors: string[];
   readonly addedDate: string;
-  readonly ageRating: number;
+  readonly ageRating: string;
   readonly countries: string;
   readonly backdropUrl: string;
   readonly compactPosterUrl: string;
@@ -19,6 +19,7 @@ export class MovieModel {
   readonly posterUrl: string;
   readonly name: string;
   readonly movieLength: string;
+  readonly movieDuration: string;
   readonly quality: string;
   readonly rating: number;
   readonly year: string;
@@ -28,7 +29,7 @@ export class MovieModel {
   constructor(value: MovieDto) {
     this.actors = value?.actors;
     this.addedDate = value?.addedDate;
-    this.ageRating = value?.ageRating;
+    this.ageRating = value?.ageRating?.toString();
     this.backdropUrl = value?.backdropUrl || urlsConstant.NO_PICTURE_URL;
     this.compactPosterUrl = value?.compactPosterUrl || urlsConstant.NO_PICTURE_URL;
     this.countries = value?.countries?.join(', ');
@@ -43,6 +44,7 @@ export class MovieModel {
     this.posterUrl = value?.posterUrl || urlsConstant.NO_PICTURE_URL;
     this.name = value?.name;
     this.movieLength = value?.movieLength ? this.#toHoursAndMinutes(value.movieLength) : '...';
+    this.movieDuration = this.movieLength.split('/')[1];
     this.quality = value?.quality;
     this.rating = value?.rating;
     this.year = value?.year;

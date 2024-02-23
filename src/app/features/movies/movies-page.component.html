@@ -3,12 +3,12 @@
     <div class="card-header">
       <cc-actions-panel></cc-actions-panel>
     </div>
-    <div class="row">
-      <div class="col">
-        <cc-movies-list [movies]="$movies() | slice: $indexFrom() : $indexTo()"></cc-movies-list>
-      </div>
-    </div>
-    <div class="card-footer border-0">
+    <!--    <div class="row">-->
+    <!--      <div class="col">-->
+    <cc-movies-list [movies]="$movies() | slice: $indexFrom() : $indexTo()"></cc-movies-list>
+    <!--      </div>-->
+    <!--    </div>-->
+    <div class="card-footer border-0 m-auto">
       <ngb-pagination
         [rotate]="true"
         [ellipses]="true"

@@ -1,0 +1,9 @@
+.logo {
+  height: 5rem;
+  width: 13.675rem;
+  fill: transparent;
+
+  &--fill {
+    fill: var(--bs-dark-text-emphasis)
+  }
+}

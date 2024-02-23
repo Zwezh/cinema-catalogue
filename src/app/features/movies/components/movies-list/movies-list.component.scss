@@ -1,14 +1,9 @@
-.table th {
-  padding: 1rem;
-  vertical-align: top;
-  border-top: 1px solid #e9ecef;
-}
-
-.btn-delete {
-  color: var(--bs-danger);
-
-  &:active, &:focus {
-    color: var(--bs-danger);
-    opacity: 0.5;
-  }
+.movie-list {
+ display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(14rem, 14rem));
+  grid-auto-rows: minmax(20rem, 20rem);
+  align-items: stretch;
+  gap: 1rem;
+  justify-content: space-evenly;
+  margin: 0.75rem;
 }

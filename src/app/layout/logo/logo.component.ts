@@ -4,6 +4,7 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
   selector: 'cc-logo',
   standalone: true,
   templateUrl: './logo.component.svg',
+  styleUrl: './logo.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class LogoComponent {}

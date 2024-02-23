@@ -1,3 +1,4 @@
+import { DecimalPipe } from '@angular/common';
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { MovieModel } from '@appModels';
@@ -5,10 +6,9 @@ import { MovieModel } from '@appModels';
 import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
-  // eslint-disable-next-line @angular-eslint/component-selector
-  selector: '[cc-movie-list-item]',
+  selector: 'cc-movie-list-item',
   standalone: true,
-  imports: [TranslateModule, RouterLink],
+  imports: [TranslateModule, RouterLink, DecimalPipe],
   templateUrl: './movie-list-item.component.html',
   styleUrls: ['./movie-list-item.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush

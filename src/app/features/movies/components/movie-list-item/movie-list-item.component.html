@@ -1,28 +1,29 @@
-<td>
-  <div class="d-flex align-items-center">
-    <img
-      [src]="movie.compactPosterUrl"
-      [alt]="'movie.poster' | translate"
-      style="width: 45px; height: 45px"
-      loading="lazy"
-      class="rounded-circle" />
-    <div class="ms-3">
-      <p class="fw-bold mb-1">
-        <a [routerLink]="movie.id">{{ movie.name }}</a>
+<div class="item__body">
+  <div class="item__top">
+    @if (movie.rating) {
+      <p class="fw-bold item__label bg-warning" [title]="'movie.rating' | translate">
+        {{ movie.rating | number: '1.2-2' }}
       </p>
-      <p class="text-muted mb-0">{{ movie?.genres }}</p>
-    </div>
+    }
+    @if (movie.ageRating) {
+      <p class="fw-bold item__label bg-success" [title]="'movie.ageRating' | translate">{{ movie.ageRating }}</p>
+    }
+    @if (movie.year) {
+      <p class="fw-bold item__label bg-info" [title]="'movie.year' | translate">{{ movie.year }}</p>
+    }
+    @if (movie.movieDuration) {
+      <p class="fw-bold item__label bg-dark" [title]="'movie.movieLength' | translate">{{ movie.movieDuration }}</p>
+    }
   </div>
-</td>
-<td>
-  <p class="fw-normal mb-1">{{ movie.year }}</p>
-  <p class="text-muted mb-0">{{ movie.addedDate }}</p>
-</td>
-<td>
-  <p class="fw-normal mb-1">{{ movie?.ageRating }}</p>
-  <p class="text-muted mb-0">{{ movie?.movieLength }}</p>
-</td>
-<td>
-  <p class="fw-normal mb-1">{{ movie?.rating }}</p>
-  <p class="text-muted mb-0">{{ movie?.quality }}</p>
-</td>
+  <img
+    [src]="movie.compactPosterUrl"
+    [alt]="'movie.poster' | translate"
+    loading="lazy"
+    class="card-img-top item__image" />
+  <p class="text-muted card-text item__genres text-truncate bg-light">{{ movie?.genres }}</p>
+</div>
+<a [routerLink]="movie.id" class="link link-dark link-offset-2 link-underline-opacity-0">
+  <div class="card-footer text-truncate" [title]="movie.name">
+    {{ movie.name }}
+  </div>
+</a>

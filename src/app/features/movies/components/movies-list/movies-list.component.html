@@ -1,9 +1,7 @@
-<table class="table align-middle mb-0 bg-white">
-  <tbody>
-    @for (movie of movies; track movie.id) {
-      <tr cc-movie-list-item [movie]="movie"></tr>
-    } @empty {
-      <cc-empty-container>{{ 'movies.noItems' | translate }}</cc-empty-container>
-    }
-  </tbody>
-</table>
+<section [ngClass]="{ 'movie-list': movies.length }" class="">
+  @for (movie of movies; track movie.id) {
+    <cc-movie-list-item class="card" [movie]="movie" type="card" />
+  } @empty {
+    <cc-empty-container>{{ 'movies.noItems' | translate }}</cc-empty-container>
+  }
+</section>
