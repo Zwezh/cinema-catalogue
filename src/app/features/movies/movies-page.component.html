@@ -8,11 +8,11 @@
     <cc-movies-list [movies]="$movies() | slice: $indexFrom() : $indexTo()"></cc-movies-list>
     <!--      </div>-->
     <!--    </div>-->
-    <div class="card-footer border-0 m-auto">
+    <div class="m-auto">
       <ngb-pagination
-        [rotate]="true"
         [ellipses]="true"
-        [maxSize]="5"
+        [maxSize]="maxPages()"
+        [rotate]="true"
         [page]="$currentPage() + 1"
         [pageSize]="$pageSize()"
         [collectionSize]="$collectionSize()"

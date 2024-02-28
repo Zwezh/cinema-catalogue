@@ -2,7 +2,7 @@
   position: relative;
 
   &__cover {
-    opacity: 0.04;
+    opacity: 0.08;
     position: absolute;
     left: 0;
     top: 0;
@@ -14,6 +14,16 @@
     width: 100%;
     height: auto;
   }
+}
+
+.movie-header {
+  flex-wrap: wrap-reverse;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.movie-titles {
+  max-width: 100%;
 }
 
 .actor-list {

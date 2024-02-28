@@ -1,16 +1,27 @@
 <nav class="navbar navbar-expand-sm bg-secondary border-bottom border-body shadow z-3" data-bs-theme="dark">
-  <div class="container-fluid">
-    <a class="navbar-brand" [routerLink]="['']">
-      <cc-logo />
-    </a>
-    <ul class="navbar-nav me-auto mb-2 mb-lg-0 justify-content-end w-100">
+  <a class="navbar-brand" [routerLink]="['']">
+    <cc-logo />
+  </a>
+  <button
+    (click)="onToggleCollapse()"
+    class="navbar-toggler hidden-sm-up"
+    type="button"
+    data-bs-toggle="collapse"
+    data-bs-target="#navbarNav"
+    aria-controls="navbarNav"
+    aria-expanded="false"
+    aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div [ngbCollapse]="isNavbarCollapsed()" class="collapse navbar-collapse" id="navbarsDefault">
+    <ul ngbNav #nav="ngbNav" class="navbar-nav me-auto mb-2 mb-lg-0 justify-content-end w-100">
       <li class="nav-item">
-        <a class="nav-link active" aria-current="page" [routerLink]="['/movies']" routerLinkActive="active">{{
+        <a class="nav-link" aria-current="page" [routerLink]="['/movies']" routerLinkActive="active">{{
           'navigation.movies' | translate
         }}</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link active" aria-current="page" [routerLink]="['/settings']" routerLinkActive="active">{{
+        <a class="nav-link" aria-current="page" [routerLink]="['/settings']" routerLinkActive="active">{{
           'navigation.settings' | translate
         }}</a>
       </li>

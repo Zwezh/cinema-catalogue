@@ -1,76 +1,69 @@
 <div class="row">
-  <div class="col-3">
+  <div class="col-sm-5 col-md-4 col-lg-3">
     <div>
       <img class="poster" [alt]="'movie.poster' | translate" [src]="pictureUrl" />
     </div>
-    <div class="text-center">
-      <cc-rating [value]="movie.rating" />
-    </div>
   </div>
-  <div class="col-9">
+  <div class="col-sm-7 col-md-8 col-lg-9">
     <div class="row mb-3">
       <div class="col">
-        <h3>
-          {{ movie.name }}
-          @if (movie.isSeries) {
-            <span class="badge text-bg-warning">{{ 'movie.series' | translate }}</span>
-          }
-        </h3>
-        <h5 class="text-secondary">{{ movie.enName }}</h5>
+        @if (movie.isSeries) {
+          <span class="badge text-bg-warning">{{ 'movie.series' | translate }}</span>
+        } @else if (movie.isCartoon) {
+          <span class="badge text-bg-success">{{ 'movie.cartoon' | translate }}</span>
+        }
       </div>
     </div>
     <div class="row">
-      <div class="col-9">
+      <div class="col-lg-9">
+        <div class="main-info mb-3">
+          <div class="rating">
+            <i class="bi-star-fill icon filled text-warning"></i>
+            {{ movie.rating }}
+          </div>
+          <div class="vr"></div>
+          {{ movie.year }}
+          <div class="vr"></div>
+          {{ movie.movieLength }}
+          <div class="vr"></div>
+          {{ movie.ageRating }}
+        </div>
+        <div class="text-truncate mb-3">{{ movie.genres }}</div>
         <div class="row">
-          <div class="col-3 text-secondary mb-3">{{ 'movie.rating' | translate }}</div>
-          <div class="col-9">{{ movie.rating }}</div>
+          <div class="col">
+            <p class="text-secondary mb-3">{{ 'movie.director' | translate }}</p>
+            <p class="text-truncate">{{ movie.director }}</p>
+          </div>
+          <div class="col">
+            <p class="text-secondary mb-3">{{ 'movie.countries' | translate }}</p>
+            <p class="text-truncate">{{ movie.countries }}</p>
+          </div>
         </div>
         <div class="row">
-          <div class="col-3 text-secondary mb-3">{{ 'movie.year' | translate }}</div>
-          <div class="col-9">{{ movie.year }}</div>
+          <div class="col">
+            <p class="text-secondary mb-3">{{ 'movie.description' | translate }}</p>
+            <p>{{ movie.description }}</p>
+          </div>
         </div>
         <div class="row">
-          <div class="col-3 text-secondary mb-3">{{ 'movie.director' | translate }}</div>
-          <div class="col-9">{{ movie.director }}</div>
-        </div>
-        <div class="row">
-          <div class="col-3 text-secondary mb-3">{{ 'movie.movieLength' | translate }}</div>
-          <div class="col-9">{{ movie.movieLength }}</div>
-        </div>
-        <div class="row">
-          <div class="col-3 text-secondary mb-3">{{ 'movie.ageRating' | translate }}</div>
-          <div class="col-9">{{ movie.ageRating }}</div>
-        </div>
-        <div class="row">
-          <div class="col-3 text-secondary mb-3">{{ 'movie.genres' | translate }}</div>
-          <div class="col-9">{{ movie.genres }}</div>
-        </div>
-        <div class="row">
-          <div class="col-3 text-secondary mb-3">{{ 'movie.countries' | translate }}</div>
-          <div class="col-9">{{ movie.countries }}</div>
-        </div>
-        <div class="row">
-          <div class="col-3 text-secondary mb-3">{{ 'movie.quality' | translate }}</div>
-          <div class="col-9">{{ movie.quality }}</div>
-        </div>
-        <div class="row">
-          <div class="col-3 text-secondary mb-3">{{ 'movie.addedDate' | translate }}</div>
-          <div class="col-9">{{ movie.addedDate }}</div>
-        </div>
-
-        <div class="row">
-          <div class="col-3 text-secondary mb-3">{{ 'movie.extension' | translate }}</div>
-          <div class="col-9">{{ movie.extension }}</div>
-        </div>
-        <div class="row">
-          <div class="col-3 text-secondary mb-3">{{ 'movie.description' | translate }}</div>
-          <div class="col-9">{{ movie.description }}</div>
+          <div class="col">
+            <p class="text-secondary mb-3">{{ 'movie.quality' | translate }}</p>
+            <p>{{ movie.quality }}</p>
+          </div>
+          <div class="col">
+            <p class="text-secondary mb-3">{{ 'movie.addedDate' | translate }}</p>
+            <p>{{ movie.addedDate }}</p>
+          </div>
+          <div class="col">
+            <p class="text-secondary mb-3">{{ 'movie.extension' | translate }}</p>
+            <p>{{ movie.extension }}</p>
+          </div>
         </div>
       </div>
-      <div class="col-3">
+      <div class="col-lg-3">
         <div>
           <div>{{ 'movie.actors' | translate }}</div>
-          <ul class="list-unstyled text-secondary">
+          <ul class="list-unstyled text-secondary actor-list">
             @for (actor of movie.actors; track actor) {
               <li class="mb-2">{{ actor }}</li>
             }

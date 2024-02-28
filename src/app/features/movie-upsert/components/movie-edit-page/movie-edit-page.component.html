@@ -1,6 +1,6 @@
 <div class="card shadow border-1">
   <div class="card-header border-0 d-flex justify-content-between">
-    <h1 class="display-6">{{ 'updateMovie' | translate }}</h1>
+    <h1 class="display-6 text-truncate">{{ 'updateMovie' | translate }}</h1>
     <div class="actions align-self-center">
       <button class="btn btn-outline-primary ms-3" [disabled]="form.invalid || form.pristine" (click)="onUpdateMovie()">
         {{ 'actions.save' | translate }}

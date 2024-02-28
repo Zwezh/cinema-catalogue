@@ -11,11 +11,13 @@
 
     @include media-breakpoint-down(md) {
       flex-direction: column;
+      gap: 0.75rem;
     }
   }
 
   @include media-breakpoint-down(md) {
     flex-direction: column;
+    gap: 0.75rem;
   }
 }
 
@@ -40,4 +42,14 @@
 
 .sort-dropdown {
   width: 11rem;
+
+  @include media-breakpoint-down(md) {
+    width: 100%;
+  }
+}
+
+.add-movie-btn {
+  @include media-breakpoint-up(md) {
+    min-width: 7.125rem;
+  }
 }

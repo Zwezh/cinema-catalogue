@@ -1,5 +1,5 @@
 .movie-list {
- display: grid;
+  display: grid;
   grid-template-columns: repeat(auto-fill, minmax(14rem, 14rem));
   grid-auto-rows: minmax(20rem, 20rem);
   align-items: stretch;

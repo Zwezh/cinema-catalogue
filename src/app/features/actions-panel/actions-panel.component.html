@@ -17,33 +17,33 @@
       <i class="bi" [ngClass]="{ 'bi-funnel-fill': active, 'bi-funnel': !active }"></i>
       <span class="filters__label">{{ 'filters.title' | translate }}</span>
     </button>
-    <ng-select
-      [searchable]="false"
-      [ngModel]="$selectedSortItem().key"
-      class="sort-dropdown ms-3"
-      id="sorting"
-      bindLabel="value"
-      bindValue="value"
-      [clearable]="false"
-      (change)="onChangeSortingKey($event)">
-      @for (item of sortingList; track item) {
-        <ng-option [value]="item.value">
-          {{ 'movie.' + item.value | translate }}
-        </ng-option>
-      }
-    </ng-select>
-    <button class="btn" type="button" (click)="onChangeSortingDirection()">
-      @if ($selectedSortItem().direction === sortingDirections.desc) {
-        <i class="bi bi-sort-down"></i>
-      }
-      @if ($selectedSortItem().direction === sortingDirections.asc) {
-        <i class="bi bi-sort-up"></i>
-      }
-    </button>
+    <div class="d-flex ms-md-3">
+      <ng-select
+        [searchable]="false"
+        [ngModel]="$selectedSortItem().key"
+        class="sort-dropdown"
+        id="sorting"
+        bindLabel="value"
+        bindValue="value"
+        [clearable]="false"
+        (change)="onChangeSortingKey($event)">
+        @for (item of sortingList; track item) {
+          <ng-option [value]="item.value">
+            {{ 'movie.' + item.value | translate }}
+          </ng-option>
+        }
+      </ng-select>
+      <button class="btn" type="button" (click)="onChangeSortingDirection()">
+        @if ($selectedSortItem().direction === sortingDirections.desc) {
+          <i class="bi bi-sort-down"></i>
+        }
+        @if ($selectedSortItem().direction === sortingDirections.asc) {
+          <i class="bi bi-sort-up"></i>
+        }
+      </button>
+    </div>
   </div>
-  <div>
-    <a routerLink="add" class="btn btn-outline-primary">{{ 'addMovie' | translate }}</a>
-  </div>
+  <a routerLink="add" class="btn btn-outline-primary add-movie-btn">{{ 'addMovie' | translate }}</a>
 </div>
 <div ngbAccordion #accordion="ngbAccordion">
   <div ngbAccordionItem="filters" class="filters__accordion">

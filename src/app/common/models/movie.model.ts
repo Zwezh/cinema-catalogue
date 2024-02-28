@@ -52,6 +52,10 @@ export class MovieModel {
     this.similarMovies = value?.similarMovies?.join(', ');
   }
 
+  get isCartoon(): boolean {
+    return this.genres.includes('мультфильм');
+  }
+
   #toHoursAndMinutes(totalMinutes: number): string {
     const minutes = totalMinutes % 60;
     const hours = Math.floor(totalMinutes / 60);

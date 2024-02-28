@@ -14,7 +14,8 @@ export const environment: Environment = {
     messagingSenderId: '1063421071099',
     appId: '1:1063421071099:web:9f639e414323560be9ea5e'
   },
-  kinopoiskToken: 'T11347S-7JJMGDN-GPJT8YX-2KPCPMQ',
+  // kinopoiskToken: 'T11347S-7JJMGDN-GPJT8YX-2KPCPMQ',
+  kinopoiskToken: 'ZZT1GA1-PD4MPDG-MJWTJ90-G7Q3BKJ',
   settingsId: '26ADw6uTvXbZjarBWqHl'
 };
 

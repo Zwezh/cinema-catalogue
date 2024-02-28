@@ -3,6 +3,7 @@ import { ChangeDetectionStrategy, Component, computed, inject, OnInit, Signal } 
 import { Router, RouterLink } from '@angular/router';
 import { EmptyContainerComponent } from '@appComponents';
 import { MovieModel } from '@appModels';
+import { ResizeService } from '@appServices';
 
 import { NgbPagination } from '@ng-bootstrap/ng-bootstrap';
 import { TranslateModule } from '@ngx-translate/core';
@@ -36,7 +37,8 @@ export class MoviesPageComponent implements OnInit {
   $indexFrom = computed(() => this.$currentPage() * this.$pageSize());
   $indexTo = computed(() => (this.$currentPage() + 1) * this.$pageSize());
   $collectionSize = computed(() => this.$movies().length);
-
+  maxPages: Signal<number>;
+  #size = inject(ResizeService).size;
   #router = inject(Router);
   #actionService = inject(MoviesEffects);
   #store = inject(MoviesStore);
@@ -46,6 +48,7 @@ export class MoviesPageComponent implements OnInit {
     this.$currentPage = this.#store.select(({ currentPage }) => currentPage);
     this.$pageSize = this.#store.select(({ pageSize }) => pageSize);
     this.$loading = this.#store.select(({ loading }) => loading);
+    this.maxPages = computed(() => this.#size() / 100);
   }
 
   ngOnInit(): void {

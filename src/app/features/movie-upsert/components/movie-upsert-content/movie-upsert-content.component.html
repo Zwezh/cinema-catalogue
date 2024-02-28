@@ -1,23 +1,6 @@
-<div class="row" [formGroup]="form">
+<div class="row d-flex" [formGroup]="form">
   <input type="hidden" formControlName="id" />
-  <div class="col-3">
-    <div class="mb-2">
-      <label for="poster" class="form-label">{{ 'movie.poster' | translate }}</label>
-      <input type="text" class="form-control" id="poster" formControlName="posterUrl" />
-    </div>
-    <div class="mb-2">
-      <label for="backdropUrl" class="form-label">{{ 'movie.backdrop' | translate }}</label>
-      <input type="text" class="form-control" id="backdropUrl" formControlName="backdropUrl" />
-    </div>
-    <div class="mb-2">
-      <label for="compactPosterUrl" class="form-label">{{ 'movie.compactPoster' | translate }}</label>
-      <input type="text" class="form-control" id="compactPosterUrl" formControlName="compactPosterUrl" />
-    </div>
-    @if (formValues?.posterUrl) {
-      <img class="poster" [alt]="'movie.poster' | translate" [src]="formValues.posterUrl" />
-    }
-  </div>
-  <div class="col-9">
+  <div class="order-sm-2 col-sm-8 col-lg-9">
     <div class="row mb-2">
       <div class="col">
         <label for="kpId" class="form-label">{{ 'movie.kpId' | translate }}</label>
@@ -52,40 +35,39 @@
         <input type="text" class="form-control" id="genres" formControlName="genres" />
       </div>
     </div>
-    <div class="row mb-2">
-      <div class="col-4">
+    <div class="row">
+      <div class="col-6 col-md-4 mb-2">
         <label for="rating" class="form-label">{{ 'movie.rating' | translate }}</label>
         <input type="number" class="form-control" id="rating" formControlName="rating" />
       </div>
-      <div class="col-4">
+      <div class="col-6 col-md-4 mb-2">
         <label for="year" class="form-label">{{ 'movie.year' | translate }}</label>
         <input type="text" class="form-control" id="year" formControlName="year" />
       </div>
-      <div class="col-4">
+      <div class="col-6 col-md-4 mb-2">
         <label for="quality" class="form-label">{{ 'movie.quality' | translate }}</label>
         <input type="text" class="form-control" id="quality" formControlName="quality" />
       </div>
-    </div>
-    <div class="row mb-2">
-      <div class="col-4">
+      <div class="col-6 col-md-4 mb-2">
         <label for="ageRating" class="form-label">{{ 'movie.ageRating' | translate }}</label>
         <input type="text" class="form-control" id="ageRating" formControlName="ageRating" />
       </div>
-      <div class="col-4">
+      <div class="col-6 col-md-4 mb-2">
         <label for="movieLength" class="form-label">{{ 'movie.movieLength' | translate }}</label>
         <input type="number" class="form-control" id="movieLength" formControlName="movieLength" />
       </div>
-      <div class="col-4">
+      <div class="col-6 col-md-4 mb-2">
         <label for="countries" class="form-label">{{ 'movie.countries' | translate }}</label>
         <input type="text" class="form-control" id="countries" formControlName="countries" />
       </div>
     </div>
+    <div class="row mb-2"></div>
     <div class="row mb-2">
       <div class="col-6">
         <label for="addedDate" class="form-label">{{ 'movie.addedDate' | translate }}</label>
         <input type="text" class="form-control" id="addedDate" formControlName="addedDate" />
       </div>
-      <div class="col-4">
+      <div class="col-6">
         <label for="extension" class="form-label">{{ 'movie.extension' | translate }}</label>
         <input type="text" class="form-control" id="extension" formControlName="extension" />
       </div>
@@ -123,5 +105,22 @@
         <textarea class="form-control" id="description" rows="4" formControlName="description"></textarea>
       </div>
     </div>
+  </div>
+  <div class="order-sm-1 col-sm-4 col-lg-3">
+    <div class="mb-2">
+      <label for="poster" class="form-label">{{ 'movie.poster' | translate }}</label>
+      <input type="text" class="form-control" id="poster" formControlName="posterUrl" />
+    </div>
+    <div class="mb-2">
+      <label for="backdropUrl" class="form-label">{{ 'movie.backdrop' | translate }}</label>
+      <input type="text" class="form-control" id="backdropUrl" formControlName="backdropUrl" />
+    </div>
+    <div class="mb-2">
+      <label for="compactPosterUrl" class="form-label">{{ 'movie.compactPoster' | translate }}</label>
+      <input type="text" class="form-control" id="compactPosterUrl" formControlName="compactPosterUrl" />
+    </div>
+    @if (formValues?.posterUrl) {
+      <img class="poster" [alt]="'movie.poster' | translate" [src]="formValues.posterUrl" />
+    }
   </div>
 </div>
