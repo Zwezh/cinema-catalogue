@@ -13,6 +13,7 @@ import {
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
+import { IsAuthenticatedDirective } from '@appDirectives';
 
 import { debounceTime } from 'rxjs';
 
@@ -38,7 +39,8 @@ import { SettingsStore } from '../settings';
     NgbAccordionModule,
     NgClass,
     NgSelectModule,
-    FormsModule
+    FormsModule,
+    IsAuthenticatedDirective
   ],
   templateUrl: './actions-panel.component.html',
   styleUrls: ['./actions-panel.component.scss'],

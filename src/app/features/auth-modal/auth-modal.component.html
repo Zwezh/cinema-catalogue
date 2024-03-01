@@ -1,0 +1,16 @@
+<div class="modal-header">
+  <h4 class="modal-title">{{ 'auth.title' | translate }}</h4>
+  <button type="button" class="btn-close" aria-label="Close" (click)="activeModal.dismiss()"></button>
+</div>
+<div class="modal-body">
+  <label for="key" class="form-label">{{ 'auth.label' | translate }}</label>
+  <input type="text" class="form-control" #keyInput id="key" />
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-secondary" (click)="activeModal.dismiss()">
+    {{ 'actions.cancel' | translate }}
+  </button>
+  <button type="button" class="btn btn-primary" (click)="activeModal.close(keyInput.value)">
+    {{ 'actions.apply' | translate }}
+  </button>
+</div>

@@ -43,7 +43,7 @@
       </button>
     </div>
   </div>
-  <a routerLink="add" class="btn btn-outline-primary add-movie-btn">{{ 'addMovie' | translate }}</a>
+  <a routerLink="add" class="btn btn-outline-primary add-movie-btn" *ccIsAuthenticated>{{ 'addMovie' | translate }}</a>
 </div>
 <div ngbAccordion #accordion="ngbAccordion">
   <div ngbAccordionItem="filters" class="filters__accordion">

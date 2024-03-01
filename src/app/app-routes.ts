@@ -1,4 +1,5 @@
 import { Routes } from '@angular/router';
+import { authGuard } from '@appGuards';
 
 export const APP_ROUTES: Routes = [
   {
@@ -10,7 +11,8 @@ export const APP_ROUTES: Routes = [
         path: 'add',
         loadComponent: () => import('./features/movie-upsert').then((m) => m.MovieAddPageComponent),
         pathMatch: 'full',
-        title: 'addMovie'
+        title: 'addMovie',
+        canMatch: [authGuard]
       },
       {
         path: ':id',
@@ -23,7 +25,8 @@ export const APP_ROUTES: Routes = [
           {
             path: 'edit',
             loadComponent: () => import('./features/movie-upsert').then((m) => m.MovieEditPageComponent),
-            title: 'updateMovie'
+            title: 'updateMovie',
+            canMatch: [authGuard]
           }
         ]
       }

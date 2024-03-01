@@ -85,6 +85,8 @@
     "qualityHint": "You can set default quality value for adding and updating movies if that field is empty, that value automatically will be inserted to form control",
     "extensionHint": "You can set default extension value for adding and updating movies if that field is empty, that value automatically will be inserted to form control",
     "fillGenres": "Fill from movie list",
+    "authRequest": "Get full access",
+    "authRequestHint": "In general, the application is allowed only in readonly mode, to get full access for creating, updating and deleting items please click 'Get' button",
     "notifications": {
       "loadingError": "Something went wrong, settings aren't got from DB.",
       "updateError": "Something went wrong during update settings.",
@@ -92,5 +94,14 @@
       "updated": "Settings are updated successfully."
     }
   },
-  "loading": "Loading..."
+  "loading": "Loading...",
+  "auth": {
+    "title": "Authentication",
+    "label": "Input secret key to get grand access",
+    "getGrandAccess": "Get grand Access",
+    "signOut": "Sign Out",
+    "loggedInSuccessfully": "You have been authenticated successfully.",
+    "loggedInFailed": "You have not been authenticated. The inputted secret key is wrong.",
+    "loggedOutSuccessfully": "You have been logged out successfully."
+  }
 }

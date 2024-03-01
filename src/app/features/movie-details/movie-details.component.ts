@@ -3,6 +3,7 @@ import { ChangeDetectionStrategy, Component, OnInit, inject, OnDestroy, Input, S
 import { Title } from '@angular/platform-browser';
 import { Router, RouterLink } from '@angular/router';
 import { urlsConstant } from '@appConstants';
+import { IsAuthenticatedDirective } from '@appDirectives';
 import { MovieModel } from '@appModels';
 
 import { take } from 'rxjs';
@@ -15,7 +16,14 @@ import { MovieDetailsEffects, MovieDetailsStore } from './store';
 @Component({
   selector: 'cc-movie-details',
   standalone: true,
-  imports: [RouterLink, MovieDetailsRawContentComponent, MovieDetailsFullContentComponent, TranslateModule, NgStyle],
+  imports: [
+    RouterLink,
+    MovieDetailsRawContentComponent,
+    MovieDetailsFullContentComponent,
+    TranslateModule,
+    NgStyle,
+    IsAuthenticatedDirective
+  ],
   templateUrl: './movie-details.component.html',
   styleUrls: ['./movie-details.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush

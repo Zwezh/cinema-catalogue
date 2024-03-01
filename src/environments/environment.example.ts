@@ -7,16 +7,20 @@ import { Environment } from '@appModels';
 export const environment: Environment = {
   production: false,
   firebaseOptions: {
-    apiKey: 'AIzaSyAjppsLKh3q9Kh4TaG4dhcr-4xC7eFJKbw',
-    authDomain: 'cinema-catalogue.firebaseapp.com',
-    projectId: 'cinema-catalogue',
-    storageBucket: 'cinema-catalogue.appspot.com',
-    messagingSenderId: '1063421071099',
-    appId: '1:1063421071099:web:9f639e414323560be9ea5e'
+    apiKey: 'x',
+    authDomain: 'xxx.firebaseapp.com',
+    projectId: 'x',
+    storageBucket: 'xxx.appspot.com',
+    messagingSenderId: 'x',
+    appId: 'x'
   },
-  // kinopoiskToken: 'T11347S-7JJMGDN-GPJT8YX-2KPCPMQ',
-  kinopoiskToken: 'ZZT1GA1-PD4MPDG-MJWTJ90-G7Q3BKJ',
-  settingsId: '26ADw6uTvXbZjarBWqHl'
+  kinopoiskToken: 'x',
+  settingsId: 'x',
+  authToken: {
+    date: 'date',
+    fullName: 'X x',
+    admin: false
+  }
 };
 
 /*

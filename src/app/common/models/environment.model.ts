@@ -5,4 +5,9 @@ export interface Environment {
   firebaseOptions: FirebaseOptions;
   kinopoiskToken: string;
   settingsId: string;
+  authToken: {
+    date: string;
+    fullName: string;
+    admin: boolean;
+  };
 }

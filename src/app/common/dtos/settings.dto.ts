@@ -3,5 +3,6 @@ export interface SettingsDto {
   language: string;
   quality: string;
   extension: string;
+  key: string;
   genresForFilters: string[];
 }

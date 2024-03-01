@@ -1,4 +1,5 @@
 export const storageKeysConstant = {
   MOVIES: 'movies',
-  SETTINGS: 'settings'
+  SETTINGS: 'settings',
+  AUTH: 'auth'
 };
