@@ -1,33 +1,37 @@
 import { Injectable } from '@angular/core';
 import { MovieDto } from '@appDTOs';
-import { FireApiService } from '@appServices';
 
 import { Observable } from 'rxjs';
 
-@Injectable({
-  providedIn: 'root'
-})
-export class MoviesApiService extends FireApiService {
+import { BaseApiService } from './base-api.service';
+
+@Injectable({ providedIn: 'root' })
+export class MoviesApiService extends BaseApiService {
   constructor() {
     super('movies');
   }
 
   getAllMovies$(): Observable<MovieDto[]> {
-    return this.getAll$<MovieDto>((ref) => ref.orderBy('addedDate', 'desc'));
+    return this.httpClient.get<MovieDto[]>(this.url);
+  }
+
+  getMovieGenres$(): Observable<string[]> {
+    return this.httpClient.get<string[]>(`${this.url}/genres`);
   }
 
   getMovieById$(id: string): Observable<MovieDto> {
-    return this.getById$<MovieDto>(id);
+    return this.httpClient.get<MovieDto>(`${this.url}/${id}`);
   }
 
-  updateMovie$(movie: MovieDto): Observable<void> {
-    return this.update$<MovieDto>(movie);
+  updateMovie$(movie: MovieDto): Observable<MovieDto> {
+    return this.httpClient.put<MovieDto>(this.url, movie);
   }
 
-  addMovie$(dto: MovieDto): Observable<unknown> {
-    return this.add$<MovieDto>(dto);
+  addMovie$(dto: MovieDto): Observable<MovieDto> {
+    return this.httpClient.post<MovieDto>(this.url, dto);
   }
+
   deleteMovie$(id: string): Observable<unknown> {
-    return this.delete$({ id });
+    return this.httpClient.delete<void>(`${this.url}/${id}`);
   }
 }

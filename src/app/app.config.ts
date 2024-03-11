@@ -1,19 +1,18 @@
-import { HttpClient, provideHttpClient } from '@angular/common/http';
-import { importProvidersFrom, ApplicationConfig } from '@angular/core';
-import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
-import { FIREBASE_OPTIONS } from '@angular/fire/compat';
-import { getFirestore, provideFirestore } from '@angular/fire/firestore';
+import { HttpClient, provideHttpClient, withInterceptors } from '@angular/common/http';
+import { ApplicationConfig, importProvidersFrom } from '@angular/core';
 import {
-  provideRouter,
   TitleStrategy,
+  provideRouter,
   withComponentInputBinding,
   withInMemoryScrolling,
   withViewTransitions
 } from '@angular/router';
-import { LanguagesConstant } from '@appConstants';
+import { LanguagesConstant, StorageKeysConstant } from '@appConstants';
+import { authInterceptor } from '@appInterceptors';
 import { TitleStrategyService } from '@appServices';
 import { ENVIRONMENT } from '@appTokens';
 
+import { JwtModule } from '@auth0/angular-jwt';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 
@@ -34,11 +33,8 @@ export const APP_CONFIG: ApplicationConfig = {
       withInMemoryScrolling({ scrollPositionRestoration: 'top' })
     ),
     { provide: ENVIRONMENT, useValue: environment },
-    importProvidersFrom(provideFirebaseApp(() => initializeApp(environment.firebaseOptions))),
-    importProvidersFrom(provideFirestore(() => getFirestore())),
-    { provide: FIREBASE_OPTIONS, useValue: environment.firebaseOptions },
     { provide: TitleStrategy, useClass: TitleStrategyService },
-    provideHttpClient(),
+    provideHttpClient(withInterceptors([authInterceptor])),
     importProvidersFrom(
       TranslateModule.forRoot({
         defaultLanguage: LanguagesConstant.EN,
@@ -46,6 +42,11 @@ export const APP_CONFIG: ApplicationConfig = {
           provide: TranslateLoader,
           useFactory: HttpLoaderFactory,
           deps: [HttpClient]
+        }
+      }),
+      JwtModule.forRoot({
+        config: {
+          tokenGetter: () => localStorage.getItem(StorageKeysConstant.TOKEN)
         }
       })
     )

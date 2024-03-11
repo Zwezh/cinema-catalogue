@@ -1,53 +1,52 @@
-import { effect, inject, Injectable, Signal, signal } from '@angular/core';
-import { SettingsStore } from '@app/features/settings';
-import { storageKeysConstant } from '@appConstants';
+import { HttpClient } from '@angular/common/http';
+import { inject, Injectable, signal, WritableSignal } from '@angular/core';
+import { StorageKeysConstant } from '@appConstants';
 import { ToastsService } from '@appLayout';
-import { ENVIRONMENT } from '@appTokens';
 
-import sign from 'jwt-encode';
+import { take } from 'rxjs';
+
+import { JwtHelperService } from '@auth0/angular-jwt';
+
+import { BaseApiService } from './features-api/base-api.service';
 
 @Injectable({
   providedIn: 'root'
 })
-export class AuthService {
-  readonly isLoggedIn = signal(JSON.parse(localStorage.getItem(storageKeysConstant.AUTH)) || false);
-  #settingsStore = inject(SettingsStore);
+export class AuthService extends BaseApiService {
+  readonly isLoggedIn: WritableSignal<boolean>;
   #toastService = inject(ToastsService);
-  #environment = inject(ENVIRONMENT);
-  readonly #secretKey: Signal<string>;
-
+  #httpClient = inject(HttpClient);
+  #jwtHelper = inject(JwtHelperService);
   constructor() {
-    this.#secretKey = this.#settingsStore.select(({ settings }) => settings.key);
-    effect(() => {
-      localStorage.setItem(storageKeysConstant.AUTH, JSON.stringify(this.isLoggedIn()));
-    });
+    super('auth');
+    this.isLoggedIn = signal(this.#isAuthenticated());
   }
 
-  authenticate(inputKey: string): void {
-    const encodedKey = this.#encodeKey(inputKey);
-    if (encodedKey === this.#secretKey()) {
-      this.isLoggedIn.set(true);
-      this.#toastService.show({
-        type: 'success',
-        translateKey: 'auth.loggedInSuccessfully'
+  authenticate(secretKey: string): void {
+    this.#httpClient
+      .post<{ access_token: string }>(this.url, { secretKey })
+      .pipe(take(1))
+      .subscribe({
+        next: (response: { access_token: string }) => {
+          localStorage.setItem(StorageKeysConstant.TOKEN, response.access_token);
+          this.isLoggedIn.set(true);
+          this.#toastService.show({
+            type: 'success',
+            translateKey: 'auth.loggedInSuccessfully'
+          });
+        },
+        error: () => this.#toastService.show({ type: 'danger', translateKey: 'auth.loggedInFailed' })
       });
-    } else {
-      this.#toastService.show({
-        type: 'danger',
-        translateKey: 'auth.loggedInFailed'
-      });
-    }
   }
 
   signOut(): void {
+    localStorage.removeItem(StorageKeysConstant.TOKEN);
     this.isLoggedIn.set(false);
-    this.#toastService.show({
-      type: 'success',
-      translateKey: 'auth.loggedOutSuccessfully'
-    });
+    this.#toastService.show({ type: 'success', translateKey: 'auth.loggedOutSuccessfully' });
   }
 
-  #encodeKey(key: string): string {
-    return sign(this.#environment.authToken, key);
+  #isAuthenticated(): boolean {
+    const token = localStorage.getItem(StorageKeysConstant.TOKEN);
+    return token && !this.#jwtHelper.isTokenExpired(token);
   }
 }

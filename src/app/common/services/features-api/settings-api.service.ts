@@ -1,27 +1,21 @@
-import { Inject, Injectable } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { SettingsDto } from '@appDTOs';
-import { Environment } from '@appModels';
-import { FireApiService } from '@appServices';
-import { ENVIRONMENT } from '@appTokens';
 
 import { Observable } from 'rxjs';
 
-@Injectable({
-  providedIn: 'root'
-})
-export class SettingsApiService extends FireApiService {
-  #settingsId: string;
+import { BaseApiService } from './base-api.service';
 
-  constructor(@Inject(ENVIRONMENT) environment: Environment) {
+@Injectable({ providedIn: 'root' })
+export class SettingsApiService extends BaseApiService {
+  constructor() {
     super('settings');
-    this.#settingsId = environment.settingsId;
   }
 
-  getSettings$(): Observable<SettingsDto> {
-    return this.getById$<SettingsDto>(this.#settingsId);
+  getSettigns$(): Observable<SettingsDto> {
+    return this.httpClient.get<SettingsDto>(this.url);
   }
 
-  updateSettings$(dto: SettingsDto): Observable<void> {
-    return this.update$<SettingsDto>(dto);
+  updateSettings$(settingsDto: SettingsDto): Observable<SettingsDto> {
+    return this.httpClient.put<SettingsDto>(this.url, settingsDto);
   }
 }

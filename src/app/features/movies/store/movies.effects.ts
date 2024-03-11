@@ -1,5 +1,4 @@
 import { effect, inject, Injectable } from '@angular/core';
-import { storageKeysConstant } from '@appConstants';
 import { MovieDto } from '@appDTOs';
 import { LoadingBarStore, Toast, ToastsService } from '@appLayout';
 import { MovieModel } from '@appModels';
@@ -38,16 +37,6 @@ export class MoviesEffects {
   }
 
   loadAllMovies(): void {
-    this.#updateStateByLoading(true);
-    const cachedMovies = sessionStorage.getItem(storageKeysConstant.MOVIES);
-    const movies = JSON.parse(cachedMovies) as MovieDto[];
-    if (cachedMovies && movies.length) {
-      const movieList = this.#convertDtoListToModel(movies);
-      this.#sourceMovies = [...movieList];
-      this.#updateStateAfterLoad();
-      this.#updateStateByLoading(false);
-      return;
-    }
     this.#apiService
       .getAllMovies$()
       .pipe(
@@ -65,7 +54,6 @@ export class MoviesEffects {
           this.#toastService.show(toast);
         }),
         filter(Boolean),
-        tap((movies: MovieDto[]) => sessionStorage.setItem(storageKeysConstant.MOVIES, JSON.stringify(movies))),
         map(this.#convertDtoListToModel),
         tap((movies: MovieModel[]) => (this.#sourceMovies = [...movies]))
       )

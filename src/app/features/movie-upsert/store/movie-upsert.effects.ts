@@ -1,5 +1,4 @@
 import { effect, inject, Injectable } from '@angular/core';
-import { storageKeysConstant } from '@appConstants';
 import { MovieDto } from '@appDTOs';
 import { LoadingBarStore, ToastsService } from '@appLayout';
 import { KinopoiskApiService, MoviesApiService } from '@appServices';
@@ -84,10 +83,9 @@ export class MovieUpsertEffects {
       .subscribe((result) => this.#store.update((state) => ({ ...state, movieDTO: result, loading: false })));
   }
 
-  updateMovie$(movie: MovieDto): Observable<void> {
+  updateMovie$(movie: MovieDto): Observable<MovieDto> {
     this.#store.update((state) => ({ ...state, loading: true }));
     return this.#moviesApi.updateMovie$(movie).pipe(
-      tap(() => sessionStorage.removeItem(storageKeysConstant.MOVIES)),
       tap(() => {
         this.#toastService.show({
           type: 'success',
@@ -105,10 +103,9 @@ export class MovieUpsertEffects {
     );
   }
 
-  addMovie$(movie: MovieDto): Observable<unknown> {
+  addMovie$(movie: MovieDto): Observable<MovieDto> {
     this.#store.update((state) => ({ ...state, loading: true }));
     return this.#moviesApi.addMovie$(movie).pipe(
-      tap(() => sessionStorage.removeItem(storageKeysConstant.MOVIES)),
       tap((res) => {
         if (res) {
           this.#toastService.show({

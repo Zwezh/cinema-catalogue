@@ -1,5 +1,5 @@
-import { MovieModel } from '@app/common/models';
 import { FiltersValueType } from '@app/features/filters-panel';
+import { MovieModel } from '@appModels';
 
 export const moviesFilterHelper = (movie: MovieModel, filtersString: string): boolean => {
   //TODO A.Z.: Update after fix data in db.

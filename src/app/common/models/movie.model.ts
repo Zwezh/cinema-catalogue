@@ -14,6 +14,7 @@ export class MovieModel {
   readonly extension: string;
   readonly genres: string;
   readonly id: string;
+  readonly isCartoon: boolean;
   readonly isSeries: boolean;
   readonly kpId: number;
   readonly posterUrl: string;
@@ -47,13 +48,10 @@ export class MovieModel {
     this.movieDuration = this.movieLength.split('/')[1];
     this.quality = value?.quality;
     this.rating = value?.rating;
-    this.year = value?.year;
+    this.year = value?.isSeries ? this.#buildYearForSeries(value?.year as number[]) : value?.year.toString();
     this.sequelsAndPrequels = value?.sequelsAndPrequels?.join(', ');
     this.similarMovies = value?.similarMovies?.join(', ');
-  }
-
-  get isCartoon(): boolean {
-    return this.genres.includes('мультфильм');
+    this.isCartoon = this.genres.includes('мультфильм');
   }
 
   #toHoursAndMinutes(totalMinutes: number): string {
@@ -65,5 +63,9 @@ export class MovieModel {
 
   #padTo2Digits(value: number) {
     return value.toString().padStart(2, '0');
+  }
+
+  #buildYearForSeries(value: number[]): string {
+    return `${value[0]} - ${value[1] ?? '...'}`;
   }
 }

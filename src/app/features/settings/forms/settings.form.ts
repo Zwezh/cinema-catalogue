@@ -10,10 +10,8 @@ export class SettingsForm extends FormGroup<SettingsFormModel> {
       id: new FormControl<string>(settings?.id, Validators.required),
       extension: new FormControl<string>(settings?.extension, Validators.required),
       genresForFilters: new FormArray<FormControl<string>>(convertFilterListToControls(settings)),
-      language: new FormControl<string>(settings?.language, Validators.required),
       quality: new FormControl<string>(settings?.quality, Validators.required)
     });
-    this.controls.language.disable();
   }
 
   addGenre(value?: string): void {

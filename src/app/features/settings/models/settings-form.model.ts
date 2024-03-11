@@ -6,6 +6,5 @@ export interface SettingsFormModel {
   id: FormControl<string>;
   extension: FormControl<string>;
   genresForFilters: FormArray<FormControl<string>>;
-  language: FormControl<string>;
   quality: FormControl<string>;
 }

@@ -1,5 +1,4 @@
 import { effect, inject, Injectable } from '@angular/core';
-import { storageKeysConstant } from '@appConstants';
 import { MovieDto } from '@appDTOs';
 import { LoadingBarStore, ToastsService } from '@appLayout';
 import { MovieModel } from '@appModels';
@@ -63,7 +62,6 @@ export class MovieDetailsEffects {
     this.#store.update((state) => ({ ...state, loading: true }));
     return this.#apiService.deleteMovie$(id).pipe(
       tap(() => this.#store.update((state) => ({ ...state, loading: false }))),
-      tap(() => sessionStorage.removeItem(storageKeysConstant.MOVIES)),
       tap((res) => {
         if (res) {
           this.#toastService.show({

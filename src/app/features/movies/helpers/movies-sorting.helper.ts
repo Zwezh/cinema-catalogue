@@ -1,5 +1,5 @@
-import { MovieModel } from '@app/common/models';
 import { SortingDirectionConstant, SortingKeyConstant, SortingType } from '@app/features/actions-panel';
+import { MovieModel } from '@appModels';
 
 export const moviesSortingHelper = (list: MovieModel[], sortItem: SortingType): MovieModel[] => {
   return list.length ? [...list.sort((a: MovieModel, b: MovieModel) => orderBy(a, b, sortItem))] : list;

@@ -65,7 +65,7 @@ export class MovieUpsertForm extends FormGroup<MovieUpsertFormModel> {
       posterUrl: value?.posterUrl,
       quality: value?.quality || quality,
       rating: value?.rating,
-      year: value?.year,
+      year: value?.year.toString(),
       sequelsAndPrequels: value?.sequelsAndPrequels?.join(', '),
       similarMovies: value?.similarMovies?.join(', ')
     });
@@ -118,7 +118,7 @@ export class MovieUpsertForm extends FormGroup<MovieUpsertFormModel> {
       actors: this.value.actors.split(', '),
       quality: this.value.quality,
       rating: this.value.rating,
-      year: this.value.year,
+      year: this.#getYearAsNumber(),
       sequelsAndPrequels: this.value.sequelsAndPrequels.split(', '),
       similarMovies: this.value.similarMovies.split(', ')
     };
@@ -136,12 +136,16 @@ export class MovieUpsertForm extends FormGroup<MovieUpsertFormModel> {
   }
 
   #getYear(value: KinopoiskDto): string {
-    return value.isSeries
-      ? `${value.releaseYears[0].start} - ${value.releaseYears[0].end || '...'}`
-      : value.year.toString();
+    return value.isSeries ? `${value.releaseYears[0].start},${value.releaseYears[0].end}` : value.year.toString();
   }
 
   #getDuration(value: KinopoiskDto): number {
     return value.isSeries ? value.seriesLength : value.movieLength;
+  }
+
+  #getYearAsNumber(): number | number[] {
+    return this.value.isSeries
+      ? this.value.year.split(',').map((year: string) => Number(year))
+      : Number(this.value.year);
   }
 }

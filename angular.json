@@ -80,7 +80,8 @@
               "buildTarget": "cinema-catalogue:build:production"
             },
             "development": {
-              "buildTarget": "cinema-catalogue:build:development"
+              "buildTarget": "cinema-catalogue:build:development",
+              "proxyConfig": "proxy.config.json"
             }
           },
           "defaultConfiguration": "development"

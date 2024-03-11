@@ -1,5 +1,4 @@
-export const storageKeysConstant = {
-  MOVIES: 'movies',
-  SETTINGS: 'settings',
-  AUTH: 'auth'
-};
+export enum StorageKeysConstant {
+  LANGUGAGE = 'language',
+  TOKEN = 'token'
+}

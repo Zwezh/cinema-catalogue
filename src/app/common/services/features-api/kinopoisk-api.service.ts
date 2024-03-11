@@ -1,8 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Inject, inject, Injectable } from '@angular/core';
 import { KinopoiskDto, KinopoiskImageDto } from '@appDTOs';
-import { Environment } from '@appModels';
 import { ENVIRONMENT } from '@appTokens';
+import { Environment } from '@appTypes';
 
 import { catchError, map, Observable } from 'rxjs';
 

@@ -18,7 +18,7 @@ export interface MovieDto {
   actors: string[];
   quality: string;
   rating: number;
-  year: string;
+  year: number | number[];
   sequelsAndPrequels: string[];
   similarMovies: string[];
 }

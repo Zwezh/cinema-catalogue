@@ -2,7 +2,7 @@ import { TestBed } from '@angular/core/testing';
 
 import { SettingsApiService } from './settings-api.service';
 
-describe('MoviesApiService', () => {
+describe(SettingsApiService.name, () => {
   let service: SettingsApiService;
 
   beforeEach(() => {

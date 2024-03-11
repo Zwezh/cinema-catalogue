@@ -3,9 +3,8 @@
   "compilerOptions": {
     "baseUrl": "./",
     "paths": {
-      "@app/*": ["./src/app/*"],
       "@appServices": ["./src/app/common/services"],
-      "@appModels": ["./src/app/common/models"],
+      "@appModels": ["src/app/common/models"],
       "@appTokens": ["./src/app/common/tokens"],
       "@appLayout": ["./src/app/layout"],
       "@appDTOs": ["./src/app/common/dtos"],
@@ -13,7 +12,10 @@
       "@appConstants": ["./src/app/common/constants"],
       "@appStore": ["./src/app/common/store"],
       "@appGuards": ["./src/app/common/guards"],
-      "@appDirectives": ["./src/app/common/directives"]
+      "@appDirectives": ["./src/app/common/directives"],
+      "@appTypes": ["./src/app/common/types"],
+      "@appInterceptors": ["./src/app/common/interceptors"],
+      "@app/*": ["./src/app/*"]
     },
     "outDir": "./dist/out-tsc",
     "forceConsistentCasingInFileNames": true,

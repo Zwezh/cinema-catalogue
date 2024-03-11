@@ -3,8 +3,11 @@
   <button type="button" class="btn-close" aria-label="Close" (click)="activeModal.dismiss()"></button>
 </div>
 <div class="modal-body">
+  <p>
+    {{ 'auth.authRequestHint' | translate }}
+  </p>
   <label for="key" class="form-label">{{ 'auth.label' | translate }}</label>
-  <input type="text" class="form-control" #keyInput id="key" />
+  <input type="password" class="form-control" #keyInput id="key" />
 </div>
 <div class="modal-footer">
   <button type="button" class="btn btn-secondary" (click)="activeModal.dismiss()">

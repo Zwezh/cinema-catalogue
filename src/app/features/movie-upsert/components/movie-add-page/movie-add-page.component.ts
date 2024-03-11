@@ -30,9 +30,9 @@ export class MovieAddPageComponent extends MovieUpsertPageBaseComponent {
     this.effects
       .addMovie$(this.form.getMovieValue())
       .pipe(take(1))
-      .subscribe(() => {
+      .subscribe(({ id }) => {
         this.form.reset();
-        this.#router.navigate(['..'], { relativeTo: this.#activatedRoute });
+        this.#router.navigate(['..', id], { relativeTo: this.#activatedRoute });
       });
   }
 

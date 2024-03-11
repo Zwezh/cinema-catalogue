@@ -1,8 +1,7 @@
 import { effect, inject, Injectable } from '@angular/core';
-import { storageKeysConstant } from '@appConstants';
 import { SettingsDto } from '@appDTOs';
 import { LoadingBarStore, ToastsService } from '@appLayout';
-import { SettingsApiService } from '@appServices';
+import { MoviesApiService, SettingsApiService } from '@appServices';
 
 import { catchError, filter, take, tap, throwError } from 'rxjs';
 
@@ -12,6 +11,7 @@ import { SettingsStore } from './settings.store';
 export class SettingsEffects {
   #store = inject(SettingsStore);
   #apiService = inject(SettingsApiService);
+  #moviesApiService = inject(MoviesApiService);
   #toastService = inject(ToastsService);
   #loadingBarStore = inject(LoadingBarStore);
 
@@ -34,7 +34,7 @@ export class SettingsEffects {
   load(): void {
     this.#store.update((state) => ({ ...state, loading: true }));
     this.#apiService
-      .getSettings$()
+      .getSettigns$()
       .pipe(
         take(1),
         tap((res) => {
@@ -50,10 +50,7 @@ export class SettingsEffects {
             });
           }
         }),
-        filter(Boolean),
-        tap((settings: SettingsDto) => {
-          sessionStorage.setItem(storageKeysConstant.SETTINGS, JSON.stringify(settings));
-        })
+        filter(Boolean)
       )
       .subscribe({
         next: (settings: SettingsDto) => this.#store.update((state) => ({ ...state, settings })),
@@ -61,14 +58,36 @@ export class SettingsEffects {
       });
   }
 
-  update(settings: SettingsDto): void {
+  loadGenres(): void {
+    this.#store.update((state) => ({ ...state, loading: true }));
+    this.#moviesApiService
+      .getMovieGenres$()
+      .pipe(take(1), filter(Boolean))
+      .subscribe({
+        next: (movieGenres: string[]) => {
+          this.#store.update((state) => ({ ...state, movieGenres }));
+          this.#toastService.show({
+            type: 'success',
+            translateKey: 'settings.notifications.loaded'
+          });
+        },
+        error: () => {
+          this.#toastService.show({
+            type: 'danger',
+            translateKey: 'settings.notifications.loadingError'
+          });
+        },
+        complete: () => this.#store.update((state) => ({ ...state, loading: false }))
+      });
+  }
+
+  update(value: SettingsDto): void {
     this.#store.update((state) => ({ ...state, loading: true }));
     this.#apiService
-      .updateSettings$(settings)
+      .updateSettings$(value)
       .pipe(
         take(1),
-        tap(() => this.#store.update((state) => ({ ...state, settings, loading: false }))),
-        tap(() => sessionStorage.setItem(storageKeysConstant.SETTINGS, JSON.stringify(settings))),
+        tap((settings: SettingsDto) => this.#store.update((state) => ({ ...state, settings, loading: false }))),
         tap(() =>
           this.#toastService.show({
             type: 'success',

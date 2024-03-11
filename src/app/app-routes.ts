@@ -35,7 +35,8 @@ export const APP_ROUTES: Routes = [
   {
     path: 'settings',
     title: 'settings.title',
-    loadComponent: () => import('./features/settings/settings.component').then((m) => m.SettingsComponent)
+    loadComponent: () => import('./features/settings/settings.component').then((m) => m.SettingsComponent),
+    canMatch: [authGuard]
   },
   { path: '', redirectTo: 'movies', pathMatch: 'prefix' },
   { path: '*', redirectTo: 'movies' }
