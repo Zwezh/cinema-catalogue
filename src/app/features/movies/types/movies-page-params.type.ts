@@ -1,7 +1,6 @@
 export type MoviesPageParamsType = {
   filters?: string;
-  page?: string;
-  resetState?: boolean;
+  currentPage?: string;
   search?: string;
   sort?: string;
 };

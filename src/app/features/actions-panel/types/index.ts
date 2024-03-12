@@ -1,1 +1,1 @@
-export * from './sorting.type';
+export * from './list-actions-state.type';

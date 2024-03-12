@@ -1,14 +1,8 @@
-import { SortingDirectionConstant, SortingKeyConstant } from '@app/features/actions-panel';
-
 import { MoviesState } from '../types';
 
 export const MOVIES_INITIAL_STATE: MoviesState = {
-  currentPage: 1,
+  currentPage: 0,
   loading: null,
   movies: [],
-  sorting: {
-    direction: SortingDirectionConstant.desc,
-    key: SortingKeyConstant.addedDate
-  },
-  pageSize: 30
+  totalCount: 0
 };

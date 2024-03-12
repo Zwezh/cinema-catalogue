@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
-import { MovieDto } from '@appDTOs';
+import { MoviesParams } from '@app/common/types/movies-params.type';
+import { MovieDto, MovieListDto } from '@appDTOs';
 
 import { Observable } from 'rxjs';
 
@@ -11,8 +12,8 @@ export class MoviesApiService extends BaseApiService {
     super('movies');
   }
 
-  getAllMovies$(): Observable<MovieDto[]> {
-    return this.httpClient.get<MovieDto[]>(this.url);
+  getAllMovies$(params: MoviesParams): Observable<MovieListDto> {
+    return this.httpClient.get<MovieListDto>(this.url, { params });
   }
 
   getMovieGenres$(): Observable<string[]> {

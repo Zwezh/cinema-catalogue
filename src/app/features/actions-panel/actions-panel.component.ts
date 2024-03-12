@@ -7,13 +7,16 @@ import {
   OnInit,
   Signal,
   ViewChild,
+  effect,
   inject,
   signal
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { ActivatedRoute, Router, RouterModule } from '@angular/router';
+import { ActivatedRoute, Params, Router, RouterModule } from '@angular/router';
+import { SortingDirectionConstant } from '@appConstants';
 import { IsAuthenticatedDirective } from '@appDirectives';
+import { Sorting, SortingKey } from '@appTypes';
 
 import { debounceTime } from 'rxjs';
 
@@ -21,11 +24,10 @@ import { NgbAccordionDirective, NgbAccordionModule } from '@ng-bootstrap/ng-boot
 import { NgSelectModule } from '@ng-select/ng-select';
 import { TranslateModule } from '@ngx-translate/core';
 
-import { SortingDirectionConstant, SortingKeyConstant } from './constants';
-import { SortingType } from './types';
+import { SortingKeysConstant } from './constants';
+import { ListActionsEffects, ListActionsStore } from './store';
 
 import { FiltersPanelComponent, FiltersValueType } from '../filters-panel';
-import { MoviesEffects, MoviesPageParamsType, MoviesStore } from '../movies';
 import { SettingsStore } from '../settings';
 
 @Component({
@@ -51,36 +53,33 @@ export class ActionsPanelComponent implements OnInit, AfterViewInit {
   searchControl = new FormControl();
   active = false;
 
-  sortingList = Object.values(SortingKeyConstant).map((key) => ({ value: key }));
+  sortingList = SortingKeysConstant;
   sortingDirections = SortingDirectionConstant;
-  $selectedSortItem: Signal<SortingType>;
+  $selectedSortItem: Signal<Sorting>;
   $filters = signal<Partial<FiltersValueType>>(undefined);
   $genresForFilters = inject(SettingsStore).select(({ settings }) => settings?.genresForFilters || []);
   #activatedRoute = inject(ActivatedRoute);
   #router = inject(Router);
-  #effects = inject(MoviesEffects);
-  #store = inject(MoviesStore);
+  #effects = inject(ListActionsEffects);
+  #store = inject(ListActionsStore);
   #destroyRef = inject(DestroyRef);
 
   constructor() {
     this.$selectedSortItem = this.#store.select(({ sorting }) => sorting);
+    effect(() => {
+      this.searchControl.setValue(this.#store.select(({ searchValue }) => searchValue)());
+    });
   }
 
   ngOnInit(): void {
     this.searchControl.valueChanges
-      .pipe(debounceTime(300), takeUntilDestroyed(this.#destroyRef))
-      .subscribe((value: string) => this.#navigateChange({ search: value || undefined, resetState: true, page: '1' }));
-    this.#activatedRoute.queryParams
-      .pipe(takeUntilDestroyed(this.#destroyRef))
-      .subscribe((params: MoviesPageParamsType) => {
-        this.#effects.setMovieListParams(params);
-        this.searchControl.patchValue(params.search, { emitEvent: false });
-        if (params.filters) {
-          const filters = JSON.parse(decodeURIComponent(params.filters));
-          this.$filters.set(filters);
-        }
+      .pipe(debounceTime(500), takeUntilDestroyed(this.#destroyRef))
+      .subscribe((value: string) => {
+        const queryParams: Params = { search: value || undefined, currentPage: undefined };
+        this.#router.navigate([], { queryParams, queryParamsHandling: 'merge' });
       });
     this.active = !!this.#activatedRoute.snapshot.queryParams['filters'];
+    this.#effects.initListActionsEffect();
   }
   ngAfterViewInit(): void {
     if (this.active) {
@@ -90,18 +89,21 @@ export class ActionsPanelComponent implements OnInit, AfterViewInit {
 
   onChangeFilters(value: Partial<FiltersValueType>): void {
     const filters = value ? encodeURIComponent(JSON.stringify(value)) : undefined;
-    this.#navigateChange({ filters, resetState: true, page: '1' });
+    // this.#navigateChange({ filters, currentPage: undefined });
   }
 
-  onChangeSortingKey(value: SortingKeyConstant): void {
-    this.#effects.changeSortingKey(value);
+  onChangeSortingKey(key: SortingKey): void {
+    this.#router.navigate([], { queryParams: { key }, queryParamsHandling: 'merge' });
   }
 
   onChangeSortingDirection(): void {
-    this.#effects.changeSortingDirection();
+    const direction = this.#getSortingDirection();
+    this.#router.navigate([], { queryParams: { direction }, queryParamsHandling: 'merge' });
   }
 
-  #navigateChange(queryParams: MoviesPageParamsType): void {
-    this.#router.navigate([], { queryParams, queryParamsHandling: 'merge' });
+  #getSortingDirection(): SortingDirectionConstant {
+    return this.$selectedSortItem()?.direction === SortingDirectionConstant.desc
+      ? SortingDirectionConstant.asc
+      : SortingDirectionConstant.desc;
   }
 }

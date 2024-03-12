@@ -1,17 +1,17 @@
-@if (!$loading()) {
+@if (!loading()) {
   <div class="card shadow border-0">
     <div class="card-header">
       <cc-actions-panel></cc-actions-panel>
     </div>
-    <cc-movies-list [movies]="$movies() | slice: $indexFrom() : $indexTo()"></cc-movies-list>
+    <cc-movies-list [movies]="movies()"></cc-movies-list>
     <div class="m-auto">
       <ngb-pagination
         [ellipses]="true"
         [maxSize]="maxPages()"
         [rotate]="true"
-        [page]="$currentPage() + 1"
-        [pageSize]="$pageSize()"
-        [collectionSize]="$collectionSize()"
+        [page]="currentPage() + 1"
+        [pageSize]="pageSize"
+        [collectionSize]="totalCount()"
         (pageChange)="onChangePageChange($event)">
       </ngb-pagination>
     </div>

@@ -28,8 +28,8 @@
         [clearable]="false"
         (change)="onChangeSortingKey($event)">
         @for (item of sortingList; track item) {
-          <ng-option [value]="item.value">
-            {{ 'movie.' + item.value | translate }}
+          <ng-option [value]="item">
+            {{ 'movie.' + item | translate }}
           </ng-option>
         }
       </ng-select>
