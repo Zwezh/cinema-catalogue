@@ -18,8 +18,13 @@
       <div class="col-lg-9">
         <div class="main-info mb-3">
           <div class="rating">
-            <i class="bi-star-fill icon filled text-warning"></i>
-            {{ movie.rating }}
+            <a
+              class="icon-link link-offset-1 link-dark link-underline-warning"
+              [href]="movie.kinopoiskLink"
+              target="_blank">
+              <i class="bi-star-fill icon filled text-warning"></i>
+              {{ movie.rating }}
+            </a>
           </div>
           <div class="vr"></div>
           {{ movie.year }}

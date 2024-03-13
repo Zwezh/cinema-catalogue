@@ -1,0 +1,17 @@
+<div class="modal-header">
+  <h4 class="modal-title">{{ data.title }}</h4>
+  <button type="button" class="btn-close" aria-label="Close" (click)="activeModal.dismiss()"></button>
+</div>
+<div class="modal-body">
+  <p>
+    {{ data.body }}
+  </p>
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-secondary" (click)="activeModal.close(false)">
+    {{ data.cancelButton }}
+  </button>
+  <button type="button" [class]="'btn btn-' + data.type" (click)="activeModal.close(true)">
+    {{ data.confirmButton }}
+  </button>
+</div>

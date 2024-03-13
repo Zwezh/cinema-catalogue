@@ -16,6 +16,7 @@ export class MovieModel {
   readonly id: string;
   readonly isCartoon: boolean;
   readonly isSeries: boolean;
+  readonly kinopoiskLink: string;
   readonly kpId: number;
   readonly posterUrl: string;
   readonly name: string;
@@ -52,6 +53,7 @@ export class MovieModel {
     this.sequelsAndPrequels = value?.sequelsAndPrequels?.join(', ');
     this.similarMovies = value?.similarMovies?.join(', ');
     this.isCartoon = this.genres.includes('мультфильм');
+    this.kinopoiskLink = `https://www.kinopoisk.ru/${value.isSeries ? 'film' : 'series'}/${value.kpId}`;
   }
 
   #toHoursAndMinutes(totalMinutes: number): string {

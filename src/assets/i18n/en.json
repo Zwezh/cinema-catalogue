@@ -20,7 +20,8 @@
     "saveAndAddNew": "Save and add new",
     "cancel": "Cancel",
     "apply": "Apply",
-    "reset": "Reset"
+    "reset": "Reset",
+    "confirm": "Confirm"
   },
   "filters": {
     "title": "Filters",
@@ -73,6 +74,10 @@
       "deleted": "The movie is deleted successfully.",
       "loadingErrorFromKP": "Something went wrong, the movie isn't got from Kinopoisk.",
       "loadedFromKP": "The movie is loaded successfully from Kinopoisk."
+    },
+    "deleteModal": {
+      "title": "Please confirm the action!",
+      "body": "Are you sure you want delete '{{movieName}}'? \n This action permanently will delete record from db at all."
     }
   },
   "ratingIs": "Rating is:",

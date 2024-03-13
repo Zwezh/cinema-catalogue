@@ -4,7 +4,7 @@ import { LoadingBarStore, ToastsService } from '@appLayout';
 import { MovieModel } from '@appModels';
 import { MoviesApiService } from '@appServices';
 
-import { Observable, take, tap } from 'rxjs';
+import { catchError, Observable, take, tap, throwError } from 'rxjs';
 
 import { MovieDetailsStore } from './movie-details.store';
 
@@ -62,18 +62,13 @@ export class MovieDetailsEffects {
     this.#store.update((state) => ({ ...state, loading: true }));
     return this.#apiService.deleteMovie$(id).pipe(
       tap(() => this.#store.update((state) => ({ ...state, loading: false }))),
-      tap((res) => {
-        if (res) {
-          this.#toastService.show({
-            type: 'success',
-            translateKey: 'movie.notifications.deleted'
-          });
-        } else {
-          this.#toastService.show({
-            type: 'danger',
-            translateKey: 'movie.notifications.deleteError'
-          });
-        }
+      tap(() => this.#toastService.show({ type: 'success', translateKey: 'movie.notifications.deleted' })),
+      catchError((error) => {
+        this.#toastService.show({
+          type: 'danger',
+          translateKey: 'movie.notifications.deleteError'
+        });
+        return throwError(() => error);
       })
     );
   }
