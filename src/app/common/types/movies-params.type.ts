@@ -7,5 +7,11 @@ export type MoviesParams = {
   direction: SortingDirectionConstant;
   key: SortingKey;
   pageSize: number;
+  actors?: string;
+  directors?: string[];
+  fromYear?: number;
+  genres?: string[];
+  rating?: number;
   search?: string;
+  toYear?: number;
 };

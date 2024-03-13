@@ -30,8 +30,8 @@ import { MovieDetailsEffects, MovieDetailsStore } from './store';
 })
 export class MovieDetailsComponent implements OnInit, OnDestroy {
   @Input() id?: string;
-  $movie: Signal<MovieModel>;
-  $loading: Signal<boolean>;
+  movie: Signal<MovieModel>;
+  loading: Signal<boolean>;
 
   #effects = inject(MovieDetailsEffects);
   #store = inject(MovieDetailsStore);
@@ -39,10 +39,10 @@ export class MovieDetailsComponent implements OnInit, OnDestroy {
   #title = inject(Title);
 
   constructor() {
-    this.$movie = this.#store.select(({ movie }) => movie);
-    this.$loading = this.#store.select(({ loading }) => loading);
+    this.movie = this.#store.select(({ movie }) => movie);
+    this.loading = this.#store.select(({ loading }) => loading);
     effect(() => {
-      const name = this.$movie()?.name;
+      const name = this.movie()?.name;
       this.#title.setTitle(name);
     });
   }

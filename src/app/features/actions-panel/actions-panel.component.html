@@ -11,16 +11,16 @@
     <button
       type="button"
       class="btn filters__btn"
-      (click)="active = !active; accordion.toggle('filters')"
+      (click)="active.set(!active()); accordion.toggle('filters')"
       [attr.aria-label]="'filters.title' | translate"
       [title]="'filters.title' | translate">
-      <i class="bi" [ngClass]="{ 'bi-funnel-fill': active, 'bi-funnel': !active }"></i>
+      <i class="bi" [ngClass]="{ 'bi-funnel-fill': active(), 'bi-funnel': !active() }"></i>
       <span class="filters__label">{{ 'filters.title' | translate }}</span>
     </button>
     <div class="d-flex ms-md-3">
       <ng-select
         [searchable]="false"
-        [ngModel]="$selectedSortItem().key"
+        [ngModel]="selectedSortItem().key"
         class="sort-dropdown"
         id="sorting"
         bindLabel="value"
@@ -34,10 +34,10 @@
         }
       </ng-select>
       <button class="btn" type="button" (click)="onChangeSortingDirection()">
-        @if ($selectedSortItem().direction === sortingDirections.desc) {
+        @if (selectedSortItem().direction === sortingDirections.desc) {
           <i class="bi bi-sort-down"></i>
         }
-        @if ($selectedSortItem().direction === sortingDirections.asc) {
+        @if (selectedSortItem().direction === sortingDirections.asc) {
           <i class="bi bi-sort-up"></i>
         }
       </button>
@@ -50,8 +50,8 @@
     <div ngbAccordionCollapse>
       <div ngbAccordionBody>
         <cc-filters-panel
-          [filters]="$filters()"
-          [genresForFilters]="$genresForFilters()"
+          [filters]="filters()"
+          [genresForFilters]="genresForFilters()"
           (changeFilters)="onChangeFilters($event)"></cc-filters-panel>
       </div>
     </div>

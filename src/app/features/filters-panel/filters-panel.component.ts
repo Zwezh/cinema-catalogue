@@ -17,9 +17,9 @@ import { FiltersListType, FiltersValueType } from './types';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class FiltersPanelComponent {
-  @Output() changeFilters = new EventEmitter<Partial<FiltersValueType>>();
-  filters = input.required<Partial<FiltersValueType>>();
-  $genres = input.required<{ value: string }[], string[]>({
+  @Output() changeFilters = new EventEmitter<FiltersValueType>();
+  filters = input.required<FiltersValueType>();
+  genres = input.required<{ value: string }[], string[]>({
     alias: 'genresForFilters',
     transform: (genres: string[]) => genres.map((genre) => ({ value: genre }))
   });
@@ -27,8 +27,8 @@ export class FiltersPanelComponent {
 
   ratingList = filtersRatingListBuilder();
 
-  $fromYearList = signal<FiltersListType>(filtersYearListBuilder({}));
-  $toYearList = signal<FiltersListType>(filtersYearListBuilder({}));
+  fromYearList = signal<FiltersListType>(filtersYearListBuilder({}));
+  toYearList = signal<FiltersListType>(filtersYearListBuilder({}));
 
   constructor() {
     effect(
@@ -44,19 +44,19 @@ export class FiltersPanelComponent {
   }
 
   onApplyFilters(): void {
-    this.changeFilters.emit(this.form.getValue());
+    this.changeFilters.emit(this.form.getRawValue());
   }
 
   onResetFilters(): void {
     this.form.reset();
-    this.changeFilters.emit(undefined);
+    this.changeFilters.emit(this.form.getRawValue());
   }
 
   onChangeToYearField(change: { value?: number }): void {
-    this.$fromYearList.update(() => filtersYearListBuilder({ to: change?.value }));
+    this.fromYearList.update(() => filtersYearListBuilder({ to: change?.value }));
   }
 
   onChangeFromYearField(change: { value?: number }): void {
-    this.$toYearList.update(() => filtersYearListBuilder({ from: change?.value }));
+    this.toYearList.update(() => filtersYearListBuilder({ from: change?.value }));
   }
 }

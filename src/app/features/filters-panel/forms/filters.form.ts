@@ -17,17 +17,4 @@ export class FiltersForm extends FormGroup<FiltersFormType> {
       toYear: new FormControl<number>(undefined)
     });
   }
-
-  get fromYear(): FormControl<number> {
-    return this.controls.fromYear;
-  }
-
-  get toYear(): FormControl<number> {
-    return this.controls.toYear;
-  }
-
-  getValue(): Partial<FiltersValueType> {
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    return Object.fromEntries(Object.entries(this.value).filter(([_, v]) => !!v));
-  }
 }

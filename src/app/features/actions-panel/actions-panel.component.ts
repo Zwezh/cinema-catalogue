@@ -1,6 +1,5 @@
 import { NgClass } from '@angular/common';
 import {
-  AfterViewInit,
   ChangeDetectionStrategy,
   Component,
   DestroyRef,
@@ -9,6 +8,7 @@ import {
   ViewChild,
   effect,
   inject,
+  afterNextRender,
   signal
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
@@ -48,16 +48,15 @@ import { SettingsStore } from '../settings';
   styleUrls: ['./actions-panel.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class ActionsPanelComponent implements OnInit, AfterViewInit {
+export class ActionsPanelComponent implements OnInit {
   @ViewChild('accordion', { static: true }) accordion: NgbAccordionDirective;
   searchControl = new FormControl();
-  active = false;
-
   sortingList = SortingKeysConstant;
   sortingDirections = SortingDirectionConstant;
-  $selectedSortItem: Signal<Sorting>;
-  $filters = signal<Partial<FiltersValueType>>(undefined);
-  $genresForFilters = inject(SettingsStore).select(({ settings }) => settings?.genresForFilters || []);
+  active = signal(false);
+  selectedSortItem: Signal<Sorting>;
+  filters: Signal<FiltersValueType>;
+  genresForFilters = inject(SettingsStore).select(({ settings }) => settings?.genresForFilters || []);
   #activatedRoute = inject(ActivatedRoute);
   #router = inject(Router);
   #effects = inject(ListActionsEffects);
@@ -65,9 +64,16 @@ export class ActionsPanelComponent implements OnInit, AfterViewInit {
   #destroyRef = inject(DestroyRef);
 
   constructor() {
-    this.$selectedSortItem = this.#store.select(({ sorting }) => sorting);
+    this.selectedSortItem = this.#store.select(({ sorting }) => sorting);
+    this.filters = this.#store.select(({ filters }) => filters);
     effect(() => {
       this.searchControl.setValue(this.#store.select(({ searchValue }) => searchValue)());
+    });
+    afterNextRender(() => {
+      this.active.set(!!this.filters());
+      if (this.active()) {
+        this.accordion.toggle('filters');
+      }
     });
   }
 
@@ -78,18 +84,11 @@ export class ActionsPanelComponent implements OnInit, AfterViewInit {
         const queryParams: Params = { search: value || undefined, currentPage: undefined };
         this.#router.navigate([], { queryParams, queryParamsHandling: 'merge' });
       });
-    this.active = !!this.#activatedRoute.snapshot.queryParams['filters'];
     this.#effects.initListActionsEffect();
   }
-  ngAfterViewInit(): void {
-    if (this.active) {
-      this.accordion.toggle('filters');
-    }
-  }
 
-  onChangeFilters(value: Partial<FiltersValueType>): void {
-    const filters = value ? encodeURIComponent(JSON.stringify(value)) : undefined;
-    // this.#navigateChange({ filters, currentPage: undefined });
+  onChangeFilters(value: FiltersValueType): void {
+    this.#router.navigate([], { queryParams: { currentPage: undefined, ...value }, queryParamsHandling: 'merge' });
   }
 
   onChangeSortingKey(key: SortingKey): void {
@@ -102,7 +101,7 @@ export class ActionsPanelComponent implements OnInit, AfterViewInit {
   }
 
   #getSortingDirection(): SortingDirectionConstant {
-    return this.$selectedSortItem()?.direction === SortingDirectionConstant.desc
+    return this.selectedSortItem()?.direction === SortingDirectionConstant.desc
       ? SortingDirectionConstant.asc
       : SortingDirectionConstant.desc;
   }
