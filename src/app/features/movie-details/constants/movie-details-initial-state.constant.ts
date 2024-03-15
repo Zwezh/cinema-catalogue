@@ -1,4 +1,4 @@
-import { MovieDetailsState } from '../models';
+import { MovieDetailsState } from '../types';
 
 export const MOVIE_DETAILS_INITIAL_STATE: MovieDetailsState = {
   loading: null,

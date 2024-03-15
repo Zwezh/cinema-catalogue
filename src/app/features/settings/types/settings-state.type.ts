@@ -1,7 +1,7 @@
 import { SettingsDto } from '@appDTOs';
 
-export interface SettingsState {
+export type SettingsState = {
   settings: SettingsDto;
   movieGenres: string[];
   loading: boolean;
-}
+};

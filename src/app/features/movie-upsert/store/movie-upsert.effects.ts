@@ -45,17 +45,11 @@ export class MovieUpsertEffects {
       .subscribe({
         next: (kinopoiskDTO) => {
           this.#store.update((state) => ({ ...state, kinopoiskDTO, loading: false }));
-          this.#toastService.show({
-            type: 'success',
-            translateKey: 'movie.notifications.loadedFromKP'
-          });
+          this.#toastService.show({ type: 'success', translateKey: 'movie.notifications.loadedFromKP' });
         },
         error: () => {
           this.#store.update((state) => ({ ...state, loading: false }));
-          this.#toastService.show({
-            type: 'danger',
-            translateKey: 'movie.notifications.loadingErrorFromKP'
-          });
+          this.#toastService.show({ type: 'danger', translateKey: 'movie.notifications.loadingErrorFromKP' });
         }
       });
   }
@@ -66,38 +60,21 @@ export class MovieUpsertEffects {
       .getMovieById$(id)
       .pipe(
         take(1),
-        tap((res) => {
-          if (res) {
-            this.#toastService.show({
-              type: 'success',
-              translateKey: 'movie.notifications.loaded'
-            });
-          } else {
-            this.#toastService.show({
-              type: 'danger',
-              translateKey: 'movie.notifications.loadingError'
-            });
-          }
-        })
+        tap(() => this.#toastService.show({ type: 'success', translateKey: 'movie.notifications.loaded' }))
       )
-      .subscribe((result) => this.#store.update((state) => ({ ...state, movieDTO: result, loading: false })));
+      .subscribe({
+        next: (result) => this.#store.update((state) => ({ ...state, movieDTO: result, loading: false })),
+        error: () => this.#toastService.show({ type: 'danger', translateKey: 'movie.notifications.loadingError' })
+      });
   }
 
   updateMovie$(movie: MovieDto): Observable<MovieDto> {
     this.#store.update((state) => ({ ...state, loading: true }));
     return this.#moviesApi.updateMovie$(movie).pipe(
-      tap(() => {
-        this.#toastService.show({
-          type: 'success',
-          translateKey: 'movie.notifications.updated'
-        });
-      }),
+      tap(() => this.#toastService.show({ type: 'success', translateKey: 'movie.notifications.updated' })),
       catchError((err) => {
-        this.#toastService.show({
-          type: 'danger',
-          translateKey: 'movie.notifications.updateError'
-        });
-        return throwError(err);
+        this.#toastService.show({ type: 'danger', translateKey: 'movie.notifications.updateError' });
+        return throwError(() => err);
       }),
       finalize(() => this.#store.update((state) => ({ ...state, loading: false })))
     );
@@ -106,18 +83,10 @@ export class MovieUpsertEffects {
   addMovie$(movie: MovieDto): Observable<MovieDto> {
     this.#store.update((state) => ({ ...state, loading: true }));
     return this.#moviesApi.addMovie$(movie).pipe(
-      tap((res) => {
-        if (res) {
-          this.#toastService.show({
-            type: 'success',
-            translateKey: 'movie.notifications.added'
-          });
-        } else {
-          this.#toastService.show({
-            type: 'danger',
-            translateKey: 'movie.notifications.addError'
-          });
-        }
+      tap(() => this.#toastService.show({ type: 'success', translateKey: 'movie.notifications.added' })),
+      catchError((error) => {
+        this.#toastService.show({ type: 'danger', translateKey: 'movie.notifications.addError' });
+        return throwError(() => error);
       }),
       finalize(() => this.#store.update((state) => ({ ...state, loading: false })))
     );

@@ -2,10 +2,10 @@ import { FormControl, FormGroup } from '@angular/forms';
 
 import { Observable } from 'rxjs';
 
-import { FiltersFormType, FiltersValueType } from '../types';
+import { FiltersFormType, FiltersValue } from '../types';
 
 export class FiltersForm extends FormGroup<FiltersFormType> {
-  override valueChanges: Observable<FiltersValueType>;
+  override valueChanges: Observable<FiltersValue>;
 
   constructor() {
     super({

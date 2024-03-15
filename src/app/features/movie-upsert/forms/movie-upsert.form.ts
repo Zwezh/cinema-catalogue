@@ -4,11 +4,11 @@ import { KinopoiskDto, KinopoiskListItemDto, KinopoiskPersonListDto, MovieDto, S
 import { Observable } from 'rxjs';
 
 import { MovieProfessionConstant } from '../constants';
-import { MovieUpsertFormModel, MovieUpsertValueModel } from '../models';
+import { MovieUpsertFormType, MovieUpsertValue } from '../types';
 
-export class MovieUpsertForm extends FormGroup<MovieUpsertFormModel> {
-  override value: MovieUpsertValueModel;
-  override valueChanges: Observable<MovieUpsertValueModel>;
+export class MovieUpsertForm extends FormGroup<MovieUpsertFormType> {
+  override value: MovieUpsertValue;
+  override valueChanges: Observable<MovieUpsertValue>;
 
   constructor() {
     super({

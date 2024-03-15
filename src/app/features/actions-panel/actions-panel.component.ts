@@ -13,7 +13,7 @@ import {
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { ActivatedRoute, Params, Router, RouterModule } from '@angular/router';
+import { Params, Router, RouterModule } from '@angular/router';
 import { SortingDirectionConstant } from '@appConstants';
 import { IsAuthenticatedDirective } from '@appDirectives';
 import { Sorting, SortingKey } from '@appTypes';
@@ -27,7 +27,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { SortingKeysConstant } from './constants';
 import { ListActionsEffects, ListActionsStore } from './store';
 
-import { FiltersPanelComponent, FiltersValueType } from '../filters-panel';
+import { FiltersPanelComponent, FiltersValue } from '../filters-panel';
 import { SettingsStore } from '../settings';
 
 @Component({
@@ -55,9 +55,8 @@ export class ActionsPanelComponent implements OnInit {
   sortingDirections = SortingDirectionConstant;
   active = signal(false);
   selectedSortItem: Signal<Sorting>;
-  filters: Signal<FiltersValueType>;
+  filters: Signal<FiltersValue>;
   genresForFilters = inject(SettingsStore).select(({ settings }) => settings?.genresForFilters || []);
-  #activatedRoute = inject(ActivatedRoute);
   #router = inject(Router);
   #effects = inject(ListActionsEffects);
   #store = inject(ListActionsStore);
@@ -87,7 +86,7 @@ export class ActionsPanelComponent implements OnInit {
     this.#effects.initListActionsEffect();
   }
 
-  onChangeFilters(value: FiltersValueType): void {
+  onChangeFilters(value: FiltersValue): void {
     this.#router.navigate([], { queryParams: { currentPage: undefined, ...value }, queryParamsHandling: 'merge' });
   }
 

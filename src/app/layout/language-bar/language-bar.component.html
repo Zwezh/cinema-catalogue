@@ -1,0 +1,8 @@
+<li class="nav-item" ngbDropdown placement="bottom-end">
+  <a class="nav-link" tabindex="0" ngbDropdownToggle id="selectedLanguage" role="button"> {{ selectedLanguage() }} </a>
+  <div ngbDropdownMenu aria-labelledby="selectedLanguage" class="dropdown-menu">
+    @for (item of languageList(); track item) {
+      <a ngbDropdownItem href="#" (click)="$event.preventDefault(); onChangeLanguage(item)">{{ item }}</a>
+    }
+  </div>
+</li>

@@ -1,7 +1,7 @@
 import { KinopoiskDto, MovieDto } from '@appDTOs';
 
-export interface MovieUpsertState {
+export type MovieUpsertState = {
   readonly loading: boolean;
   readonly kinopoiskDTO: KinopoiskDto | null;
   readonly movieDTO: MovieDto | null;
-}
+};

@@ -80,10 +80,9 @@
       "body": "Are you sure you want delete '{{movieName}}'? \n This action permanently will delete record from db at all."
     }
   },
-  "ratingIs": "Rating is:",
   "settings": {
     "title": "Settings",
-    "header": "Set your settings",
+    "header": "Set your preferences",
     "language": "Language",
     "languageHint": "The selected language effects only for labels and general titles, but not the data stored on the server",
     "genresForFilters": "Genres for filters",

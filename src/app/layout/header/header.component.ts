@@ -9,6 +9,7 @@ import { take } from 'rxjs';
 import { NgbCollapse, NgbModal, NgbNav } from '@ng-bootstrap/ng-bootstrap';
 import { TranslateModule } from '@ngx-translate/core';
 
+import { LanguageBarComponent } from '../language-bar';
 import { LoadingBarComponent } from '../loading-bar';
 import { LogoComponent } from '../logo';
 
@@ -26,7 +27,8 @@ import { LogoComponent } from '../logo';
     LoadingBarComponent,
     NgbNav,
     NgbCollapse,
-    IsAuthenticatedDirective
+    IsAuthenticatedDirective,
+    LanguageBarComponent
   ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })

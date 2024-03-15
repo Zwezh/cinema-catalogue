@@ -1,5 +1,5 @@
 import { FILTERS_FROM_YEAR, FILTERS_TO_YEAR } from '../constants';
-import { FiltersListType } from '../types';
+import { FiltersList } from '../types';
 
 export const filtersYearListBuilder = ({
   from = FILTERS_FROM_YEAR,
@@ -7,4 +7,4 @@ export const filtersYearListBuilder = ({
 }: {
   from?: number;
   to?: number;
-}): FiltersListType => new Array(to - from + 1).fill(0).map((_, index: number) => ({ value: to - index }));
+}): FiltersList => new Array(to - from + 1).fill(0).map((_, index: number) => ({ value: to - index }));

@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { BaseStore } from '@appStore';
 
 import { SETTINGS_INITIAL_STATE } from '../constants';
-import { SettingsState } from '../models';
+import { SettingsState } from '../types';
 
 @Injectable({
   providedIn: 'root'

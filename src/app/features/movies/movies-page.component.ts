@@ -12,7 +12,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { MoviesListComponent } from './components';
 import { MOVIES_PAGE_SIZE } from './constants';
 import { MoviesEffects, MoviesStore } from './store';
-import { MoviesPageParamsType } from './types';
+import { MoviesPageParams } from './types';
 
 import { ActionsPanelComponent } from '../actions-panel';
 
@@ -56,11 +56,11 @@ export class MoviesPageComponent implements OnInit {
   ngOnInit(): void {
     this.#activatedRoute.queryParams
       .pipe(takeUntilDestroyed(this.#destroyRef))
-      .subscribe((params: MoviesPageParamsType) => this.#effects.loadAllMovies(params));
+      .subscribe((params: MoviesPageParams) => this.#effects.loadAllMovies(params));
   }
 
   onChangePageChange(page: number): void {
-    const queryParams: MoviesPageParamsType = { currentPage: page === 1 ? undefined : (page - 1).toString() };
+    const queryParams: MoviesPageParams = { currentPage: page === 1 ? undefined : (page - 1).toString() };
     this.#router.navigate([], { queryParams, queryParamsHandling: 'merge' });
   }
 }

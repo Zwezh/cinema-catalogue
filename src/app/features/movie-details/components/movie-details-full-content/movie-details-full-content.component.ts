@@ -4,14 +4,12 @@ import { MovieModel } from '@appModels';
 
 import { TranslateModule } from '@ngx-translate/core';
 
-import { RatingComponent } from '../rating/rating.component';
-
 @Component({
   selector: 'cc-movie-details-full-content',
   standalone: true,
   templateUrl: './movie-details-full-content.component.html',
   styleUrls: ['./movie-details-full-content.component.scss'],
-  imports: [RatingComponent, TranslateModule],
+  imports: [TranslateModule],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class MovieDetailsFullContentComponent {

@@ -1,4 +1,4 @@
-export interface MovieUpsertValueModel {
+export type MovieUpsertValue = {
   [key: string]: unknown;
   actors: string;
   addedDate: string;
@@ -22,4 +22,4 @@ export interface MovieUpsertValueModel {
   year: string;
   sequelsAndPrequels: string;
   similarMovies: string;
-}
+};

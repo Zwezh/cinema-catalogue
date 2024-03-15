@@ -1,5 +1,5 @@
 import { FILTERS_MAX_RATING } from '../constants';
-import { FiltersListType } from '../types';
+import { FiltersList } from '../types';
 
-export const filtersRatingListBuilder = (): FiltersListType =>
+export const filtersRatingListBuilder = (): FiltersList =>
   new Array(FILTERS_MAX_RATING + 1).fill(0).map((_, index: number) => ({ value: FILTERS_MAX_RATING - index }));

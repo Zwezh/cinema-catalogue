@@ -37,21 +37,12 @@ export class MovieDetailsEffects {
       .getMovieById$(id)
       .pipe(
         take(1),
-        tap((res) => {
-          if (res) {
-            this.#toastService.show({
-              type: 'success',
-              translateKey: 'movie.notifications.loaded'
-            });
-          } else {
-            this.#toastService.show({
-              type: 'danger',
-              translateKey: 'movie.notifications.loadingError'
-            });
-          }
-        })
+        tap(() => this.#toastService.show({ type: 'success', translateKey: 'movie.notifications.loaded' }))
       )
-      .subscribe(this.#updateStateAfterLoadMovie.bind(this));
+      .subscribe({
+        next: (response) => this.#updateStateAfterLoadMovie(response),
+        error: () => this.#toastService.show({ type: 'danger', translateKey: 'movie.notifications.loadingError' })
+      });
   }
 
   resetState(): void {
@@ -64,10 +55,7 @@ export class MovieDetailsEffects {
       tap(() => this.#store.update((state) => ({ ...state, loading: false }))),
       tap(() => this.#toastService.show({ type: 'success', translateKey: 'movie.notifications.deleted' })),
       catchError((error) => {
-        this.#toastService.show({
-          type: 'danger',
-          translateKey: 'movie.notifications.deleteError'
-        });
+        this.#toastService.show({ type: 'danger', translateKey: 'movie.notifications.deleteError' });
         return throwError(() => error);
       })
     );

@@ -17,6 +17,7 @@ import { Toast } from './types';
 })
 export class ToastsComponent {
   toasts: Signal<Toast[]>;
+  readonly DEFAULT_DELAY = 4000;
 
   #toastService = inject(ToastsService);
 

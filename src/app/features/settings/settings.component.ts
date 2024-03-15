@@ -3,14 +3,13 @@ import { ChangeDetectionStrategy, Component, computed, effect, inject, signal, S
 import { FormArray, FormControl, ReactiveFormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { EmptyContainerComponent } from '@appComponents';
-import { LanguagesConstant } from '@appConstants';
 
 import { NgbTooltipModule } from '@ng-bootstrap/ng-bootstrap';
 import { TranslateModule } from '@ngx-translate/core';
 
 import { SettingsForm } from './forms';
-import { SettingsState } from './models';
 import { SettingsEffects, SettingsStore } from './store';
+import { SettingsState } from './types';
 
 @Component({
   selector: 'cc-settings',
@@ -24,7 +23,6 @@ export class SettingsComponent {
   readonly $loading: Signal<boolean>;
   readonly $form: Signal<SettingsForm> = signal(null);
   readonly $genres: Signal<FormArray<FormControl<string>>> = signal(null);
-  languages = LanguagesConstant;
 
   #settingsStore = inject(SettingsStore);
   #settingEffects = inject(SettingsEffects);

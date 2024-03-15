@@ -1,6 +1,6 @@
 import { AbstractControl, FormControl } from '@angular/forms';
 
-export interface MovieUpsertFormModel {
+export type MovieUpsertFormType = {
   [key: string]: AbstractControl<unknown, unknown>;
 
   actors: FormControl<string>;
@@ -25,4 +25,4 @@ export interface MovieUpsertFormModel {
   sequelsAndPrequels: FormControl<string>;
   similarMovies: FormControl<string>;
   year: FormControl<string>;
-}
+};

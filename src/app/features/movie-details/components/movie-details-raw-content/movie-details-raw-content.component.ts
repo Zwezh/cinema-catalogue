@@ -7,7 +7,6 @@ import { TranslateModule } from '@ngx-translate/core';
   selector: 'cc-movie-details-raw-content',
   standalone: true,
   templateUrl: './movie-details-raw-content.component.html',
-  styleUrls: ['./movie-details-raw-content.component.scss'],
   imports: [TranslateModule],
   changeDetection: ChangeDetectionStrategy.OnPush
 })

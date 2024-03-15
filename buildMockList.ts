@@ -33,7 +33,7 @@ const moviesList = 'movies'.split(/\r?\n/).map(buildMovie);
 const moviesHTML = moviesList.map((item: RawMovie) => Object.values(item)).join('</br>');
 // appDiv.innerHTML = moviesHTML;
 
-interface RawMovie {
+type RawMovie {
   name: string;
   year: string;
   extension: string;

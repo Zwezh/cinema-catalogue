@@ -34,26 +34,15 @@ export class SettingsEffects {
   load(): void {
     this.#store.update((state) => ({ ...state, loading: true }));
     this.#apiService
-      .getSettigns$()
+      .getSettings$()
       .pipe(
         take(1),
-        tap((res) => {
-          if (res) {
-            this.#toastService.show({
-              type: 'success',
-              translateKey: 'settings.notifications.loaded'
-            });
-          } else {
-            this.#toastService.show({
-              type: 'danger',
-              translateKey: 'settings.notifications.loadingError'
-            });
-          }
-        }),
+        tap(() => this.#toastService.show({ type: 'success', translateKey: 'settings.notifications.loaded' })),
         filter(Boolean)
       )
       .subscribe({
         next: (settings: SettingsDto) => this.#store.update((state) => ({ ...state, settings })),
+        error: () => this.#toastService.show({ type: 'danger', translateKey: 'settings.notifications.loadingError' }),
         complete: () => this.#store.update((state) => ({ ...state, loading: false }))
       });
   }
@@ -66,17 +55,9 @@ export class SettingsEffects {
       .subscribe({
         next: (movieGenres: string[]) => {
           this.#store.update((state) => ({ ...state, movieGenres }));
-          this.#toastService.show({
-            type: 'success',
-            translateKey: 'settings.notifications.loaded'
-          });
+          this.#toastService.show({ type: 'success', translateKey: 'settings.notifications.loaded' });
         },
-        error: () => {
-          this.#toastService.show({
-            type: 'danger',
-            translateKey: 'settings.notifications.loadingError'
-          });
-        },
+        error: () => this.#toastService.show({ type: 'danger', translateKey: 'settings.notifications.loadingError' }),
         complete: () => this.#store.update((state) => ({ ...state, loading: false }))
       });
   }
@@ -88,19 +69,11 @@ export class SettingsEffects {
       .pipe(
         take(1),
         tap((settings: SettingsDto) => this.#store.update((state) => ({ ...state, settings, loading: false }))),
-        tap(() =>
-          this.#toastService.show({
-            type: 'success',
-            translateKey: 'settings.notifications.updated'
-          })
-        ),
+        tap(() => this.#toastService.show({ type: 'success', translateKey: 'settings.notifications.updated' })),
         catchError((err) => {
-          this.#toastService.show({
-            type: 'danger',
-            translateKey: 'settings.notifications.updateError'
-          });
+          this.#toastService.show({ type: 'danger', translateKey: 'settings.notifications.updateError' });
           this.#store.update((state) => ({ ...state, loading: false }));
-          return throwError(err);
+          return throwError(() => err);
         })
       )
       .subscribe();

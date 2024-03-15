@@ -4,20 +4,19 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { TranslateModule } from '@ngx-translate/core';
 
-import { RatingComponent } from '../../../movie-details/components';
 import { MovieUpsertForm } from '../../forms';
-import { MovieUpsertValueModel } from '../../models';
+import { MovieUpsertValue } from '../../types';
 
 @Component({
   selector: 'cc-movie-upsert-content',
   standalone: true,
-  imports: [ReactiveFormsModule, FormsModule, TranslateModule, RatingComponent, NgOptimizedImage],
+  imports: [ReactiveFormsModule, FormsModule, TranslateModule, NgOptimizedImage],
   templateUrl: './movie-upsert-content.component.html',
   styleUrls: ['./movie-upsert-content.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class MovieUpsertContentComponent {
   @Input({ required: true }) form: MovieUpsertForm;
-  @Input({ required: true }) formValues: MovieUpsertValueModel;
+  @Input({ required: true }) formValues: MovieUpsertValue;
   @Output() loadFromKP = new EventEmitter<void>();
 }

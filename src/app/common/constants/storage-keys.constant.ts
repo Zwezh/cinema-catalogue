@@ -1,4 +1,4 @@
 export enum StorageKeysConstant {
-  LANGUGAGE = 'language',
+  LANGUAGE = 'language',
   TOKEN = 'token'
 }

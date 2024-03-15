@@ -4,7 +4,7 @@ import { ActivatedRoute, Params } from '@angular/router';
 
 import { ListActionsStore } from './list-actions.store';
 
-import { FiltersValueType } from '../../filters-panel';
+import { FiltersValue } from '../../filters-panel';
 import { buildSortingUtil } from '../utils';
 
 @Injectable({ providedIn: 'root' })
@@ -21,8 +21,8 @@ export class ListActionsEffects {
     });
   }
 
-  #buildFilters(params: Params): FiltersValueType {
-    const filters: FiltersValueType = {};
+  #buildFilters(params: Params): FiltersValue {
+    const filters: FiltersValue = {};
     if (params['actors']) {
       filters.actors = params['actors'];
     }

@@ -11,7 +11,7 @@ export class SettingsApiService extends BaseApiService {
     super('settings');
   }
 
-  getSettigns$(): Observable<SettingsDto> {
+  getSettings$(): Observable<SettingsDto> {
     return this.httpClient.get<SettingsDto>(this.url);
   }
 

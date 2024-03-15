@@ -1,4 +1,4 @@
-export type MoviesPageParamsType = {
+export type MoviesPageParams = {
   filters?: string;
   currentPage?: string;
   search?: string;

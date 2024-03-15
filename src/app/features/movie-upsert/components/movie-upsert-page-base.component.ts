@@ -2,8 +2,8 @@ import { Component, effect, inject, OnDestroy } from '@angular/core';
 
 import { SettingsStore } from '../../settings';
 import { MovieUpsertForm } from '../forms';
-import { MovieUpsertState } from '../models';
 import { MovieUpsertEffects, MovieUpsertStore } from '../store';
+import { MovieUpsertState } from '../types';
 
 @Component({ template: '' })
 export abstract class MovieUpsertPageBaseComponent implements OnDestroy {

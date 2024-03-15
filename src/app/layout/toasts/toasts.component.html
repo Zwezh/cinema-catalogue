@@ -4,7 +4,7 @@
     [ngClass]="toastType(toast)"
     [autohide]="true"
     (hidden)="onHidden(toast)"
-    [delay]="toast.delay || 4000">
+    [delay]="toast.delay || DEFAULT_DELAY">
     {{ toast.translateKey | translate: toast.translateParams }}
   </ngb-toast>
 }

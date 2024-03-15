@@ -8,7 +8,7 @@ import { ConfirmationModalData } from './confirmation-modal-input.type';
   selector: 'cc-confirmation-modal',
   standalone: true,
   templateUrl: './confirmation-modal.component.html',
-  styleUrl: './confirmation-modal.component.scss',
+  styles: '.body {white-space: pre-wrap}',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ConfirmationModalComponent {

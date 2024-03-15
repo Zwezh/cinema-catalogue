@@ -1,4 +1,4 @@
-export interface MovieDto {
+export type MovieDto = {
   addedDate: string;
   ageRating: number;
   backdropUrl: string;
@@ -21,4 +21,4 @@ export interface MovieDto {
   year: number | number[];
   sequelsAndPrequels: string[];
   similarMovies: string[];
-}
+};

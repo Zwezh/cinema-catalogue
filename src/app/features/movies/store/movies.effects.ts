@@ -40,18 +40,12 @@ export class MoviesEffects {
       .pipe(take(1))
       .subscribe({
         next: ({ list, totalCount, currentPage }: MovieListDto) => {
-          this.#toastService.show({
-            type: 'success',
-            translateKey: 'movies.successfulLoaded'
-          });
+          this.#toastService.show({ type: 'success', translateKey: 'movies.successfulLoaded' });
           const movies = this.#convertDtoListToModel(list);
           this.#store.update((state) => ({ ...state, movies, currentPage: +currentPage, totalCount, loading: false }));
         },
         error: () => {
-          this.#toastService.show({
-            type: 'danger',
-            translateKey: 'movies.loadedWithErrors'
-          });
+          this.#toastService.show({ type: 'danger', translateKey: 'movies.loadedWithErrors' });
           this.#store.update((state) => ({ ...state, loading: false }));
         }
       });

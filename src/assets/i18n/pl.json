@@ -1,0 +1,112 @@
+{
+  "defaultTitle": "Katalog filmów",
+  "navigation": {
+    "movies": "Filmy",
+    "settings": "Ustawienia",
+    "signIn": "Zaloguj się",
+    "signOut": "Wyloguj się"
+  },
+  "movies": {
+    "noItems": "Brak dostępnych filmów.",
+    "loadedWithErrors": "Wystąpił problem podczas pobierania filmów z bazy danych.",
+    "successfulLoaded": "Filmy zostały pomyślnie załadowane."
+  },
+  "actions": {
+    "add": "Dodaj",
+    "edit": "Edytuj",
+    "delete": "Usuń",
+    "back": "Powrót",
+    "save": "Zapisz",
+    "saveAndAddNew": "Zapisz i dodaj nowy",
+    "cancel": "Anuluj",
+    "apply": "Zastosuj",
+    "reset": "Resetuj",
+    "confirm": "Potwierdź"
+  },
+  "filters": {
+    "title": "Filtry",
+    "fromYear": "Od roku",
+    "toYear": "Do roku",
+    "actors": "Aktorzy",
+    "directors": "Reżyserzy",
+    "rating": "Minimalna ocena",
+    "genres": "Gatunki"
+  },
+  "search": "Szukaj",
+  "addMovie": "Dodaj film",
+  "updateMovie": "Aktualizuj film",
+  "getFromKp": "Pobierz dane z KP",
+  "movie": {
+    "name": "Rosyjska nazwa",
+    "poster": "Link do plakatu",
+    "backdrop": "Link do obrazu tła",
+    "compactPoster": "Link do kompaktowego plakatu",
+    "kpId": "ID na Kinopoisku",
+    "enName": "Nazwa",
+    "rating": "Ocena",
+    "year": "Rok",
+    "director": "Reżyser",
+    "ageRating": "Ocena wiekowa",
+    "genres": "Gatunki",
+    "countries": "Kraje",
+    "quality": "Jakość",
+    "description": "Opis",
+    "actors": "Aktorzy:",
+    "addActor": "Dodaj aktora",
+    "series": "Serial",
+    "cartoon": "Kreskówka",
+    "extension": "Rozszerzenie pliku",
+    "addedDate": "Data dodania",
+    "movieLength": "Czas trwania",
+    "sequelsAndPrequels": "Sequele i prequele",
+    "similarMovies": "Podobne filmy",
+    "seriesLength": "Długość serialu",
+    "totalSeriesLength": "Całkowita długość serialu",
+    "isSeries": "To serial",
+    "notifications": {
+      "loadingError": "Wystąpił problem, film nie został pobrany z bazy danych.",
+      "updateError": "Wystąpił problem podczas aktualizacji filmu.",
+      "addError": "Wystąpił problem podczas dodawania filmu.",
+      "deleteError": "Wystąpił problem podczas usuwania filmu.",
+      "loaded": "Film został pomyślnie załadowany.",
+      "updated": "Film został pomyślnie zaktualizowany.",
+      "added": "Film został pomyślnie dodany.",
+      "deleted": "Film został pomyślnie usunięty.",
+      "loadingErrorFromKP": "Wystąpił problem, film nie został pobrany z Kinopoiska.",
+      "loadedFromKP": "Film został pomyślnie załadowany z Kinopoiska."
+    },
+    "deleteModal": {
+      "title": "Proszę potwierdzić działanie!",
+      "body": "Czy na pewno chcesz usunąć '{{movieName}}'? \n To działanie trwale usunie rekord z bazy danych."
+    }
+  },
+  "settings": {
+    "title": "Ustawienia",
+    "header": "Ustaw swoje preferencje",
+    "language": "Język",
+    "languageHint": "Wybrany język wpływa tylko na etykiety i ogólne tytuły, ale nie na dane przechowywane na serwerze",
+    "genresForFilters": "Gatunki do filtrów",
+    "defaultQuality": "Domyślna jakość",
+    "defaultExtension": "Domyślne rozszerzenie",
+    "qualityHint": "Możesz ustawić domyślną wartość jakości dla dodawania i aktualizowania filmów, jeśli to pole jest puste, ta wartość automatycznie zostanie wstawiona do kontrolki formularza",
+    "extensionHint": "Możesz ustawić domyślną wartość rozszerzenia dla dodawania i aktualizowania filmów, jeśli to pole jest puste, ta wartość automatycznie zostanie wstawiona do kontrolki formularza",
+    "fillGenres": "Wypełnij z listy filmów",
+    "notifications": {
+      "loadingError": "Wystąpił problem, ustawienia nie zostały pobrane z bazy danych.",
+      "updateError": "Wystąpił problem podczas aktualizacji ustawień.",
+      "loaded": "Ustawienia zostały pomyślnie załadowane.",
+      "updated": "Ustawienia zostały pomyślnie zaktualizowane."
+    }
+  },
+  "loading": "Ładowanie...",
+  "auth": {
+    "title": "Autoryzacja",
+    "label": "Wprowadź klucz dostępu, aby uzyskać pełny dostęp",
+    "authRequestHint": "Ogólnie rzecz biorąc, aplikacja jest obecnie ograniczona do trybu tylko do odczytu. Aby uzyskać pełny dostęp do tworzenia, aktualizowania i usuwania elementów, wprowadź klucz dostępu i kliknij przycisk „Zastosuj”.",
+    "getGrandAccess": "Uzyskaj pełen dostęp",
+    "loggedInSuccessfully": "Zostałeś pomyślnie uwierzytelniony.",
+    "loggedInFailed": "Nie zostałeś uwierzytelniony. Wprowadzony klucz dostępu jest nieprawidłowy.",
+    "tokenIsExpired": "Twój token wygasł. Zaloguj się ponownie.",
+    "loggedOutSuccessfully": "Zostałeś pomyślnie wylogowany."
+  }
+}

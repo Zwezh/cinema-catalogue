@@ -9,7 +9,6 @@ import { TranslateModule } from '@ngx-translate/core';
   standalone: true,
   imports: [ReactiveFormsModule, TranslateModule],
   templateUrl: './auth-modal.component.html',
-  styleUrl: './auth-modal.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AuthModalComponent {

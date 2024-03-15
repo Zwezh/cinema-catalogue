@@ -6,7 +6,7 @@ import { TranslateModule } from '@ngx-translate/core';
 
 import { filtersRatingListBuilder, filtersYearListBuilder } from './builders';
 import { FiltersForm } from './forms';
-import { FiltersListType, FiltersValueType } from './types';
+import { FiltersList, FiltersValue } from './types';
 
 @Component({
   selector: 'cc-filters-panel',
@@ -17,8 +17,8 @@ import { FiltersListType, FiltersValueType } from './types';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class FiltersPanelComponent {
-  @Output() changeFilters = new EventEmitter<FiltersValueType>();
-  filters = input.required<FiltersValueType>();
+  @Output() changeFilters = new EventEmitter<FiltersValue>();
+  filters = input.required<FiltersValue>();
   genres = input.required<{ value: string }[], string[]>({
     alias: 'genresForFilters',
     transform: (genres: string[]) => genres.map((genre) => ({ value: genre }))
@@ -27,8 +27,8 @@ export class FiltersPanelComponent {
 
   ratingList = filtersRatingListBuilder();
 
-  fromYearList = signal<FiltersListType>(filtersYearListBuilder({}));
-  toYearList = signal<FiltersListType>(filtersYearListBuilder({}));
+  fromYearList = signal<FiltersList>(filtersYearListBuilder({}));
+  toYearList = signal<FiltersList>(filtersYearListBuilder({}));
 
   constructor() {
     effect(

@@ -1,4 +1,4 @@
 export * from './settings.component';
-export * from './models';
+export * from './types';
 export * from './constants';
 export * from './store';

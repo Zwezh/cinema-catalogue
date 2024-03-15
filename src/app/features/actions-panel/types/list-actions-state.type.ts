@@ -1,9 +1,9 @@
 import { Sorting } from '@appTypes';
 
-import { FiltersValueType } from '../../filters-panel';
+import { FiltersValue } from '../../filters-panel';
 
 export type ListActionsState = {
-  readonly filters?: FiltersValueType;
+  readonly filters?: FiltersValue;
   readonly searchValue?: string;
   readonly sorting?: Sorting;
 };

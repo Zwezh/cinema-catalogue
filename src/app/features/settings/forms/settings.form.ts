@@ -1,10 +1,10 @@
 import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { SettingsDto } from '@appDTOs';
 
-import { SettingsFormModel, SettingsValueModel } from '../models';
+import { SettingsFormType, SettingsValue } from '../types';
 
-export class SettingsForm extends FormGroup<SettingsFormModel> {
-  override value: SettingsValueModel;
+export class SettingsForm extends FormGroup<SettingsFormType> {
+  override value: SettingsValue;
   constructor(settings: SettingsDto) {
     super({
       id: new FormControl<string>(settings?.id, Validators.required),

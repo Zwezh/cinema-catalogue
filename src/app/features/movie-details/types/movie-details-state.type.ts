@@ -1,6 +1,6 @@
 import { MovieModel } from '@appModels';
 
-export interface MovieDetailsState {
+export type MovieDetailsState = {
   readonly loading: boolean;
   readonly movie: MovieModel;
-}
+};

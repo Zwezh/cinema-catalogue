@@ -1,5 +1,5 @@
 import { SettingsDto } from '@appDTOs';
 
-export interface SettingsValueModel extends SettingsDto {
+export type SettingsValue = SettingsDto & {
   [key: string]: unknown;
-}
+};

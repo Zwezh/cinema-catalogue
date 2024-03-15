@@ -25,9 +25,9 @@ export type KinopoiskDto = {
     start: number;
   }[];
   sequelsAndPrequels: KinopoiskListItemDto[];
-  seriesLength: 20;
+  seriesLength: number;
   similarMovies: KinopoiskListItemDto[];
-  totalSeriesLength: 155;
+  totalSeriesLength: number;
   year: number;
 };
 

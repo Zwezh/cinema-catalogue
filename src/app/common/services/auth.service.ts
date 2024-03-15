@@ -30,10 +30,7 @@ export class AuthService extends BaseApiService {
         next: (response: { access_token: string }) => {
           localStorage.setItem(StorageKeysConstant.TOKEN, response.access_token);
           this.isLoggedIn.set(true);
-          this.#toastService.show({
-            type: 'success',
-            translateKey: 'auth.loggedInSuccessfully'
-          });
+          this.#toastService.show({ type: 'success', translateKey: 'auth.loggedInSuccessfully' });
         },
         error: () => this.#toastService.show({ type: 'danger', translateKey: 'auth.loggedInFailed' })
       });
