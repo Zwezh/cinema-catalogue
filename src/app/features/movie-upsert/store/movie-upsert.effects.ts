@@ -1,3 +1,4 @@
+import { HttpErrorResponse, HttpStatusCode } from '@angular/common/http';
 import { effect, inject, Injectable } from '@angular/core';
 import { MovieDto } from '@appDTOs';
 import { LoadingBarStore, ToastsService } from '@appLayout';
@@ -84,8 +85,12 @@ export class MovieUpsertEffects {
     this.#store.update((state) => ({ ...state, loading: true }));
     return this.#moviesApi.addMovie$(movie).pipe(
       tap(() => this.#toastService.show({ type: 'success', translateKey: 'movie.notifications.added' })),
-      catchError((error) => {
-        this.#toastService.show({ type: 'danger', translateKey: 'movie.notifications.addError' });
+      catchError((error: HttpErrorResponse) => {
+        if (error.status === HttpStatusCode.Conflict) {
+          this.#toastService.show({ type: 'danger', translateKey: 'movie.notifications.conflictError' });
+        } else {
+          this.#toastService.show({ type: 'danger', translateKey: 'movie.notifications.addError' });
+        }
         return throwError(() => error);
       }),
       finalize(() => this.#store.update((state) => ({ ...state, loading: false })))

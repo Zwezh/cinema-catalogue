@@ -18,7 +18,7 @@ import { SortingDirectionConstant } from '@appConstants';
 import { IsAuthenticatedDirective } from '@appDirectives';
 import { Sorting, SortingKey } from '@appTypes';
 
-import { debounceTime } from 'rxjs';
+import { debounceTime, distinctUntilChanged } from 'rxjs';
 
 import { NgbAccordionDirective, NgbAccordionModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgSelectModule } from '@ng-select/ng-select';
@@ -66,7 +66,8 @@ export class ActionsPanelComponent implements OnInit {
     this.selectedSortItem = this.#store.select(({ sorting }) => sorting);
     this.filters = this.#store.select(({ filters }) => filters);
     effect(() => {
-      this.searchControl.setValue(this.#store.select(({ searchValue }) => searchValue)());
+      const searchValue = this.#store.select(({ searchValue }) => searchValue)();
+      if (typeof searchValue === 'string') this.searchControl.setValue(searchValue);
     });
     afterNextRender(() => {
       this.active.set(!!this.filters());
@@ -78,7 +79,7 @@ export class ActionsPanelComponent implements OnInit {
 
   ngOnInit(): void {
     this.searchControl.valueChanges
-      .pipe(debounceTime(500), takeUntilDestroyed(this.#destroyRef))
+      .pipe(debounceTime(500), distinctUntilChanged(), takeUntilDestroyed(this.#destroyRef))
       .subscribe((value: string) => {
         const queryParams: Params = { search: value || undefined, currentPage: undefined };
         this.#router.navigate([], { queryParams, queryParamsHandling: 'merge' });

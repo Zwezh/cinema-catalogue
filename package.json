@@ -1,10 +1,12 @@
 {
   "name": "cinema-catalogue",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
+    "postCSS": "cd ./dist && purgecss --css ./styles-*.css --content ./index.html ./*.js --output ./",
+    "build:firebase": "npm run build && npm run postCSS",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "lint": "ng lint",

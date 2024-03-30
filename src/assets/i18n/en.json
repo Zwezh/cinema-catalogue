@@ -7,6 +7,7 @@
     "signOut": "Sign Out"
   },
   "movies": {
+    "inTotal": "In total: {{total}}",
     "noItems": "There are no movies available.",
     "loadedWithErrors": "Something went wrong during getting movies from DB.",
     "successfulLoaded": "Movies are loaded successfully."
@@ -67,6 +68,7 @@
       "loadingError": "Something went wrong, the movie isn't got from DB.",
       "updateError": "Something went wrong during updating the movie.",
       "addError": "Something went wrong during adding the movie.",
+      "conflictError": "A movie with the same kinopoisk ID already exists.",
       "deleteError": "Something went wrong during deleting the movie.",
       "loaded": "The movie is loaded successfully.",
       "updated": "The movie is updated successfully.",

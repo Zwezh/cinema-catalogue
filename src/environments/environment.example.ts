@@ -5,8 +5,9 @@
 import { Environment } from '@appTypes';
 
 export const environment: Environment = {
-  production: false,
-  kinopoiskToken: 'x'
+  apiUrl: 'http://localhost:3000',
+  kinopoiskToken: 'x',
+  production: false
 };
 
 /*

@@ -35,6 +35,7 @@ export class MoviesEffects {
   }
 
   loadAllMovies(params: Params): void {
+    this.#store.update((state) => ({ ...state, loading: true }));
     this.#apiService
       .getAllMovies$(buildMoviesParamsUtil(params))
       .pipe(take(1))

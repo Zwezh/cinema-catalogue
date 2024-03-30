@@ -1,6 +1,8 @@
 <section [ngClass]="{ 'movie-list': movies.length }" class="">
   @for (movie of movies; track movie.id) {
-    <cc-movie-list-item class="card" [movie]="movie" type="card" />
+    <a [routerLink]="movie.id" class="link link-dark link-offset-2 link-underline-opacity-0">
+      <cc-movie-list-item class="card" [movie]="movie" />
+    </a>
   } @empty {
     <cc-empty-container>{{ 'movies.noItems' | translate }}</cc-empty-container>
   }

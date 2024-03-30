@@ -9,7 +9,6 @@ import {
 } from '@angular/router';
 import { StorageKeysConstant } from '@appConstants';
 import { authInterceptor } from '@appInterceptors';
-import { languageBarList } from '@appLayout';
 import { TitleStrategyService } from '@appServices';
 import { ENVIRONMENT } from '@appTokens';
 
@@ -38,7 +37,6 @@ export const APP_CONFIG: ApplicationConfig = {
     provideHttpClient(withInterceptors([authInterceptor])),
     importProvidersFrom(
       TranslateModule.forRoot({
-        defaultLanguage: languageBarList[0],
         loader: { provide: TranslateLoader, useFactory: HttpLoaderFactory, deps: [HttpClient] }
       }),
       JwtModule.forRoot({ config: { tokenGetter: () => localStorage.getItem(StorageKeysConstant.TOKEN) } })

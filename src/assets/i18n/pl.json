@@ -7,6 +7,7 @@
     "signOut": "Wyloguj się"
   },
   "movies": {
+    "inTotal": "Łącznie: {{total}}",
     "noItems": "Brak dostępnych filmów.",
     "loadedWithErrors": "Wystąpił problem podczas pobierania filmów z bazy danych.",
     "successfulLoaded": "Filmy zostały pomyślnie załadowane."
@@ -67,6 +68,7 @@
       "loadingError": "Wystąpił problem, film nie został pobrany z bazy danych.",
       "updateError": "Wystąpił problem podczas aktualizacji filmu.",
       "addError": "Wystąpił problem podczas dodawania filmu.",
+      "conflictError": "Film o tym samym identyfikatorze Kinopoiska już istnieje.",
       "deleteError": "Wystąpił problem podczas usuwania filmu.",
       "loaded": "Film został pomyślnie załadowany.",
       "updated": "Film został pomyślnie zaktualizowany.",

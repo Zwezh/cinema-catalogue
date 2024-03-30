@@ -14,6 +14,7 @@
         [collectionSize]="totalCount()"
         (pageChange)="onChangePageChange($event)">
       </ngb-pagination>
+      <p class="d-flex justify-content-center">{{ 'movies.inTotal' | translate: { total: totalCount() } }}</p>
     </div>
   </div>
 } @else {
