@@ -64,6 +64,22 @@
             <p>{{ movie.extension }}</p>
           </div>
         </div>
+        @if (movie.sequelsAndPrequels || movie.similarMovies) {
+          <div class="row mt-5">
+            <div class="col">
+              @if (movie?.sequelsAndPrequels) {
+                <h5>{{ 'movie.sequelsAndPrequels' | translate }}</h5>
+                <p class="text-secondary">{{ movie.sequelsAndPrequels }}</p>
+              }
+              @if (movie?.similarMovies) {
+                <h5>{{ 'movie.similarMovies' | translate }}</h5>
+                <p class="text-secondary">
+                  {{ movie.similarMovies }}
+                </p>
+              }
+            </div>
+          </div>
+        }
       </div>
       <div class="col-lg-3">
         <div>
@@ -74,20 +90,6 @@
             }
           </ul>
         </div>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col">
-        @if (movie?.sequelsAndPrequels) {
-          <h5>{{ 'movie.sequelsAndPrequels' | translate }}</h5>
-          <p class="text-secondary">{{ movie.sequelsAndPrequels }}</p>
-        }
-        @if (movie?.similarMovies) {
-          <h5>{{ 'movie.similarMovies' | translate }}</h5>
-          <p class="text-secondary">
-            {{ movie.similarMovies }}
-          </p>
-        }
       </div>
     </div>
   </div>

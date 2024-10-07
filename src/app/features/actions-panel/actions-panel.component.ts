@@ -6,9 +6,9 @@ import {
   OnInit,
   Signal,
   ViewChild,
+  afterNextRender,
   effect,
   inject,
-  afterNextRender,
   signal
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
@@ -79,7 +79,7 @@ export class ActionsPanelComponent implements OnInit {
 
   ngOnInit(): void {
     this.searchControl.valueChanges
-      .pipe(debounceTime(500), distinctUntilChanged(), takeUntilDestroyed(this.#destroyRef))
+      .pipe(debounceTime(1000), distinctUntilChanged(), takeUntilDestroyed(this.#destroyRef))
       .subscribe((value: string) => {
         const queryParams: Params = { search: value || undefined, currentPage: undefined };
         this.#router.navigate([], { queryParams, queryParamsHandling: 'merge' });

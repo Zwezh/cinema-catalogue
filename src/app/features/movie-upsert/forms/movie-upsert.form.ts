@@ -103,36 +103,38 @@ export class MovieUpsertForm extends FormGroup<MovieUpsertFormType> {
       ageRating: this.value.ageRating,
       backdropUrl: this.value.backdropUrl,
       compactPosterUrl: this.value.compactPosterUrl,
-      countries: this.value.countries.split(', '),
+      countries: this.value.countries?.split(', ') ?? [],
       description: this.value.description,
-      director: this.value.director.split(', '),
+      director: this.value.director?.split(', ') ?? [],
       enName: this.value.enName,
       extension: this.value.extension,
-      genres: this.value.genres.split(', '),
+      genres: this.value.genres?.split(', ') ?? [],
       id: this.value.id,
       isSeries: this.value.isSeries,
       kpId: this.value.kpId,
       posterUrl: this.value.posterUrl,
       name: this.value.name,
       movieLength: this.value.movieLength,
-      actors: this.value.actors.split(', '),
+      actors: this.value.actors?.split(', ') ?? [],
       quality: this.value.quality,
       rating: this.value.rating,
       year: this.#getYearAsNumber(),
-      sequelsAndPrequels: this.value.sequelsAndPrequels.split(', '),
-      similarMovies: this.value.similarMovies.split(', ')
+      sequelsAndPrequels: this.value.sequelsAndPrequels?.split(', ') ?? [],
+      similarMovies: this.value.similarMovies?.split(', ') ?? []
     };
   }
 
   #getPersonsFromDto(fields: KinopoiskPersonListDto[], type: MovieProfessionConstant): string {
-    return fields
-      .filter((field: KinopoiskPersonListDto) => field.enProfession === type)
-      .map((field: KinopoiskListItemDto) => field.name)
-      ?.join(', ');
+    return (
+      fields
+        ?.filter((field: KinopoiskPersonListDto) => field.enProfession === type)
+        ?.map((field: KinopoiskListItemDto) => field.name)
+        ?.join(', ') ?? ''
+    );
   }
 
   #getNamesFromDto(fields: KinopoiskListItemDto[]): string {
-    return fields.map((field: KinopoiskListItemDto) => field.name)?.join(', ');
+    return fields?.map((field: KinopoiskListItemDto) => field.name)?.join(', ') ?? '';
   }
 
   #getYear(value: KinopoiskDto): string {
